@@ -1,8 +1,10 @@
 #!/usr/bin/env node
-// Generates site/index.html — a listing of every file in site/ except the
-// index page itself and dotfiles. Run automatically by the GitHub Pages
-// workflow on each deploy, so adding a cheatsheet never requires editing the
-// index by hand. You can also run it locally to preview: `node scripts/build-index.mjs`.
+// Generates site/index.html — one card per cheatsheet, grouping every file that
+// shares a basename (e.g. markdown-cheatsheet.html / .md / .pdf) into a single
+// card with a View button plus a download button per available format.
+// Run automatically by the GitHub Pages workflow on each deploy, so adding a
+// cheatsheet never requires editing the index by hand. Preview locally with:
+//   node scripts/build-index.mjs
 
 import { readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { dirname, extname, join, resolve } from "node:path";
@@ -17,128 +19,133 @@ const LICENSE_URL = `${REPO_URL}/blob/main/LICENSE`;
 // Files that are never listed, regardless of where they live.
 const EXCLUDED = new Set(["index.html", "readme.md", "license"]);
 
-const HTML_EXTS = new Set([".html", ".htm"]);
+const HTML_EXTS = new Set(["html", "htm"]);
 
-const ENTITIES = {
-  "&amp;": "&",
-  "&lt;": "<",
-  "&gt;": ">",
-  "&quot;": '"',
-  "&#39;": "'",
-  "&apos;": "'",
-  "&mdash;": "—",
-  "&ndash;": "–",
+// --- File-type logos (inline SVG, so the page stays self-contained) ----------
+const ICON_PDF = `<svg class="ico ico-pdf" viewBox="0 0 24 24" aria-hidden="true"><path fill="#e23a3a" d="M7 2h8l5 5v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path fill="#9b1c1c" d="M15 2l5 5h-4a1 1 0 0 1-1-1V2z"/><text x="10.8" y="18.4" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="6.6" font-weight="700" fill="#fff">PDF</text></svg>`;
+const ICON_MD = `<svg class="ico ico-md" viewBox="0 0 208 128" aria-hidden="true"><rect x="5" y="5" width="198" height="118" rx="12" ry="12" fill="none" stroke="currentColor" stroke-width="14"/><path fill="currentColor" d="M30 98V30h20l20 25 20-25h20v68H90V59L70 84 50 59v39zm125 0l-30-33h20V30h20v35h20z"/></svg>`;
+const ICON_HTML = `<svg class="ico ico-html" viewBox="0 0 384 512" aria-hidden="true"><path fill="#e44d26" d="M0 32l34.9 395.8L191.5 480l157.6-52.2L384 32H0z"/><path fill="#f16529" d="M192 442.7l127.4-42.2 29.8-334.3H192z"/><path fill="#ebebeb" d="M192 233.2h-64l-4.4-49.5H192V135H68.9l1.2 13.4 12.1 135.5H192zm0 128.1l-.4.1-53.7-14.5-3.4-38.5H85.7l6.8 76 99.1 27.5.4-.1z"/><path fill="#fff" d="M191.8 233.2v49.5h59.5l-5.6 62.7-53.9 14.5v51.5l99.2-27.5.7-8.1 11.4-127.5 1.2-13.1zm0-98.2v49.5h118.7l1-11 2.2-25.1 1.2-13.4z"/></svg>`;
+const ICON_FILE = `<svg class="ico ico-file" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 2h8l5 5v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm7 1.5V8h4.5z"/></svg>`;
+const ICON_VIEW = `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>`;
+
+// Normalized type -> label + icon. Download buttons render in this order.
+const FORMAT_META = {
+  pdf: { label: "PDF", icon: ICON_PDF },
+  md: { label: "MD", icon: ICON_MD },
+  html: { label: "HTML", icon: ICON_HTML },
 };
+const DOWNLOAD_ORDER = ["pdf", "md", "html"];
 
-function decodeEntities(str) {
-  return str.replace(/&[a-z#0-9]+;/gi, (m) => ENTITIES[m.toLowerCase()] ?? m);
-}
+const normType = (ext) => (HTML_EXTS.has(ext) ? "html" : ext);
+const metaFor = (type) => FORMAT_META[type] ?? { label: (type || "file").toUpperCase(), icon: ICON_FILE };
 
-function escapeHtml(str) {
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
-}
-
-function titleCase(str) {
-  return str.replace(/\b\w/g, (c) => c.toUpperCase());
-}
+// --- Small HTML helpers ------------------------------------------------------
+const ENTITIES = {
+  "&amp;": "&", "&lt;": "<", "&gt;": ">", "&quot;": '"',
+  "&#39;": "'", "&apos;": "'", "&mdash;": "—", "&ndash;": "–",
+};
+const decodeEntities = (s) => s.replace(/&[a-z#0-9]+;/gi, (m) => ENTITIES[m.toLowerCase()] ?? m);
+const escapeHtml = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+const titleCase = (s) => s.replace(/\b\w/g, (c) => c.toUpperCase());
 
 function humanSize(bytes) {
   if (bytes < 1024) return `${bytes} B`;
   const units = ["KB", "MB", "GB"];
-  let value = bytes / 1024;
-  let unit = 0;
-  while (value >= 1024 && unit < units.length - 1) {
-    value /= 1024;
-    unit += 1;
-  }
+  let value = bytes / 1024, unit = 0;
+  while (value >= 1024 && unit < units.length - 1) { value /= 1024; unit += 1; }
   return `${value.toFixed(value < 10 ? 1 : 0)} ${units[unit]}`;
 }
 
-// Pull the first matching capture out of some HTML, or return null.
-function firstMatch(html, regex) {
-  const m = html.match(regex);
-  return m ? m[1].trim() : null;
-}
+const firstMatch = (html, re) => { const m = html.match(re); return m ? m[1].trim() : null; };
 
 function extractMeta(html, name) {
-  const re = new RegExp(
-    `<meta[^>]*name=["']${name}["'][^>]*content=["']([^"']*)["']`,
-    "i",
-  );
-  const alt = new RegExp(
-    `<meta[^>]*content=["']([^"']*)["'][^>]*name=["']${name}["']`,
-    "i",
-  );
+  const re = new RegExp(`<meta[^>]*name=["']${name}["'][^>]*content=["']([^"']*)["']`, "i");
+  const alt = new RegExp(`<meta[^>]*content=["']([^"']*)["'][^>]*name=["']${name}["']`, "i");
   return firstMatch(html, re) ?? firstMatch(html, alt);
 }
 
 // Split "Name — Tagline" style titles into their two halves.
 function splitTitle(title) {
-  const separators = [" — ", " – ", " | ", " - ", "—", "–"];
-  for (const sep of separators) {
+  for (const sep of [" — ", " – ", " | ", " - ", "—", "–"]) {
     const idx = title.indexOf(sep);
-    if (idx > 0) {
-      return {
-        name: title.slice(0, idx).trim(),
-        tagline: title.slice(idx + sep.length).trim(),
-      };
-    }
+    if (idx > 0) return { name: title.slice(0, idx).trim(), tagline: title.slice(idx + sep.length).trim() };
   }
   return { name: title.trim(), tagline: null };
 }
 
-function describe(fileName) {
-  const ext = extname(fileName).toLowerCase();
-  const stats = statSync(join(siteDir, fileName));
-  const base = { file: fileName, size: humanSize(stats.size), type: (ext.slice(1) || "file").toUpperCase() };
+// --- Group files by basename into one cheatsheet each ------------------------
+const groups = new Map(); // stem -> Map(normType -> { file, size })
+for (const file of readdirSync(siteDir)) {
+  if (file.startsWith(".")) continue;
+  if (EXCLUDED.has(file.toLowerCase())) continue;
+  if (!statSync(join(siteDir, file)).isFile()) continue;
 
-  if (HTML_EXTS.has(ext)) {
-    const html = readFileSync(join(siteDir, fileName), "utf8");
+  const ext = extname(file).toLowerCase().slice(1);
+  const stem = ext ? file.slice(0, -(ext.length + 1)) : file;
+  if (!groups.has(stem)) groups.set(stem, new Map());
+  const bytes = statSync(join(siteDir, file)).size;
+  groups.get(stem).set(normType(ext), { file, size: humanSize(bytes) });
+}
+
+function buildCard(stem, formats) {
+  const htmlEntry = formats.get("html");
+  const viewEntry = htmlEntry ?? formats.get("pdf") ?? formats.get("md") ?? [...formats.values()][0];
+  const viewType = normType(extname(viewEntry.file).toLowerCase().slice(1));
+
+  let name = titleCase(stem.replace(/[-_]+/g, " "));
+  let tagline = null;
+  if (htmlEntry) {
+    const html = readFileSync(join(siteDir, htmlEntry.file), "utf8");
     const rawTitle = firstMatch(html, /<title[^>]*>([\s\S]*?)<\/title>/i);
     const description = extractMeta(html, "description");
     if (rawTitle) {
-      const { name, tagline } = splitTitle(decodeEntities(rawTitle));
-      return { ...base, name, tagline: description ?? tagline };
+      const split = splitTitle(decodeEntities(rawTitle));
+      name = split.name;
+      tagline = description ?? split.tagline;
     }
   }
 
-  // Fallback: derive a readable name from the file name.
-  const stem = fileName.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ");
-  return { ...base, name: titleCase(stem), tagline: null };
+  const orderedTypes = [
+    ...DOWNLOAD_ORDER.filter((t) => formats.has(t)),
+    ...[...formats.keys()].filter((t) => !DOWNLOAD_ORDER.includes(t)).sort(),
+  ];
+  const downloads = orderedTypes
+    .map((type) => {
+      const entry = formats.get(type);
+      const meta = metaFor(type);
+      return `            <a class="btn btn-file" href="./${escapeHtml(entry.file)}" download title="Download ${meta.label} — ${entry.size}">${meta.icon}<span>${meta.label}</span></a>`;
+    })
+    .join("\n");
+
+  const taglineHtml = tagline ? `\n          <p class="card-tagline">${escapeHtml(tagline)}</p>` : "";
+
+  const markup = `      <li class="card">
+        <div class="card-head">
+          <h2 class="card-title">${escapeHtml(name)}</h2>
+          <span class="badge">${escapeHtml(metaFor(viewType).label)}</span>
+        </div>${taglineHtml}
+        <div class="card-actions">
+          <a class="btn btn-primary" href="./${escapeHtml(viewEntry.file)}">${ICON_VIEW}<span>View cheatsheet</span></a>
+          <div class="downloads">
+            <span class="dl-label">Download</span>
+${downloads}
+          </div>
+        </div>
+      </li>`;
+
+  return { name, markup };
 }
 
-const entries = readdirSync(siteDir)
-  .filter((name) => !name.startsWith("."))
-  .filter((name) => !EXCLUDED.has(name.toLowerCase()))
-  .filter((name) => statSync(join(siteDir, name)).isFile())
-  .map(describe)
+const cardData = [...groups.entries()]
+  .map(([stem, formats]) => buildCard(stem, formats))
   .sort((a, b) => a.name.localeCompare(b.name));
 
 const cards =
-  entries.length === 0
-    ? `      <p class="empty">No cheatsheets yet. Drop an <code>.html</code> file into <code>site/</code> and it will appear here.</p>`
-    : entries
-        .map((entry) => {
-          const tagline = entry.tagline
-            ? `\n          <p class="card-tagline">${escapeHtml(entry.tagline)}</p>`
-            : "";
-          return `      <li>
-        <a class="card" href="./${escapeHtml(entry.file)}">
-          <div class="card-head">
-            <h2 class="card-title">${escapeHtml(entry.name)}</h2>
-            <span class="badge">${escapeHtml(entry.type)}</span>
-          </div>${tagline}
-          <p class="card-meta"><code>${escapeHtml(entry.file)}</code><span class="dot">&middot;</span>${escapeHtml(entry.size)}</p>
-        </a>
-      </li>`;
-        })
-        .join("\n");
+  cardData.length === 0
+    ? `      <li class="empty">No cheatsheets yet. Drop an <code>.html</code> file (optionally with <code>.md</code> / <code>.pdf</code> siblings) into <code>site/</code> and it will appear here.</li>`
+    : cardData.map((c) => c.markup).join("\n");
 
-const count = entries.length;
+const count = cardData.length;
 const countLabel = `${count} ${count === 1 ? "cheatsheet" : "cheatsheets"}`;
 
 // Official GitHub mark (Octocat), inlined so the page stays self-contained.
@@ -232,19 +239,15 @@ const html = `<!DOCTYPE html>
 
   main{max-width:900px; margin:0 auto; padding:1.25rem 1.75rem 4rem;}
   ul.cards{list-style:none; margin:0; padding:0; display:grid; gap:1rem;}
-  @media (min-width:620px){ ul.cards{grid-template-columns:1fr 1fr;} }
+  @media (min-width:640px){ ul.cards{grid-template-columns:1fr 1fr;} }
 
   .card{
-    display:block; height:100%;
+    display:flex; flex-direction:column;
     background:var(--surface); border:1px solid var(--line); border-radius:12px;
-    padding:1.25rem 1.35rem; color:inherit;
-    transition:border-color .15s ease, transform .15s ease, box-shadow .15s ease, background .15s ease;
+    padding:1.35rem 1.4rem;
+    transition:border-color .15s ease;
   }
-  .card:hover{
-    text-decoration:none; border-color:var(--accent);
-    background:var(--surface-hover); transform:translateY(-2px);
-    box-shadow:0 0 0 1px var(--accent), 0 10px 28px rgba(79,57,246,0.18);
-  }
+  .card:hover{border-color:#33333c;}
   .card-head{display:flex; align-items:center; justify-content:space-between; gap:0.75rem;}
   .card-title{
     font-family:var(--mono); font-size:1.15rem; font-weight:700; margin:0;
@@ -255,13 +258,43 @@ const html = `<!DOCTYPE html>
     letter-spacing:0.05em; color:var(--accent-ink); background:var(--accent);
     border-radius:5px; padding:0.22rem 0.5rem;
   }
-  .card-tagline{margin:0.5rem 0 0; font-size:0.92rem; color:var(--ink-soft);}
-  .card-meta{
-    margin:0.9rem 0 0; font-size:0.78rem; color:var(--ink-soft);
-    display:flex; align-items:center; gap:0.5rem;
+  .card-tagline{margin:0.55rem 0 0; font-size:0.92rem; color:var(--ink-soft);}
+
+  .card-actions{margin-top:auto; padding-top:1.2rem; display:flex; flex-direction:column; gap:0.85rem;}
+  .btn{
+    display:inline-flex; align-items:center; gap:0.45rem;
+    font-family:var(--sans); font-weight:600; font-size:0.85rem; line-height:1;
+    border:1px solid transparent; border-radius:9px; padding:0.6rem 0.95rem;
+    cursor:pointer; white-space:nowrap;
+    transition:background .15s ease, border-color .15s ease, color .15s ease, transform .15s ease;
   }
-  .card-meta .dot{opacity:0.6;}
-  .empty{color:var(--ink-soft); font-size:1rem;}
+  .btn:hover{text-decoration:none;}
+  .btn .ico{width:16px; height:16px; flex:none; display:block;}
+  .btn-primary{
+    align-self:flex-start; background:var(--accent); color:var(--accent-ink);
+  }
+  .btn-primary:hover{background:var(--accent-hover); transform:translateY(-1px);}
+
+  .downloads{display:flex; align-items:center; flex-wrap:wrap; gap:0.5rem;}
+  .dl-label{
+    font-family:var(--mono); font-size:0.66rem; font-weight:700; letter-spacing:0.09em;
+    text-transform:uppercase; color:var(--ink-soft); margin-right:0.1rem;
+  }
+  .btn-file{
+    background:var(--bg); color:var(--ink); border-color:var(--line);
+    font-family:var(--mono); font-size:0.74rem; font-weight:700;
+    padding:0.42rem 0.7rem; gap:0.4rem;
+  }
+  .btn-file:hover{border-color:var(--accent); color:var(--head); transform:translateY(-1px);}
+  .btn-file .ico{width:auto; height:15px;}
+  .btn-file .ico-md{color:var(--ink);}
+  .btn-file:hover .ico-md{color:var(--head);}
+
+  .empty{
+    list-style:none; color:var(--ink-soft); font-size:1rem;
+    background:var(--surface); border:1px solid var(--line); border-radius:12px;
+    padding:1.35rem 1.4rem;
+  }
 
   footer{
     max-width:900px; margin:0 auto; padding:2rem 1.75rem 3rem;
@@ -300,4 +333,4 @@ ${cards}
 `;
 
 writeFileSync(join(siteDir, "index.html"), html);
-console.log(`Generated site/index.html with ${count} entr${count === 1 ? "y" : "ies"}.`);
+console.log(`Generated site/index.html with ${count} cheatsheet card${count === 1 ? "" : "s"}.`);
