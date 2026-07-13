@@ -90,7 +90,6 @@ for (const file of readdirSync(siteDir)) {
 function buildCard(stem, formats) {
   const htmlEntry = formats.get("html");
   const viewEntry = htmlEntry ?? formats.get("pdf") ?? formats.get("md") ?? [...formats.values()][0];
-  const viewType = normType(extname(viewEntry.file).toLowerCase().slice(1));
 
   let name = titleCase(stem.replace(/[-_]+/g, " "));
   let tagline = null;
@@ -120,10 +119,7 @@ function buildCard(stem, formats) {
   const taglineHtml = tagline ? `\n          <p class="card-tagline">${escapeHtml(tagline)}</p>` : "";
 
   const markup = `      <li class="card">
-        <div class="card-head">
-          <h2 class="card-title">${escapeHtml(name)}</h2>
-          <span class="badge">${escapeHtml(metaFor(viewType).label)}</span>
-        </div>${taglineHtml}
+        <h2 class="card-title">${escapeHtml(name)}</h2>${taglineHtml}
         <div class="card-actions">
           <a class="btn btn-primary" href="./${escapeHtml(viewEntry.file)}">${ICON_VIEW}<span>View cheatsheet</span></a>
           <div class="downloads">
@@ -248,15 +244,9 @@ const html = `<!DOCTYPE html>
     transition:border-color .15s ease;
   }
   .card:hover{border-color:#33333c;}
-  .card-head{display:flex; align-items:center; justify-content:space-between; gap:0.75rem;}
   .card-title{
     font-family:var(--mono); font-size:1.15rem; font-weight:700; margin:0;
     letter-spacing:-0.01em; color:var(--head);
-  }
-  .badge{
-    flex:none; font-family:var(--mono); font-size:0.65rem; font-weight:700;
-    letter-spacing:0.05em; color:var(--accent-ink); background:var(--accent);
-    border-radius:5px; padding:0.22rem 0.5rem;
   }
   .card-tagline{margin:0.55rem 0 0; font-size:0.92rem; color:var(--ink-soft);}
 
