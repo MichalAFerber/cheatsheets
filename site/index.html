@@ -4,39 +4,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cheatsheets — Clean, printable developer references</title>
-<meta name="description" content="A growing collection of clean, printable developer cheatsheets.">
+<title>Cheatsheets — Clean, privacy-first developer references</title>
+<meta name="description" content="A growing collection of clean, privacy-first, printable developer cheatsheets.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#ffffff;
-    --surface:#f6f8fa;
-    --surface-hover:#eef1f4;
-    --ink:#0d1117;
-    --ink-soft:#57606a;
-    --line:#d0d7de;
-    --accent:#0969da;
-    --accent-soft:#ddf4ff;
-    --badge-bg:#eaeef2;
-    --badge-ink:#424a53;
+    --bg:#0A0A0B;          /* Cod Gray */
+    --surface:#18181C;     /* Vulcan */
+    --surface-hover:#202028;
+    --head:#ffffff;
+    --ink:#f4f4f6;
+    --ink-soft:#9a9aa6;
+    --line:#26262c;
+    --accent:#4F39F6;      /* Royal Blue */
+    --accent-hover:#6350f8;
+    --accent-ink:#ffffff;
+    --heart:#ff5a7a;
     --mono:'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
     --sans:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-  }
-  @media (prefers-color-scheme: dark){
-    :root{
-      --bg:#0d1117;
-      --surface:#161b22;
-      --surface-hover:#1c232c;
-      --ink:#e6edf3;
-      --ink-soft:#8b949e;
-      --line:#30363d;
-      --accent:#4493f8;
-      --accent-soft:#132132;
-      --badge-bg:#21262d;
-      --badge-ink:#adbac7;
-    }
   }
 
   *{box-sizing:border-box;}
@@ -50,31 +37,54 @@
     line-height:1.6;
     -webkit-font-smoothing:antialiased;
   }
-  ::selection{background:var(--accent-soft);}
+  /* Royal-blue frame on all four sides of the viewport. */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    border:4px solid var(--accent);
+    pointer-events:none;
+    z-index:100;
+  }
+  ::selection{background:var(--accent); color:var(--accent-ink);}
   a{color:var(--accent); text-decoration:none;}
   a:hover{text-decoration:underline;}
   code{font-family:var(--mono); font-size:0.85em;}
 
-  .topbar{height:4px; background:linear-gradient(90deg,var(--accent),#54aeff,var(--accent));}
-
   header.masthead{
-    max-width:900px; margin:0 auto; padding:3.5rem 1.5rem 1.5rem;
+    max-width:900px; margin:0 auto; padding:4rem 1.75rem 1.5rem;
+  }
+  .hero-top{
+    display:flex; align-items:flex-start; justify-content:space-between; gap:1.5rem;
   }
   .masthead h1{
-    font-family:var(--mono); font-weight:700; font-size:2.1rem;
-    margin:0; letter-spacing:-0.02em;
+    font-family:var(--mono); font-weight:800; font-size:2.4rem;
+    margin:0; letter-spacing:-0.02em; color:var(--head);
   }
-  .masthead p{
-    margin:0.6rem 0 0; font-size:1.05rem; color:var(--ink-soft); max-width:40rem;
+  .masthead p.lede{
+    margin:0.7rem 0 0; font-size:1.05rem; color:var(--ink-soft); max-width:42rem;
   }
-  .masthead .count{
-    display:inline-block; margin-top:1.25rem;
-    font-family:var(--mono); font-size:0.78rem; font-weight:500;
-    color:var(--ink-soft); background:var(--surface);
-    border:1px solid var(--line); border-radius:999px; padding:0.25rem 0.75rem;
-  }
+  .masthead p.lede strong{color:var(--ink); font-weight:600;}
 
-  main{max-width:900px; margin:0 auto; padding:1rem 1.5rem 4rem;}
+  .repo-link{
+    flex:none; display:inline-flex; align-items:center; justify-content:center;
+    width:48px; height:48px; border-radius:10px;
+    color:var(--ink); border:1px solid var(--line); background:var(--surface);
+    transition:color .15s ease, border-color .15s ease, transform .15s ease;
+  }
+  .repo-link:hover{color:var(--accent); border-color:var(--accent); transform:translateY(-2px); text-decoration:none;}
+
+  .tags{display:flex; flex-wrap:wrap; gap:0.55rem; margin-top:1.4rem;}
+  .tag{
+    font-family:var(--mono); font-size:0.72rem; font-weight:700;
+    letter-spacing:0.03em;
+    background:var(--accent); color:var(--accent-ink);
+    border-radius:999px; padding:0.32rem 0.8rem;
+    display:inline-flex; align-items:center; gap:0.35rem; white-space:nowrap;
+  }
+  a.tag{transition:background .15s ease;}
+  a.tag:hover{background:var(--accent-hover); text-decoration:none;}
+
+  main{max-width:900px; margin:0 auto; padding:1.25rem 1.75rem 4rem;}
   ul.cards{list-style:none; margin:0; padding:0; display:grid; gap:1rem;}
   @media (min-width:620px){ ul.cards{grid-template-columns:1fr 1fr;} }
 
@@ -82,18 +92,22 @@
     display:block; height:100%;
     background:var(--surface); border:1px solid var(--line); border-radius:12px;
     padding:1.25rem 1.35rem; color:inherit;
-    transition:border-color .15s ease, transform .15s ease, background .15s ease;
+    transition:border-color .15s ease, transform .15s ease, box-shadow .15s ease, background .15s ease;
   }
   .card:hover{
     text-decoration:none; border-color:var(--accent);
     background:var(--surface-hover); transform:translateY(-2px);
+    box-shadow:0 0 0 1px var(--accent), 0 10px 28px rgba(79,57,246,0.18);
   }
   .card-head{display:flex; align-items:center; justify-content:space-between; gap:0.75rem;}
-  .card-title{font-size:1.15rem; font-weight:600; margin:0; letter-spacing:-0.01em;}
+  .card-title{
+    font-family:var(--mono); font-size:1.15rem; font-weight:700; margin:0;
+    letter-spacing:-0.01em; color:var(--head);
+  }
   .badge{
     flex:none; font-family:var(--mono); font-size:0.65rem; font-weight:700;
-    letter-spacing:0.05em; color:var(--badge-ink); background:var(--badge-bg);
-    border-radius:5px; padding:0.2rem 0.45rem;
+    letter-spacing:0.05em; color:var(--accent-ink); background:var(--accent);
+    border-radius:5px; padding:0.22rem 0.5rem;
   }
   .card-tagline{margin:0.5rem 0 0; font-size:0.92rem; color:var(--ink-soft);}
   .card-meta{
@@ -104,19 +118,28 @@
   .empty{color:var(--ink-soft); font-size:1rem;}
 
   footer{
-    max-width:900px; margin:0 auto; padding:2rem 1.5rem 3rem;
+    max-width:900px; margin:0 auto; padding:2rem 1.75rem 3rem;
     border-top:1px solid var(--line);
-    font-size:0.85rem; color:var(--ink-soft);
-    display:flex; flex-wrap:wrap; gap:0.5rem 1.25rem; align-items:center;
+    font-size:0.9rem; color:var(--ink-soft);
   }
+  footer .heart{color:var(--heart);}
+  footer a{color:var(--accent); font-weight:500;}
 </style>
 </head>
 <body>
-<div class="topbar"></div>
 <header class="masthead">
-  <h1>Cheatsheets</h1>
-  <p>A growing collection of clean, printable developer references. Pick one below.</p>
-  <span class="count">1 cheatsheet</span>
+  <div class="hero-top">
+    <div>
+      <h1>Cheatsheets</h1>
+      <p class="lede">A growing collection of clean, printable developer references. Every one is <strong>privacy-first</strong> — no trackers, no analytics, just the reference.</p>
+    </div>
+    <a class="repo-link" href="https://github.com/MichalAFerber/cheatsheets" aria-label="View source on GitHub" title="View source on GitHub"><svg viewBox="0 0 16 16" width="30" height="30" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a>
+  </div>
+  <div class="tags">
+    <span class="tag">1 cheatsheet</span>
+    <span class="tag">Privacy-first</span>
+    <a class="tag" href="https://github.com/MichalAFerber/cheatsheets/blob/main/LICENSE">MIT Licensed</a>
+  </div>
 </header>
 <main>
   <ul class="cards">
@@ -133,9 +156,7 @@
   </ul>
 </main>
 <footer>
-  <span>&copy; Michal Ferber</span>
-  <a href="https://github.com/MichalAFerber/cheatsheets">Source on GitHub</a>
-  <a href="https://github.com/MichalAFerber/cheatsheets/blob/main/LICENSE">MIT License</a>
+  <p>&copy; 2026 &nbsp;|&nbsp; Created with <span class="heart">&#10084;&#65039;</span> by <a href="https://michalferber.dev/">Michal Ferber</a>, aka <a href="https://techguywithabeard.com/">TechGuyWithABeard</a></p>
 </footer>
 </body>
 </html>
