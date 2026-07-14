@@ -1,9 +1,14 @@
 # Third-party source cheatsheets, kept locally for reference only.
-# These are copyrighted by their respective publishers (MakeUseOf/Valnet,
-# Datadog, RaspberryTips, Red Hat, …) and must NOT be committed or published.
-# Originals in site/ are authored from scratch; these folders are just source
-# material to work from.
+# Copyrighted by their publishers (MakeUseOf/Valnet, Datadog, RaspberryTips,
+# Red Hat, …) — never commit or publish them. Everything in _docs/ is original.
 /datadog/
 /muo/
 /raspberrytips/
 /redhat/
+
+# Jekyll build output & local gems
+_site/
+.jekyll-cache/
+.jekyll-metadata
+vendor/
+.bundle/

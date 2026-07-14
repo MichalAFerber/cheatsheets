@@ -1,0 +1,46 @@
+# Sidebar navigation for the mkdocs-jekyll theme.
+# The theme prepends site.baseurl + '/', so urls here have NO leading slash.
+# Regenerate with: node scripts/gen-nav.mjs
+
+- title: Shell & CLI
+  children:
+    - title: "Bash Shortcuts"
+      url: docs/bash-shortcuts/
+    - title: "Linux Commands"
+      url: docs/linux-commands/
+    - title: "macOS Terminal"
+      url: docs/macos-terminal/
+    - title: "Symlinks on macOS & Ubuntu"
+      url: docs/symlinks-cheatsheet/
+    - title: "tmux Cheat Sheet"
+      url: docs/tmux-cheatsheet/
+- title: Editors
+  children:
+    - title: "Vim Commands"
+      url: docs/vim-commands/
+    - title: "VS Code Shortcuts"
+      url: docs/vscode-shortcuts/
+- title: DevOps
+  children:
+    - title: "Docker"
+      url: docs/docker/
+    - title: "Git Ops Cheatsheet"
+      url: docs/git-cheatsheet/
+    - title: "Kubernetes (kubectl)"
+      url: docs/kubectl/
+    - title: "Sync & Secrets CLI"
+      url: docs/sync-secrets-cli-cheatsheet/
+    - title: "systemd"
+      url: docs/systemd/
+- title: Languages & Data
+  children:
+    - title: ""
+      url: docs/markdown-cheatsheet/
+    - title: "Python RegEx"
+      url: docs/python-regex/
+    - title: "SQL Commands"
+      url: docs/sql-commands/
+- title: macOS
+  children:
+    - title: "macOS Keyboard Shortcuts"
+      url: docs/macos-keyboard-shortcuts/
