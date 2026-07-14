@@ -17,6 +17,7 @@ permalinkStyle: false
 
 # --- Repo / edit links ---
 github_user: MichalAFerber
+github_repo: cheatsheets
 repo: "https://github.com/MichalAFerber/cheatsheets"
 author: "Michal Ferber"
 
