@@ -1,0 +1,58 @@
+title: "Cheatsheets"
+description: "Clean, privacy-first developer cheatsheets — as a web page, PDF, or Markdown."
+url: "https://michalaferber.github.io"
+baseurl: "/cheatsheets"
+
+# mkdocs-style Jekyll theme (light, mobile-first, sidebar nav + search)
+remote_theme: vsoch/mkdocs-jekyll
+
+# --- Theme appearance (light) ---
+# The theme wires its custom colour (site.color) to the "red" palette slot,
+# so themeColor/accentColor: red = "use the hex in `color` below".
+color: "#4b90d6"        # header / accent colour (soft blue)
+accentColor: red
+themeColor: red
+fixedNav: "true"
+permalinkStyle: false
+
+# --- Repo / edit links ---
+github_user: MichalAFerber
+repo: "https://github.com/MichalAFerber/cheatsheets"
+author: "Michal Ferber"
+
+# --- Content collection ---
+collections:
+  docs:
+    output: true
+    permalink: /docs/:path/
+
+defaults:
+  - scope:
+      path: ""
+      type: docs
+    values:
+      layout: page
+  - scope:
+      path: ""
+    values:
+      layout: page
+
+# --- Markdown ---
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+plugins:
+  - jekyll-remote-theme
+
+exclude:
+  - site/
+  - scripts/
+  - content/
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+  - README.md
+  - node_modules/
