@@ -1,0 +1,9 @@
+# Third-party source cheatsheets, kept locally for reference only.
+# These are copyrighted by their respective publishers (MakeUseOf/Valnet,
+# Datadog, RaspberryTips, Red Hat, …) and must NOT be committed or published.
+# Originals in site/ are authored from scratch; these folders are just source
+# material to work from.
+/datadog/
+/muo/
+/raspberrytips/
+/redhat/
