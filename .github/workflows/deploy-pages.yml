@@ -23,8 +23,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Generate index listing
-        run: node scripts/build-index.mjs
+      - name: Render cheatsheets and index
+        run: node scripts/build.mjs
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
