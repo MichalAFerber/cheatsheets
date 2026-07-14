@@ -1,8 +1,3 @@
----
-title: "SQL Commands"
-tagline: "Query, join, aggregate, and modify — the SQL you reach for daily."
----
-
 # SQL Commands
 
 Standard SQL that works across PostgreSQL, MySQL, and SQLite unless noted. Keywords are shown uppercase by convention; SQL itself is case-insensitive for keywords.

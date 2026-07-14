@@ -1,8 +1,3 @@
----
-title: "Kubernetes (kubectl)"
-tagline: "Inspect, apply, debug, and scale — the kubectl commands that matter."
----
-
 # Kubernetes (kubectl)
 
 `kubectl` talks to a cluster's API server. Almost every command takes `-n <namespace>` (or `-A` for all namespaces) — forgetting it is the number-one reason "my pod isn't there." Set a default namespace to save the typing.

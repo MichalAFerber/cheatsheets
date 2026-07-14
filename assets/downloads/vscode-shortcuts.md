@@ -1,8 +1,3 @@
----
-title: "VS Code Shortcuts"
-tagline: "Command palette, multi-cursor, and navigation — keys shown for Windows/Linux."
----
-
 # VS Code Shortcuts
 
 The shortcuts below use Windows/Linux bindings. On macOS, swap `Ctrl` for `⌘` (Cmd) and `Alt` for `⌥` (Option) for most of them — a handful keep `Control`, noted where they do. When in doubt, the Command Palette finds any action and shows its current binding.

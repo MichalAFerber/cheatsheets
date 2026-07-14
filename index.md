@@ -1,5 +1,6 @@
 ---
 title: Cheatsheets
+layout: page
 permalink: /
 ---
 
@@ -32,7 +33,7 @@ from the sidebar, or browse below. Each sheet is also available as a **PDF** dow
 
 ## Languages & Data
 
-- **[]({{ '/docs/markdown-cheatsheet/' | relative_url }})** — 
+- **[Markdown]({{ '/docs/markdown-cheatsheet/' | relative_url }})** — GitHub Flavored Markdown — headings, lists, tables, links, code, and the GFM extras.
 - **[Python RegEx]({{ '/docs/python-regex/' | relative_url }})** — The `re` module, metacharacters, and the patterns you keep re-Googling.
 - **[SQL Commands]({{ '/docs/sql-commands/' | relative_url }})** — Query, join, aggregate, and modify — the SQL you reach for daily.
 

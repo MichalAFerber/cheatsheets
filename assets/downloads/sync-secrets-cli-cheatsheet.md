@@ -1,8 +1,3 @@
----
-title: "Sync & Secrets CLI"
-tagline: "rclone, rsync, Syncthing, Proton Drive CLI & Proton Pass CLI — five tools, one reference."
----
-
 # Sync & Secrets CLI
 
 Five tools that all move or protect files, and five very different mental models. `rclone` talks to 70+ cloud backends and treats them like a filesystem. `rsync` is the decades-old local/SSH workhorse everything else gets compared to. Syncthing is continuous peer-to-peer sync with no central server. Proton Drive CLI and Proton Pass CLI are both new (2025–2026) single-shot scripting tools built on Proton's end-to-end encryption — not background sync engines. Knowing which one to reach for saves more time than knowing any one of them deeply.

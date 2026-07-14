@@ -1,8 +1,3 @@
----
-title: "tmux Cheat Sheet"
-tagline: "Sessions, windows, panes, and copy mode — the whole multiplexer at a glance."
----
-
 # tmux Cheat Sheet
 
 > The **prefix** is `Ctrl+b` by default. Press the prefix, release it, then press the next key.

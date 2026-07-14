@@ -1,8 +1,3 @@
----
-title: "Vim Commands"
-tagline: "Modes, motions, and edits — enough to stop fighting the editor."
----
-
 # Vim Commands
 
 Vim is modal: keys mean different things depending on the mode. The magic is composition — an operator (`d`, `c`, `y`) plus a motion (`w`, `$`, `}`) acts on exactly that range. Press `Esc` to return to Normal mode any time.

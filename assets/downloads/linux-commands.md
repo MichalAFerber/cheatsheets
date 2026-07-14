@@ -1,8 +1,3 @@
----
-title: "Linux Commands"
-tagline: "The everyday command-line toolkit — files, text, processes, and the network."
----
-
 # Linux Commands
 
 A working reference for the commands you actually type at a shell. Distro-agnostic where it matters, with notes on the `apt` vs `dnf` split for package management.

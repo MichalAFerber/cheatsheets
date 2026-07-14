@@ -1,6 +1,6 @@
 ---
-title: ""
-description: ""
+title: "Markdown"
+description: "GitHub Flavored Markdown — headings, lists, tables, links, code, and the GFM extras."
 category: "Languages & Data"
 tags: [languages-data]
 ---

@@ -27,14 +27,15 @@ collections:
     output: true
     permalink: /docs/:path/
 
+# Only docs collection pages get the `page` layout. index.md sets its own layout
+# in front matter. The raw .md files under assets/downloads/ have no front matter,
+# so /assets/downloads/<slug>.md is served as verbatim Markdown (the download link);
+# any .html Jekyll also emits for them is unreferenced and kept out of search
+# (see search/search_index.json).
 defaults:
   - scope:
       path: ""
       type: docs
-    values:
-      layout: page
-  - scope:
-      path: ""
     values:
       layout: page
 

@@ -1,8 +1,3 @@
----
-title: "Docker"
-tagline: "Build images, run containers, wire up Compose, and clean up after."
----
-
 # Docker
 
 The commands you reach for daily with the Docker CLI. `docker compose` (v2, a subcommand) has replaced the old `docker-compose` binary — both are shown where they differ.
