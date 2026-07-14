@@ -1,8 +1,3 @@
----
-title: "Python RegEx"
-tagline: "The `re` module, metacharacters, and the patterns you keep re-Googling."
----
-
 # Python RegEx
 
 Regular expressions in Python live in the `re` module. Always write patterns as raw strings (`r"..."`) so backslashes reach the regex engine instead of being eaten by Python's string parser.

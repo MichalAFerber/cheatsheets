@@ -1,8 +1,3 @@
----
-title: "macOS Terminal"
-tagline: "The macOS-specific commands — pbcopy, open, mdfind, defaults, and Homebrew."
----
-
 # macOS Terminal
 
 macOS ships a BSD-flavoured Unix userland, so the usual `cd`, `ls`, and `grep` all work. This sheet focuses on the commands that are unique to macOS — the ones worth knowing beyond generic Linux.

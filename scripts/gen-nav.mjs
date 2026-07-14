@@ -50,6 +50,7 @@ writeFileSync(join(root, "_data", "toc.yml"), toc.join("\n") + "\n");
 const idx = [
   "---",
   "title: Cheatsheets",
+  "layout: page",
   "permalink: /",
   "---",
   "",

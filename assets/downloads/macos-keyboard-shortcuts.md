@@ -1,8 +1,3 @@
----
-title: "macOS Keyboard Shortcuts"
-tagline: "The muscle-memory keys — Finder, windows, text, and screenshots."
----
-
 # macOS Keyboard Shortcuts
 
 Modifier symbols: `⌘` Command, `⌥` Option, `⌃` Control, `⇧` Shift, `⌫` Delete, `↩` Return, `⎋` Esc. Most system shortcuts are `⌘`-based; the exceptions are noted.

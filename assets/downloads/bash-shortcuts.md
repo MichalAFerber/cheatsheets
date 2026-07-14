@@ -1,8 +1,3 @@
----
-title: "Bash Shortcuts"
-tagline: "Move, edit, and recall on the command line without the arrow keys."
----
-
 # Bash Shortcuts
 
 These are Readline (Emacs-mode) key bindings — they work the same in Bash, Zsh, and most REPLs, on Linux and macOS. Learning even the top row (`Ctrl-A`, `Ctrl-R`, `Ctrl-W`) makes the shell dramatically faster.

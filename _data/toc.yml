@@ -34,7 +34,7 @@
       url: docs/systemd/
 - title: Languages & Data
   children:
-    - title: ""
+    - title: "Markdown"
       url: docs/markdown-cheatsheet/
     - title: "Python RegEx"
       url: docs/python-regex/
