@@ -1,14 +1,18 @@
-/* Site overrides, loaded after the theme's main.css + palette.css.
-   Goals: more legible fonts, always-expanded sidebar nav, on-brand source banner. */
+/* Site overrides, loaded after the theme's main.css + palette.css. */
 
-/* ---------- Typography (legibility) ---------- */
+/* ---------- Bigger across the board ----------
+   The mkdocs-jekyll theme sizes EVERYTHING in rem, scaled from the root
+   font-size (its default is 62.5% -> 75%, i.e. 1rem = 10-12px). Raising that
+   base scales all text at once — nav, content, TOC, tables, footer. */
+html { font-size: 81.25%; }   /* 1rem = 13px (theme default is 10-12px) */
+
+/* ---------- Typography (family + legibility) ---------- */
 body,
 input,
 .md-typeset {
   font-family: "Inter", "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 .md-typeset {
-  font-size: 0.92rem;
   line-height: 1.7;
   color: #24292f;
 }
@@ -18,7 +22,7 @@ input,
 .md-typeset p,
 .md-typeset li { color: #2b3138; }
 
-/* Monospace — clearer face, larger, darker than the theme's thin Roboto Mono. */
+/* Monospace — clearer face, darker, subtle background. */
 .md-typeset code,
 .md-typeset pre,
 .md-typeset kbd,
@@ -26,35 +30,28 @@ code, kbd, pre {
   font-family: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, "Roboto Mono", monospace;
 }
 .md-typeset code {
-  font-size: 0.82em;
+  font-size: 0.9em;
   color: #24292f;
   background: #eceff4;
   padding: 0.12em 0.4em;
   border-radius: 4px;
 }
-
-/* Command / reference tables — the main readability fix. */
-.md-typeset table:not([class]) {
-  font-size: 0.9rem;
+.md-typeset pre code {
+  color: #24292f;
+  background: transparent;
 }
+
+/* Command / reference tables. */
 .md-typeset table:not([class]) th,
 .md-typeset table:not([class]) td {
-  padding: 0.55rem 0.9rem;
+  padding: 0.6rem 0.9rem;
   color: #24292f;
 }
-.md-typeset table:not([class]) td:first-child {
-  white-space: nowrap;
-}
+.md-typeset table:not([class]) td:first-child { white-space: nowrap; }
 .md-typeset table:not([class]) td code {
-  font-size: 0.9em;
   font-weight: 500;
   color: #0d1117;
   background: #f3f5f8;
-}
-.md-typeset pre code {
-  font-size: 0.88em;
-  color: #24292f;
-  background: transparent;
 }
 
 /* ---------- Sidebar: flat, always-expanded groups ---------- */
@@ -62,7 +59,7 @@ code, kbd, pre {
   display: block;
   margin: 1.15rem 0 0.3rem;
   padding-left: 0.6rem;
-  font-size: 0.68rem;
+  font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.07em;
   text-transform: uppercase;
@@ -71,9 +68,6 @@ code, kbd, pre {
 .md-nav--primary .nav-group .md-nav__list {
   margin-left: 0;
   padding-left: 0;
-}
-.md-nav--primary .md-nav__link {
-  font-size: 0.85rem;
 }
 
 /* ---------- Source banner: match the header instead of red ---------- */
