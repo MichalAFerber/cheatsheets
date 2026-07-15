@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linux Commands — Cheatsheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+:root{
+  --ink:#00070A;      /* Midnight Moss  */
+  --blue:#214D72;     /* Chathams Blue  */
+  --sepia:#98643F;    /* Sepia Skin     */
+  --body:#404040;     /* Cape Cod       */
+  --rule:#e1e4e8;
+  --code-bg:#eceff4;
+  --pre-bg:#f6f8fa;
+}
+*{box-sizing:border-box}
+html{font-size:16px}
+body{
+  margin:0;
+  font-family:"Inter","Roboto",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  line-height:1.7;
+  color:var(--body);
+  background:#CCCCCC;
+}
+.page{
+  max-width:820px;
+  margin:2rem auto;
+  padding:3rem 3.25rem 2rem;
+  background:#fff;
+  border-radius:6px;
+  border-bottom:3px solid var(--blue);
+  box-shadow:0 1px 4px rgba(0,0,0,.12);
+}
+h1,h2,h3,h4{line-height:1.3;margin:1.8em 0 .6em}
+h1{color:var(--ink);font-weight:700;font-size:2.1rem;margin-top:0}
+h2{color:var(--blue);font-weight:600;font-size:1.5rem;padding-bottom:.3rem;border-bottom:1px solid var(--rule)}
+h3{color:var(--ink);font-weight:600;font-size:1.2rem}
+h4{color:var(--ink);font-weight:600;font-size:1.05rem}
+p,li{color:var(--body)}
+a{color:var(--blue);text-decoration:none}
+a:hover{color:var(--sepia);text-decoration:underline}
+strong{color:var(--ink)}
+hr{border:0;border-top:1px solid var(--rule);margin:2rem 0}
+ul,ol{padding-left:1.4rem}
+li{margin:.25em 0}
+code,kbd,pre{font-family:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,"Roboto Mono",monospace}
+code{
+  font-size:.88em;color:#24292f;background:var(--code-bg);
+  padding:.12em .4em;border-radius:4px;
+}
+pre{
+  background:var(--pre-bg);
+  border:1px solid var(--rule);
+  border-radius:8px;
+  padding:1rem 1.15rem;
+  overflow:auto;
+  line-height:1.55;
+}
+pre code{font-size:.86em;color:#24292f;background:transparent;padding:0;border-radius:0}
+table{border-collapse:collapse;width:100%;margin:1.2rem 0;font-size:.95em}
+th,td{padding:.55rem .9rem;border:1px solid var(--rule);text-align:left;vertical-align:top}
+th{background:#f3f5f8;color:var(--ink);font-weight:600}
+td code{font-weight:500;color:#0d1117;background:#f3f5f8}
+blockquote{
+  margin:1.2rem 0;padding:.4rem 1.1rem;
+  border-left:4px solid var(--blue);
+  background:#f6f8fa;color:#4a5568;
+}
+img{max-width:100%}
+
+.hljs{color:#24292f;background:transparent}
+.hljs-doctag,.hljs-keyword,.hljs-meta .hljs-keyword,.hljs-template-tag,.hljs-template-variable,.hljs-type,.hljs-variable.language_{color:#cf222e}
+.hljs-title,.hljs-title.class_,.hljs-title.class_.inherited__,.hljs-title.function_{color:#8250df}
+.hljs-attr,.hljs-attribute,.hljs-literal,.hljs-meta,.hljs-number,.hljs-operator,.hljs-variable,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-id{color:#0550ae}
+.hljs-regexp,.hljs-string,.hljs-meta .hljs-string{color:#0a3069}
+.hljs-built_in,.hljs-symbol{color:#e36209}
+.hljs-comment,.hljs-code,.hljs-formula{color:#6e7781}
+.hljs-name,.hljs-quote,.hljs-selector-tag,.hljs-selector-pseudo{color:#116329}
+.hljs-subst{color:#24292f}
+.hljs-section{color:#0550ae;font-weight:700}
+.hljs-bullet{color:#735c0f}
+.hljs-emphasis{color:#24292f;font-style:italic}
+.hljs-strong{color:#24292f;font-weight:700}
+.hljs-addition{color:#116329;background:#dafbe1}
+.hljs-deletion{color:#82071e;background:#ffebe9}
+
+@media print{
+  html{font-size:12.5px}
+  body{background:#fff}
+  .page{max-width:none;margin:0;padding:0;border-radius:0;border-bottom:0;box-shadow:none}
+  h2,h3,h4{break-after:avoid}
+  pre,table,blockquote{break-inside:avoid}
+  a{color:var(--blue)}
+}
+</style>
+</head>
+<body>
+<main class="page">
+<h1>Linux Commands</h1>
+<p>A working reference for the commands you actually type at a shell. Distro-agnostic where it matters, with notes on the <code>apt</code> vs <code>dnf</code> split for package management.</p>
+<h2>Navigation &amp; Files</h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>pwd</code></td>
+<td>print the current working directory</td>
+</tr>
+<tr>
+<td><code>ls -lah</code></td>
+<td>long listing, <strong>a</strong>ll files, <strong>h</strong>uman-readable sizes</td>
+</tr>
+<tr>
+<td><code>cd -</code></td>
+<td>jump back to the previous directory</td>
+</tr>
+<tr>
+<td><code>cp -r src dst</code></td>
+<td>copy recursively (directories)</td>
+</tr>
+<tr>
+<td><code>mv old new</code></td>
+<td>move or rename</td>
+</tr>
+<tr>
+<td><code>rm -r dir</code></td>
+<td>remove a directory and its contents</td>
+</tr>
+<tr>
+<td><code>mkdir -p a/b/c</code></td>
+<td>create nested directories in one shot</td>
+</tr>
+<tr>
+<td><code>touch file</code></td>
+<td>create an empty file / update its timestamp</td>
+</tr>
+<tr>
+<td><code>ln -s target link</code></td>
+<td>create a symbolic link</td>
+</tr>
+<tr>
+<td><code>tree -L 2</code></td>
+<td>show the directory tree, 2 levels deep</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>rm -rf is unforgiving.</strong> There is no trash can. Double-check the path before running <code>rm -rf</code>, and never run it with a variable that could be empty (<code>rm -rf &quot;$DIR/&quot;</code> deletes <code>/</code> if <code>$DIR</code> is unset).</p>
+</blockquote>
+<h2>Viewing &amp; Searching</h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>cat file</code></td>
+<td>dump a whole file to stdout</td>
+</tr>
+<tr>
+<td><code>less file</code></td>
+<td>page through a file (<code>q</code> to quit, <code>/</code> to search)</td>
+</tr>
+<tr>
+<td><code>head -n 20 file</code></td>
+<td>first 20 lines</td>
+</tr>
+<tr>
+<td><code>tail -f log</code></td>
+<td>follow a file as it grows — great for logs</td>
+</tr>
+<tr>
+<td><code>grep -rin &#39;text&#39; .</code></td>
+<td>recursive, case-<strong>i</strong>nsensitive, with line <strong>n</strong>umbers</td>
+</tr>
+<tr>
+<td><code>find . -name &#39;*.log&#39;</code></td>
+<td>find files by name pattern</td>
+</tr>
+<tr>
+<td><code>find . -mtime -1</code></td>
+<td>files modified in the last day</td>
+</tr>
+<tr>
+<td><code>wc -l file</code></td>
+<td>count lines</td>
+</tr>
+<tr>
+<td>`sort file</td>
+<td>uniq -c`</td>
+</tr>
+</tbody></table>
+<h2>Permissions &amp; Ownership</h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>chmod +x script.sh</code></td>
+<td>make a file executable</td>
+</tr>
+<tr>
+<td><code>chmod 644 file</code></td>
+<td>owner read/write, group + others read</td>
+</tr>
+<tr>
+<td><code>chmod 755 dir</code></td>
+<td>owner all, group + others read/execute</td>
+</tr>
+<tr>
+<td><code>chown user:group file</code></td>
+<td>change owner and group</td>
+</tr>
+<tr>
+<td><code>chmod -R 750 dir</code></td>
+<td>apply recursively</td>
+</tr>
+<tr>
+<td><code>sudo !!</code></td>
+<td>re-run the previous command with sudo</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Octal in three digits:</strong> read = 4, write = 2, execute = 1. Add them per role (owner, group, other). <code>7</code> = rwx, <code>6</code> = rw-, <code>5</code> = r-x.</p>
+</blockquote>
+<h2>Processes &amp; System</h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>`ps aux</td>
+<td>grep node`</td>
+</tr>
+<tr>
+<td><code>top</code></td>
+<td>live process/CPU view (<code>htop</code> if installed)</td>
+</tr>
+<tr>
+<td><code>kill -9 PID</code></td>
+<td>force-kill a process by PID</td>
+</tr>
+<tr>
+<td><code>pkill -f pattern</code></td>
+<td>kill by matching the full command line</td>
+</tr>
+<tr>
+<td><code>df -h</code></td>
+<td>disk space by filesystem, human-readable</td>
+</tr>
+<tr>
+<td><code>du -sh *</code></td>
+<td>size of each item in the current directory</td>
+</tr>
+<tr>
+<td><code>free -h</code></td>
+<td>memory usage</td>
+</tr>
+<tr>
+<td><code>systemctl status nginx</code></td>
+<td>check a service&#39;s state (systemd)</td>
+</tr>
+<tr>
+<td><code>journalctl -u nginx -f</code></td>
+<td>follow a service&#39;s logs</td>
+</tr>
+</tbody></table>
+<h2>Networking</h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>curl -I https://site</code></td>
+<td>fetch just the response headers</td>
+</tr>
+<tr>
+<td>`curl -fsSL url</td>
+<td>sh`</td>
+</tr>
+<tr>
+<td><code>wget url</code></td>
+<td>download a file</td>
+</tr>
+<tr>
+<td><code>ssh user@host</code></td>
+<td>open a remote shell</td>
+</tr>
+<tr>
+<td><code>scp file user@host:/path</code></td>
+<td>copy a file over SSH</td>
+</tr>
+<tr>
+<td><code>ss -tulpn</code></td>
+<td>listening ports and their processes</td>
+</tr>
+<tr>
+<td><code>ping -c 4 host</code></td>
+<td>send 4 ICMP probes</td>
+</tr>
+<tr>
+<td><code>dig +short example.com</code></td>
+<td>resolve a domain, terse output</td>
+</tr>
+<tr>
+<td><code>ip a</code></td>
+<td>show network interfaces and addresses</td>
+</tr>
+</tbody></table>
+<h2>Archives &amp; Packages</h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>tar czf out.tgz dir/</code></td>
+<td>create a gzipped tarball</td>
+</tr>
+<tr>
+<td><code>tar xzf out.tgz</code></td>
+<td>extract a gzipped tarball</td>
+</tr>
+<tr>
+<td><code>tar tzf out.tgz</code></td>
+<td>list contents without extracting</td>
+</tr>
+<tr>
+<td><code>zip -r out.zip dir/</code></td>
+<td>create a zip archive</td>
+</tr>
+<tr>
+<td><code>unzip out.zip</code></td>
+<td>extract a zip archive</td>
+</tr>
+</tbody></table>
+<p><strong>Package managers — Debian/Ubuntu vs Fedora/RHEL</strong></p>
+<pre><code class="hljs language-bash"><span class="hljs-comment"># Debian / Ubuntu (apt)</span>
+<span class="hljs-built_in">sudo</span> apt update &amp;&amp; <span class="hljs-built_in">sudo</span> apt upgrade
+<span class="hljs-built_in">sudo</span> apt install &lt;pkg&gt;
+<span class="hljs-built_in">sudo</span> apt remove &lt;pkg&gt;
+
+<span class="hljs-comment"># Fedora / RHEL / Rocky (dnf)</span>
+<span class="hljs-built_in">sudo</span> dnf check-update
+<span class="hljs-built_in">sudo</span> dnf install &lt;pkg&gt;
+<span class="hljs-built_in">sudo</span> dnf remove &lt;pkg&gt;
+</code></pre><hr>
+<p>© 2026 | Created with ❤️ by <a href="https://michalferber.dev/">Michal Ferber</a>, aka <a href="https://techguywithabeard.com/">TechGuyWithABeard</a></p>
+
+</main>
+</body>
+</html>

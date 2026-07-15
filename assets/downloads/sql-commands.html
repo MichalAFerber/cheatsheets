@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SQL Commands — Cheatsheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+:root{
+  --ink:#00070A;      /* Midnight Moss  */
+  --blue:#214D72;     /* Chathams Blue  */
+  --sepia:#98643F;    /* Sepia Skin     */
+  --body:#404040;     /* Cape Cod       */
+  --rule:#e1e4e8;
+  --code-bg:#eceff4;
+  --pre-bg:#f6f8fa;
+}
+*{box-sizing:border-box}
+html{font-size:16px}
+body{
+  margin:0;
+  font-family:"Inter","Roboto",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  line-height:1.7;
+  color:var(--body);
+  background:#CCCCCC;
+}
+.page{
+  max-width:820px;
+  margin:2rem auto;
+  padding:3rem 3.25rem 2rem;
+  background:#fff;
+  border-radius:6px;
+  border-bottom:3px solid var(--blue);
+  box-shadow:0 1px 4px rgba(0,0,0,.12);
+}
+h1,h2,h3,h4{line-height:1.3;margin:1.8em 0 .6em}
+h1{color:var(--ink);font-weight:700;font-size:2.1rem;margin-top:0}
+h2{color:var(--blue);font-weight:600;font-size:1.5rem;padding-bottom:.3rem;border-bottom:1px solid var(--rule)}
+h3{color:var(--ink);font-weight:600;font-size:1.2rem}
+h4{color:var(--ink);font-weight:600;font-size:1.05rem}
+p,li{color:var(--body)}
+a{color:var(--blue);text-decoration:none}
+a:hover{color:var(--sepia);text-decoration:underline}
+strong{color:var(--ink)}
+hr{border:0;border-top:1px solid var(--rule);margin:2rem 0}
+ul,ol{padding-left:1.4rem}
+li{margin:.25em 0}
+code,kbd,pre{font-family:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,"Roboto Mono",monospace}
+code{
+  font-size:.88em;color:#24292f;background:var(--code-bg);
+  padding:.12em .4em;border-radius:4px;
+}
+pre{
+  background:var(--pre-bg);
+  border:1px solid var(--rule);
+  border-radius:8px;
+  padding:1rem 1.15rem;
+  overflow:auto;
+  line-height:1.55;
+}
+pre code{font-size:.86em;color:#24292f;background:transparent;padding:0;border-radius:0}
+table{border-collapse:collapse;width:100%;margin:1.2rem 0;font-size:.95em}
+th,td{padding:.55rem .9rem;border:1px solid var(--rule);text-align:left;vertical-align:top}
+th{background:#f3f5f8;color:var(--ink);font-weight:600}
+td code{font-weight:500;color:#0d1117;background:#f3f5f8}
+blockquote{
+  margin:1.2rem 0;padding:.4rem 1.1rem;
+  border-left:4px solid var(--blue);
+  background:#f6f8fa;color:#4a5568;
+}
+img{max-width:100%}
+
+.hljs{color:#24292f;background:transparent}
+.hljs-doctag,.hljs-keyword,.hljs-meta .hljs-keyword,.hljs-template-tag,.hljs-template-variable,.hljs-type,.hljs-variable.language_{color:#cf222e}
+.hljs-title,.hljs-title.class_,.hljs-title.class_.inherited__,.hljs-title.function_{color:#8250df}
+.hljs-attr,.hljs-attribute,.hljs-literal,.hljs-meta,.hljs-number,.hljs-operator,.hljs-variable,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-id{color:#0550ae}
+.hljs-regexp,.hljs-string,.hljs-meta .hljs-string{color:#0a3069}
+.hljs-built_in,.hljs-symbol{color:#e36209}
+.hljs-comment,.hljs-code,.hljs-formula{color:#6e7781}
+.hljs-name,.hljs-quote,.hljs-selector-tag,.hljs-selector-pseudo{color:#116329}
+.hljs-subst{color:#24292f}
+.hljs-section{color:#0550ae;font-weight:700}
+.hljs-bullet{color:#735c0f}
+.hljs-emphasis{color:#24292f;font-style:italic}
+.hljs-strong{color:#24292f;font-weight:700}
+.hljs-addition{color:#116329;background:#dafbe1}
+.hljs-deletion{color:#82071e;background:#ffebe9}
+
+@media print{
+  html{font-size:12.5px}
+  body{background:#fff}
+  .page{max-width:none;margin:0;padding:0;border-radius:0;border-bottom:0;box-shadow:none}
+  h2,h3,h4{break-after:avoid}
+  pre,table,blockquote{break-inside:avoid}
+  a{color:var(--blue)}
+}
+</style>
+</head>
+<body>
+<main class="page">
+<h1>SQL Commands</h1>
+<p>Standard SQL that works across PostgreSQL, MySQL, and SQLite unless noted. Keywords are shown uppercase by convention; SQL itself is case-insensitive for keywords.</p>
+<h2>Querying</h2>
+<table>
+<thead>
+<tr>
+<th>Clause</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>SELECT col1, col2</code></td>
+<td>pick columns (<code>*</code> for all)</td>
+</tr>
+<tr>
+<td><code>FROM table</code></td>
+<td>the source table</td>
+</tr>
+<tr>
+<td><code>WHERE cond</code></td>
+<td>filter rows before grouping</td>
+</tr>
+<tr>
+<td><code>ORDER BY col DESC</code></td>
+<td>sort results (default <code>ASC</code>)</td>
+</tr>
+<tr>
+<td><code>LIMIT 10 OFFSET 20</code></td>
+<td>paginate: 10 rows, skipping 20</td>
+</tr>
+<tr>
+<td><code>SELECT DISTINCT col</code></td>
+<td>unique values only</td>
+</tr>
+<tr>
+<td><code>AS alias</code></td>
+<td>rename a column or table in the output</td>
+</tr>
+</tbody></table>
+<p><strong>A typical read query</strong></p>
+<pre><code class="hljs language-sql"><span class="hljs-keyword">SELECT</span> name, email, created_at
+<span class="hljs-keyword">FROM</span> users
+<span class="hljs-keyword">WHERE</span> active <span class="hljs-operator">=</span> <span class="hljs-literal">true</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> created_at <span class="hljs-keyword">DESC</span>
+LIMIT <span class="hljs-number">25</span>;
+</code></pre><h2>Filtering</h2>
+<table>
+<thead>
+<tr>
+<th>Operator</th>
+<th>Matches</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>col = 5</code></td>
+<td>exact equality</td>
+</tr>
+<tr>
+<td><code>col &lt;&gt; 5</code></td>
+<td>not equal (also <code>!=</code>)</td>
+</tr>
+<tr>
+<td><code>col LIKE &#39;a%&#39;</code></td>
+<td>starts with a (<code>%</code> = any, <code>_</code> = one char)</td>
+</tr>
+<tr>
+<td><code>col ILIKE &#39;a%&#39;</code></td>
+<td>case-insensitive LIKE (Postgres)</td>
+</tr>
+<tr>
+<td><code>col IN (1, 2, 3)</code></td>
+<td>matches any value in the list</td>
+</tr>
+<tr>
+<td><code>col BETWEEN 1 AND 9</code></td>
+<td>inclusive range</td>
+</tr>
+<tr>
+<td><code>col IS NULL</code></td>
+<td>test for NULL (never use <code>= NULL</code>)</td>
+</tr>
+<tr>
+<td><code>a = 1 AND b = 2</code></td>
+<td>combine conditions (<code>OR</code>, <code>NOT</code> too)</td>
+</tr>
+</tbody></table>
+<h2>Joins</h2>
+<table>
+<thead>
+<tr>
+<th>Join</th>
+<th>Returns</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>INNER JOIN</code></td>
+<td>only rows matching in both tables</td>
+</tr>
+<tr>
+<td><code>LEFT JOIN</code></td>
+<td>all left rows + matches (NULLs if none)</td>
+</tr>
+<tr>
+<td><code>RIGHT JOIN</code></td>
+<td>all right rows + matches</td>
+</tr>
+<tr>
+<td><code>FULL OUTER JOIN</code></td>
+<td>all rows from both sides</td>
+</tr>
+<tr>
+<td><code>CROSS JOIN</code></td>
+<td>every combination (Cartesian product)</td>
+</tr>
+</tbody></table>
+<p><strong>Join with an aggregate</strong></p>
+<pre><code class="hljs language-sql"><span class="hljs-keyword">SELECT</span> u.name, <span class="hljs-built_in">COUNT</span>(o.id) <span class="hljs-keyword">AS</span> orders
+<span class="hljs-keyword">FROM</span> users u
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> orders o <span class="hljs-keyword">ON</span> o.user_id <span class="hljs-operator">=</span> u.id
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> u.name
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> orders <span class="hljs-keyword">DESC</span>;
+</code></pre><h2>Aggregation</h2>
+<table>
+<thead>
+<tr>
+<th>Function / clause</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>COUNT(*)</code></td>
+<td>number of rows</td>
+</tr>
+<tr>
+<td><code>SUM(col)</code></td>
+<td>total of a numeric column</td>
+</tr>
+<tr>
+<td><code>AVG(col)</code></td>
+<td>average</td>
+</tr>
+<tr>
+<td><code>MIN(col) / MAX(col)</code></td>
+<td>smallest / largest</td>
+</tr>
+<tr>
+<td><code>GROUP BY col</code></td>
+<td>collapse rows into groups</td>
+</tr>
+<tr>
+<td><code>HAVING COUNT(*) &gt; 1</code></td>
+<td>filter groups (WHERE filters rows)</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>WHERE vs HAVING:</strong> <code>WHERE</code> filters individual rows <em>before</em> grouping; <code>HAVING</code> filters <em>after</em> grouping, so it can reference aggregates like <code>COUNT(*)</code>.</p>
+</blockquote>
+<h2>Modifying Data</h2>
+<p><strong>Insert, update, delete</strong></p>
+<pre><code class="hljs language-sql"><span class="hljs-keyword">INSERT INTO</span> users (name, email)
+<span class="hljs-keyword">VALUES</span> (<span class="hljs-string">&#x27;Ada&#x27;</span>, <span class="hljs-string">&#x27;ada@x.io&#x27;</span>);
+
+<span class="hljs-keyword">UPDATE</span> users <span class="hljs-keyword">SET</span> active <span class="hljs-operator">=</span> <span class="hljs-literal">false</span>
+<span class="hljs-keyword">WHERE</span> last_seen <span class="hljs-operator">&lt;</span> <span class="hljs-string">&#x27;2025-01-01&#x27;</span>;
+
+<span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> users <span class="hljs-keyword">WHERE</span> id <span class="hljs-operator">=</span> <span class="hljs-number">42</span>;
+</code></pre><p><strong>Upsert (Postgres / SQLite)</strong></p>
+<pre><code class="hljs language-sql"><span class="hljs-keyword">INSERT INTO</span> users (email, name)
+<span class="hljs-keyword">VALUES</span> (<span class="hljs-string">&#x27;ada@x.io&#x27;</span>, <span class="hljs-string">&#x27;Ada&#x27;</span>)
+<span class="hljs-keyword">ON</span> CONFLICT (email)
+DO <span class="hljs-keyword">UPDATE</span> <span class="hljs-keyword">SET</span> name <span class="hljs-operator">=</span> EXCLUDED.name;
+</code></pre><blockquote>
+<p><strong>Always pair UPDATE / DELETE with a WHERE.</strong> Without one, you change <em>every</em> row. Run the matching <code>SELECT</code> first, and wrap risky changes in a <code>BEGIN; ... ROLLBACK;</code> transaction while you check.</p>
+</blockquote>
+<h2>Tables &amp; Indexes</h2>
+<p><strong>Create a table</strong></p>
+<pre><code class="hljs language-sql"><span class="hljs-keyword">CREATE TABLE</span> orders (
+  id        SERIAL <span class="hljs-keyword">PRIMARY KEY</span>,
+  user_id   <span class="hljs-type">INTEGER</span> <span class="hljs-keyword">REFERENCES</span> users(id),
+  total     <span class="hljs-type">NUMERIC</span>(<span class="hljs-number">10</span>,<span class="hljs-number">2</span>) <span class="hljs-keyword">NOT NULL</span>,
+  created_at TIMESTAMPTZ <span class="hljs-keyword">DEFAULT</span> now()
+);
+</code></pre><table>
+<thead>
+<tr>
+<th>Statement</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ALTER TABLE t ADD COLUMN c TEXT</code></td>
+<td>add a column</td>
+</tr>
+<tr>
+<td><code>ALTER TABLE t DROP COLUMN c</code></td>
+<td>remove a column</td>
+</tr>
+<tr>
+<td><code>CREATE INDEX ON t (col)</code></td>
+<td>speed up lookups on col</td>
+</tr>
+<tr>
+<td><code>DROP TABLE t</code></td>
+<td>delete a table and its data</td>
+</tr>
+</tbody></table>
+<hr>
+<p>© 2026 | Created with ❤️ by <a href="https://michalferber.dev/">Michal Ferber</a>, aka <a href="https://techguywithabeard.com/">TechGuyWithABeard</a></p>
+
+</main>
+</body>
+</html>
