@@ -12,3 +12,6 @@ _site/
 .jekyll-metadata
 vendor/
 .bundle/
+
+# Node deps for the generator scripts (declared in package.json)
+node_modules/

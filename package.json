@@ -1,0 +1,15 @@
+{
+  "name": "cheatsheets",
+  "private": true,
+  "description": "Tooling for the cheatsheets site: navigation + download generation.",
+  "type": "module",
+  "scripts": {
+    "gen:nav": "node scripts/gen-nav.mjs",
+    "gen:downloads": "node scripts/gen-downloads.mjs",
+    "gen:all-downloads": "node scripts/gen-downloads.mjs --all --pdf"
+  },
+  "devDependencies": {
+    "highlight.js": "^11.9.0",
+    "marked": "^12.0.0"
+  }
+}
