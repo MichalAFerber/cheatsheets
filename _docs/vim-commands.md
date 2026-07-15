@@ -6,7 +6,7 @@ tags: [editors]
 ---
 # Vim Commands
 
-[Download PDF]({{ '/assets/downloads/vim-commands.pdf' | relative_url }}){: .pdf-link } · [Markdown source]({{ '/assets/downloads/vim-commands.md' | relative_url }}){: .pdf-link }
+{% include downloads.html slug="vim-commands" %}
 
 Vim is modal: keys mean different things depending on the mode. The magic is composition — an operator (`d`, `c`, `y`) plus a motion (`w`, `$`, `}`) acts on exactly that range. Press `Esc` to return to Normal mode any time.
 

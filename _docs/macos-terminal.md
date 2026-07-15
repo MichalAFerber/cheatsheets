@@ -6,7 +6,7 @@ tags: [shell-cli]
 ---
 # macOS Terminal
 
-[Download PDF]({{ '/assets/downloads/macos-terminal.pdf' | relative_url }}){: .pdf-link } · [Markdown source]({{ '/assets/downloads/macos-terminal.md' | relative_url }}){: .pdf-link }
+{% include downloads.html slug="macos-terminal" %}
 
 macOS ships a BSD-flavoured Unix userland, so the usual `cd`, `ls`, and `grep` all work. This sheet focuses on the commands that are unique to macOS — the ones worth knowing beyond generic Linux.
 

@@ -6,7 +6,7 @@ tags: [macos]
 ---
 # macOS Keyboard Shortcuts
 
-[Download PDF]({{ '/assets/downloads/macos-keyboard-shortcuts.pdf' | relative_url }}){: .pdf-link } · [Markdown source]({{ '/assets/downloads/macos-keyboard-shortcuts.md' | relative_url }}){: .pdf-link }
+{% include downloads.html slug="macos-keyboard-shortcuts" %}
 
 Modifier symbols: `⌘` Command, `⌥` Option, `⌃` Control, `⇧` Shift, `⌫` Delete, `↩` Return, `⎋` Esc. Most system shortcuts are `⌘`-based; the exceptions are noted.
 

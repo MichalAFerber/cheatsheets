@@ -6,7 +6,7 @@ tags: [shell-cli]
 ---
 # Linux Commands
 
-[Download PDF]({{ '/assets/downloads/linux-commands.pdf' | relative_url }}){: .pdf-link } · [Markdown source]({{ '/assets/downloads/linux-commands.md' | relative_url }}){: .pdf-link }
+{% include downloads.html slug="linux-commands" %}
 
 A working reference for the commands you actually type at a shell. Distro-agnostic where it matters, with notes on the `apt` vs `dnf` split for package management.
 

@@ -6,7 +6,7 @@ tags: [shell-cli]
 ---
 # Bash Shortcuts
 
-[Download PDF]({{ '/assets/downloads/bash-shortcuts.pdf' | relative_url }}){: .pdf-link } · [Markdown source]({{ '/assets/downloads/bash-shortcuts.md' | relative_url }}){: .pdf-link }
+{% include downloads.html slug="bash-shortcuts" %}
 
 These are Readline (Emacs-mode) key bindings — they work the same in Bash, Zsh, and most REPLs, on Linux and macOS. Learning even the top row (`Ctrl-A`, `Ctrl-R`, `Ctrl-W`) makes the shell dramatically faster.
 

@@ -6,7 +6,7 @@ tags: [languages-data]
 ---
 # Python RegEx
 
-[Download PDF]({{ '/assets/downloads/python-regex.pdf' | relative_url }}){: .pdf-link } · [Markdown source]({{ '/assets/downloads/python-regex.md' | relative_url }}){: .pdf-link }
+{% include downloads.html slug="python-regex" %}
 
 Regular expressions in Python live in the `re` module. Always write patterns as raw strings (`r"..."`) so backslashes reach the regex engine instead of being eaten by Python's string parser.
 

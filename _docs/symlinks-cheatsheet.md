@@ -6,7 +6,7 @@ tags: [shell-cli]
 ---
 # Symlinks (macOS & Ubuntu)
 
-[Download PDF]({{ '/assets/downloads/symlinks-cheatsheet.pdf' | relative_url }}){: .pdf-link } · [Markdown source]({{ '/assets/downloads/symlinks-cheatsheet.md' | relative_url }}){: .pdf-link }
+{% include downloads.html slug="symlinks-cheatsheet" %}
 
 A symbolic link is a tiny file that says "I'm actually over there." That's it. It's how you keep one canonical copy of a thing and point everything else at it — exactly the move behind keeping Obsidian as the source of truth and symlinking config out to where tools expect it (`~/.claude/CLAUDE.md`, dotfiles, whatever). The command is trivial. What gets people is link *direction*, relative-vs-absolute paths, and the fact that macOS and Linux agree on the mechanics but disagree on the edges — BSD `ln` flags, Finder aliases that masquerade as symlinks, and cloud-sync engines that flatten links into broken copies.
 
