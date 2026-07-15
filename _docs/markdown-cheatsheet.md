@@ -6,7 +6,7 @@ tags: [languages-data]
 ---
 # Markdown Cheatsheet
 
-[Download PDF]({{ '/assets/downloads/markdown-cheatsheet.pdf' | relative_url }}){: .pdf-link } · [Markdown source]({{ '/assets/downloads/markdown-cheatsheet.md' | relative_url }}){: .pdf-link }
+{% include downloads.html slug="markdown-cheatsheet" %}
 
 > GitHub Flavored Markdown Reference
 

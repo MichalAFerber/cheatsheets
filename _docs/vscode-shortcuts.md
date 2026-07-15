@@ -6,7 +6,7 @@ tags: [editors]
 ---
 # VS Code Shortcuts
 
-[Download PDF]({{ '/assets/downloads/vscode-shortcuts.pdf' | relative_url }}){: .pdf-link } · [Markdown source]({{ '/assets/downloads/vscode-shortcuts.md' | relative_url }}){: .pdf-link }
+{% include downloads.html slug="vscode-shortcuts" %}
 
 The shortcuts below use Windows/Linux bindings. On macOS, swap `Ctrl` for `⌘` (Cmd) and `Alt` for `⌥` (Option) for most of them — a handful keep `Control`, noted where they do. When in doubt, the Command Palette finds any action and shows its current binding.
 

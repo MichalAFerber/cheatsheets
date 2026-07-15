@@ -6,7 +6,7 @@ tags: [devops]
 ---
 # Git
 
-[Download PDF]({{ '/assets/downloads/git-cheatsheet.pdf' | relative_url }}){: .pdf-link } · [Markdown source]({{ '/assets/downloads/git-cheatsheet.md' | relative_url }}){: .pdf-link }
+{% include downloads.html slug="git-cheatsheet" %}
 
 You know Git. This isn't a tutorial — it's the reference for the commands you reach for under pressure and the recovery moves that turn "I just destroyed three hours of work" into "nothing happened." The headline truth: **almost nothing in Git is actually gone.** `reflog` is your time machine. Learn it and you stop fearing the tool.
 

@@ -6,7 +6,7 @@ tags: [devops]
 ---
 # Kubernetes (kubectl)
 
-[Download PDF]({{ '/assets/downloads/kubectl.pdf' | relative_url }}){: .pdf-link } · [Markdown source]({{ '/assets/downloads/kubectl.md' | relative_url }}){: .pdf-link }
+{% include downloads.html slug="kubectl" %}
 
 `kubectl` talks to a cluster's API server. Almost every command takes `-n <namespace>` (or `-A` for all namespaces) — forgetting it is the number-one reason "my pod isn't there." Set a default namespace to save the typing.
 

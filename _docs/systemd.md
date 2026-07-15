@@ -6,7 +6,7 @@ tags: [devops]
 ---
 # systemd
 
-[Download PDF]({{ '/assets/downloads/systemd.pdf' | relative_url }}){: .pdf-link } · [Markdown source]({{ '/assets/downloads/systemd.md' | relative_url }}){: .pdf-link }
+{% include downloads.html slug="systemd" %}
 
 systemd is the init system and service manager on most modern Linux distros. `systemctl` controls units (services); `journalctl` reads their logs. Most commands need `sudo` to change state.
 

@@ -6,7 +6,7 @@ tags: [languages-data]
 ---
 # SQL Commands
 
-[Download PDF]({{ '/assets/downloads/sql-commands.pdf' | relative_url }}){: .pdf-link } · [Markdown source]({{ '/assets/downloads/sql-commands.md' | relative_url }}){: .pdf-link }
+{% include downloads.html slug="sql-commands" %}
 
 Standard SQL that works across PostgreSQL, MySQL, and SQLite unless noted. Keywords are shown uppercase by convention; SQL itself is case-insensitive for keywords.
 

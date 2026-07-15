@@ -6,7 +6,7 @@ tags: [shell-cli]
 ---
 # tmux Cheat Sheet
 
-[Download PDF]({{ '/assets/downloads/tmux-cheatsheet.pdf' | relative_url }}){: .pdf-link } · [Markdown source]({{ '/assets/downloads/tmux-cheatsheet.md' | relative_url }}){: .pdf-link }
+{% include downloads.html slug="tmux-cheatsheet" %}
 
 > The **prefix** is `Ctrl+b` by default. Press the prefix, release it, then press the next key.
 

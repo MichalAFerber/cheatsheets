@@ -6,7 +6,7 @@ tags: [devops]
 ---
 # Docker
 
-[Download PDF]({{ '/assets/downloads/docker.pdf' | relative_url }}){: .pdf-link } · [Markdown source]({{ '/assets/downloads/docker.md' | relative_url }}){: .pdf-link }
+{% include downloads.html slug="docker" %}
 
 The commands you reach for daily with the Docker CLI. `docker compose` (v2, a subcommand) has replaced the old `docker-compose` binary — both are shown where they differ.
 
