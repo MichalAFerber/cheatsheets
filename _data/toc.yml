@@ -12,6 +12,8 @@
       url: docs/macos-terminal/
     - title: "Symlinks on macOS & Ubuntu"
       url: docs/symlinks-cheatsheet/
+    - title: "tar (Archives)"
+      url: docs/tar-cheatsheet/
     - title: "Terminfo & TERM over SSH"
       url: docs/terminfo-ssh/
     - title: "tmux Cheat Sheet"
