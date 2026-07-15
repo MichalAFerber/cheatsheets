@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terminfo &amp; TERM over SSH — Cheatsheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+:root{
+  --ink:#00070A;      /* Midnight Moss  */
+  --blue:#214D72;     /* Chathams Blue  */
+  --sepia:#98643F;    /* Sepia Skin     */
+  --body:#404040;     /* Cape Cod       */
+  --rule:#e1e4e8;
+  --code-bg:#eceff4;
+  --pre-bg:#f6f8fa;
+}
+*{box-sizing:border-box}
+html{font-size:16px}
+body{
+  margin:0;
+  font-family:"Inter","Roboto",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  line-height:1.7;
+  color:var(--body);
+  background:#CCCCCC;
+}
+.page{
+  max-width:820px;
+  margin:2rem auto;
+  padding:3rem 3.25rem 2rem;
+  background:#fff;
+  border-radius:6px;
+  border-bottom:3px solid var(--blue);
+  box-shadow:0 1px 4px rgba(0,0,0,.12);
+}
+h1,h2,h3,h4{line-height:1.3;margin:1.8em 0 .6em}
+h1{color:var(--ink);font-weight:700;font-size:2.1rem;margin-top:0}
+h2{color:var(--blue);font-weight:600;font-size:1.5rem;padding-bottom:.3rem;border-bottom:1px solid var(--rule)}
+h3{color:var(--ink);font-weight:600;font-size:1.2rem}
+h4{color:var(--ink);font-weight:600;font-size:1.05rem}
+p,li{color:var(--body)}
+a{color:var(--blue);text-decoration:none}
+a:hover{color:var(--sepia);text-decoration:underline}
+strong{color:var(--ink)}
+hr{border:0;border-top:1px solid var(--rule);margin:2rem 0}
+ul,ol{padding-left:1.4rem}
+li{margin:.25em 0}
+code,kbd,pre{font-family:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,"Roboto Mono",monospace}
+code{
+  font-size:.88em;color:#24292f;background:var(--code-bg);
+  padding:.12em .4em;border-radius:4px;
+}
+pre{
+  background:var(--pre-bg);
+  border:1px solid var(--rule);
+  border-radius:8px;
+  padding:1rem 1.15rem;
+  overflow:auto;
+  line-height:1.55;
+}
+pre code{font-size:.86em;color:#24292f;background:transparent;padding:0;border-radius:0}
+table{border-collapse:collapse;width:100%;margin:1.2rem 0;font-size:.95em}
+th,td{padding:.55rem .9rem;border:1px solid var(--rule);text-align:left;vertical-align:top}
+th{background:#f3f5f8;color:var(--ink);font-weight:600}
+td code{font-weight:500;color:#0d1117;background:#f3f5f8}
+blockquote{
+  margin:1.2rem 0;padding:.4rem 1.1rem;
+  border-left:4px solid var(--blue);
+  background:#f6f8fa;color:#4a5568;
+}
+img{max-width:100%}
+
+.hljs{color:#24292f;background:transparent}
+.hljs-doctag,.hljs-keyword,.hljs-meta .hljs-keyword,.hljs-template-tag,.hljs-template-variable,.hljs-type,.hljs-variable.language_{color:#cf222e}
+.hljs-title,.hljs-title.class_,.hljs-title.class_.inherited__,.hljs-title.function_{color:#8250df}
+.hljs-attr,.hljs-attribute,.hljs-literal,.hljs-meta,.hljs-number,.hljs-operator,.hljs-variable,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-id{color:#0550ae}
+.hljs-regexp,.hljs-string,.hljs-meta .hljs-string{color:#0a3069}
+.hljs-built_in,.hljs-symbol{color:#e36209}
+.hljs-comment,.hljs-code,.hljs-formula{color:#6e7781}
+.hljs-name,.hljs-quote,.hljs-selector-tag,.hljs-selector-pseudo{color:#116329}
+.hljs-subst{color:#24292f}
+.hljs-section{color:#0550ae;font-weight:700}
+.hljs-bullet{color:#735c0f}
+.hljs-emphasis{color:#24292f;font-style:italic}
+.hljs-strong{color:#24292f;font-weight:700}
+.hljs-addition{color:#116329;background:#dafbe1}
+.hljs-deletion{color:#82071e;background:#ffebe9}
+
+@media print{
+  html{font-size:12.5px}
+  body{background:#fff}
+  .page{max-width:none;margin:0;padding:0;border-radius:0;border-bottom:0;box-shadow:none}
+  h2,h3,h4{break-after:avoid}
+  pre,table,blockquote{break-inside:avoid}
+  a{color:var(--blue)}
+}
+</style>
+</head>
+<body>
+<main class="page">
+<h1 id="terminfo-amp-term-over-ssh">Terminfo &amp; TERM over SSH</h1>
+<p>Modern terminal emulators — Ghostty, Kitty, Alacritty — advertise their own terminal type (<code>TERM=xterm-ghostty</code>, <code>xterm-kitty</code>, and so on). A remote server can only drive a terminal it has a <strong>terminfo</strong> entry for, so the moment you land on a box that has never heard of <code>xterm-ghostty</code>, full-screen programs bail out with <code>Error opening terminal: xterm-ghostty</code>. The classic tell is that <code>nano</code> works but <code>sudo nano</code> doesn&#39;t — because <code>sudo</code> throws away the environment that made it work.</p>
+<h2 id="on-this-page">On This Page</h2>
+<ul>
+<li><a href="#the-symptom">The symptom</a></li>
+<li><a href="#why-it-happens">Why it happens</a></li>
+<li><a href="#quick-fix--one-off">Quick fix — one-off</a></li>
+<li><a href="#permanent-fix-a--copy-the-terminfo-to-the-server">Permanent fix A — copy the terminfo to the server</a></li>
+<li><a href="#permanent-fix-b--let-sudo-keep-your-terminfo">Permanent fix B — let sudo keep your TERMINFO</a></li>
+<li><a href="#permanent-fix-c--report-xterm-256color">Permanent fix C — report xterm-256color</a></li>
+<li><a href="#diagnose-it">Diagnose it</a></li>
+<li><a href="#which-fix-should-i-use">Which fix should I use?</a></li>
+</ul>
+<h2 id="the-symptom">The symptom</h2>
+<pre><code class="hljs language-text">$ sudo nano /etc/hosts
+Error opening terminal: xterm-ghostty.
+</code></pre>
+<table>
+<thead>
+<tr>
+<th align="left">You run</th>
+<th align="left">Result</th>
+<th align="left">Why</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>nano file</code></td>
+<td align="left">works</td>
+<td align="left">your login shell has <code>TERM</code> <strong>and</strong> a terminfo it can find</td>
+</tr>
+<tr>
+<td align="left"><code>sudo nano file</code></td>
+<td align="left"><strong>fails</strong></td>
+<td align="left"><code>sudo</code> resets the environment; <code>root</code> can&#39;t find <code>xterm-ghostty</code></td>
+</tr>
+<tr>
+<td align="left"><code>vim</code>, <code>top</code>, <code>less</code>, <code>tmux</code></td>
+<td align="left">may fail the same way</td>
+<td align="left">any curses / full-screen program needs terminfo</td>
+</tr>
+</tbody></table>
+<h2 id="why-it-happens">Why it happens</h2>
+<p>Two things line up:</p>
+<ol>
+<li><strong><code>TERM</code> names a terminal the server doesn&#39;t know.</strong> Ghostty sets <code>TERM=xterm-ghostty</code>. The server looks that name up in its <strong>terminfo</strong> database to learn how to move the cursor, clear the screen, and do colour. No entry means <code>Error opening terminal</code>.</li>
+<li><strong><code>sudo</code> starts a clean environment.</strong> Your login shell probably had a terminfo it <em>could</em> find — Ghostty&#39;s SSH integration drops one into <code>~/.terminfo</code>, and <code>TERMINFO</code> / <code>TERMINFO_DIRS</code> may point at it. <code>sudo</code> strips those variables and runs as <code>root</code>, which only searches the system database, where <code>xterm-ghostty</code> usually isn&#39;t.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="left">Whose lookup</th>
+<th align="left">Searches</th>
+<th align="left">Has <code>xterm-ghostty</code>?</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">your user</td>
+<td align="left"><code>~/.terminfo</code>, then <code>$TERMINFO</code> / <code>$TERMINFO_DIRS</code>, then the system dirs</td>
+<td align="left">often yes (injected on connect)</td>
+</tr>
+<tr>
+<td align="left"><code>root</code> via <code>sudo</code></td>
+<td align="left">system dirs only — <code>/usr/share/terminfo</code>, <code>/lib/terminfo</code>, <code>/etc/terminfo</code></td>
+<td align="left">usually <strong>no</strong></td>
+</tr>
+</tbody></table>
+<h2 id="quick-fix--one-off">Quick fix — one-off</h2>
+<p>Override <code>TERM</code> for that single command with a type every server understands:</p>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">sudo</span> TERM=xterm-256color nano /etc/hosts
+</code></pre>
+<p>Nothing to install, nothing to configure. You only lose Ghostty-specific niceties (a few colours or key sequences) for that one command.</p>
+<h2 id="permanent-fix-a--copy-the-terminfo-to-the-server">Permanent fix A — copy the terminfo to the server</h2>
+<p>Keep the real <code>xterm-ghostty</code> features by putting its terminfo where the server — and <code>root</code> — can find it. The cleanest approach exports your local entry and compiles it on the remote in one line, with no files to move by hand:</p>
+<pre><code class="hljs language-bash"><span class="hljs-comment"># run on your LOCAL machine</span>
+infocmp -x xterm-ghostty | ssh user@server -- tic -x -
+</code></pre>
+<p>Already SSH&#39;d in, with the entry sitting in your <code>~/.terminfo</code>? Copy it into a system location instead:</p>
+<pre><code class="hljs language-bash"><span class="hljs-comment"># into root&#x27;s own database</span>
+<span class="hljs-built_in">sudo</span> <span class="hljs-built_in">mkdir</span> -p /root/.terminfo/x
+<span class="hljs-built_in">sudo</span> <span class="hljs-built_in">cp</span> -a ~/.terminfo/x/xterm-ghostty /root/.terminfo/x/
+
+<span class="hljs-comment"># …or system-wide, for every user on the box</span>
+<span class="hljs-built_in">sudo</span> <span class="hljs-built_in">cp</span> -a ~/.terminfo/x/xterm-ghostty /usr/share/terminfo/x/
+</code></pre>
+<blockquote>
+<p>Distros disagree on the system path — it may be <code>/lib/terminfo/x/</code> or <code>/etc/terminfo/x/</code> instead. Run <code>infocmp -D</code> to print the directories <em>this</em> server actually searches.</p>
+</blockquote>
+<h2 id="permanent-fix-b--let-sudo-keep-your-terminfo">Permanent fix B — let sudo keep your TERMINFO</h2>
+<p>If the entry is already reachable from your user (for example in <code>~/.terminfo</code>), tell <code>sudo</code> to carry <code>TERMINFO</code> across instead of stripping it:</p>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">sudo</span> TERM=xterm-256color visudo          <span class="hljs-comment"># the override just lets visudo open</span>
+</code></pre>
+<p>Add one line — ideally as a drop-in like <code>/etc/sudoers.d/terminfo</code>, so a package upgrade can&#39;t clobber it:</p>
+<pre><code class="hljs language-text">Defaults    env_keep += &quot;TERMINFO TERMINFO_DIRS&quot;
+</code></pre>
+<p>Now <code>sudo nano</code> inherits your terminfo path and finds <code>xterm-ghostty</code>.</p>
+<h2 id="permanent-fix-c--report-xterm-256color">Permanent fix C — report xterm-256color</h2>
+<p>Tired of doing this on every new box? Tell the emulator to identify as the universal type. You give up a few bleeding-edge features in exchange for compatibility everywhere.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Terminal</th>
+<th align="left">Config file</th>
+<th align="left">Line to add</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Ghostty</td>
+<td align="left"><code>~/.config/ghostty/config</code></td>
+<td align="left"><code>term = xterm-256color</code></td>
+</tr>
+<tr>
+<td align="left">Kitty</td>
+<td align="left"><code>~/.config/kitty/kitty.conf</code></td>
+<td align="left"><code>term xterm-256color</code></td>
+</tr>
+<tr>
+<td align="left">Alacritty</td>
+<td align="left"><code>~/.config/alacritty/alacritty.toml</code></td>
+<td align="left"><code>[env]</code> &rarr; <code>TERM = &quot;xterm-256color&quot;</code></td>
+</tr>
+</tbody></table>
+<p>Restart the terminal afterwards. Kitty and Ghostty also ship SSH integration — <code>kitten ssh user@host</code>, or Ghostty&#39;s SSH feature — that copies the terminfo to the remote for you, so you keep the native <code>TERM</code> without the errors.</p>
+<h2 id="diagnose-it">Diagnose it</h2>
+<pre><code class="hljs language-bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$TERM</span>&quot;</span>                          <span class="hljs-comment"># what your terminal claims to be</span>
+infocmp <span class="hljs-string">&quot;<span class="hljs-variable">$TERM</span>&quot;</span> &gt;/dev/null &amp;&amp; <span class="hljs-built_in">echo</span> ok || <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;no terminfo for <span class="hljs-variable">$TERM</span>&quot;</span>
+infocmp -D                            <span class="hljs-comment"># the terminfo directories searched, in order</span>
+toe | grep -i ghostty                 <span class="hljs-comment"># is any ghostty entry installed?</span>
+<span class="hljs-built_in">sudo</span> sh -c <span class="hljs-string">&#x27;echo &quot;$TERM&quot;; infocmp -D&#x27;</span> <span class="hljs-comment"># what root sees (TERM is often reset first)</span>
+</code></pre>
+<table>
+<thead>
+<tr>
+<th align="left">Command</th>
+<th align="left">Tells you</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>echo $TERM</code></td>
+<td align="left">the terminal type being advertised</td>
+</tr>
+<tr>
+<td align="left"><code>infocmp $TERM</code></td>
+<td align="left">dumps the entry — errors if it&#39;s missing</td>
+</tr>
+<tr>
+<td align="left"><code>infocmp -D</code></td>
+<td align="left">the exact terminfo search path on this host</td>
+</tr>
+<tr>
+<td align="left"><code>tic -x file</code></td>
+<td align="left">compile / install a terminfo source (<code>-x</code> keeps extended caps)</td>
+</tr>
+<tr>
+<td align="left"><code>toe</code></td>
+<td align="left">list every terminfo the system knows about</td>
+</tr>
+</tbody></table>
+<h2 id="which-fix-should-i-use">Which fix should I use?</h2>
+<table>
+<thead>
+<tr>
+<th align="left">Situation</th>
+<th align="left">Best fix</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Just need to edit one file, right now</td>
+<td align="left">Quick fix: <code>sudo TERM=xterm-256color …</code></td>
+</tr>
+<tr>
+<td align="left">Your own server, want the full terminal</td>
+<td align="left">Fix A: copy the terminfo (system-wide or to <code>/root</code>)</td>
+</tr>
+<tr>
+<td align="left">Entry already in your <code>~/.terminfo</code></td>
+<td align="left">Fix B: <code>env_keep += &quot;TERMINFO&quot;</code></td>
+</tr>
+<tr>
+<td align="left">You hop across many servers</td>
+<td align="left">Fix C: report <code>xterm-256color</code>, or use <code>kitten ssh</code></td>
+</tr>
+</tbody></table>
+</main>
+</body>
+</html>
