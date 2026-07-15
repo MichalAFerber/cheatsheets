@@ -8,8 +8,9 @@ remote_theme: vsoch/mkdocs-jekyll
 
 # --- Theme appearance (light) ---
 # The theme wires its custom colour (site.color) to the "red" palette slot,
-# so themeColor/accentColor: red = "use the hex in `color` below".
-color: "#4b90d6"        # header / accent colour (soft blue)
+# so themeColor/accentColor: red = "use the hex in `color` below". This one value
+# drives the header, links, and the go-to-top button.
+color: "#214D72"        # Chathams Blue (palette primary)
 accentColor: red
 themeColor: red
 fixedNav: "true"
