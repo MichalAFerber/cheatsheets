@@ -140,7 +140,7 @@ code, kbd, pre {
 body {
   background-color: #CCCCCC;
 }
-/* Thin Chathams Blue accent pinned to the bottom edge of the viewport. Fixed,
+/* Chathams Blue accent pinned to the bottom edge of the viewport. Fixed,
    so it stays put instead of scrolling up with the page content. */
 body::after {
   content: "";
@@ -148,7 +148,7 @@ body::after {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 3px;
+  height: 8px;
   background-color: #214D72;
   z-index: 50;
   pointer-events: none;
@@ -193,3 +193,21 @@ body::after {
   color: #ffffff;
 }
 .md-typeset a.dl-pill svg { flex: none; }
+
+/* ---------- Header: tighter logo gap + wider search ---------- */
+/* Bring the "Cheatsheets" title up against the octocat, matching the small gap
+   between the git-branch icon and the repo name on the right (theme default is
+   a roomy 2rem). */
+.md-header-nav__title {
+  padding-left: 0.4rem;   /* ~15px gap, matching the git-branch↔repo-name gap */
+}
+
+/* Widen the search box to roughly the width of the white content column.
+   Desktop only (>=60em); the max-width keeps it from crowding the title/repo on
+   narrower desktops. The theme's full-screen mobile search is untouched. */
+@media only screen and (min-width: 60em) {
+  .md-search__inner {
+    width: 49rem;
+    max-width: calc(100vw - 33rem);
+  }
+}
