@@ -202,12 +202,38 @@ body::after {
   padding-left: 0.4rem;   /* ~15px gap, matching the git-branch↔repo-name gap */
 }
 
-/* Widen the search box to roughly the width of the white content column.
-   Desktop only (>=60em); the max-width keeps it from crowding the title/repo on
-   narrower desktops. The theme's full-screen mobile search is untouched. */
+/* Let the repo banner size to its content so the name shows in full — the theme
+   hard-caps it at 23rem, which ellipsised "MichalAFerber/cheatsheets" at every
+   width. Applies across the desktop range (>=60em). */
 @media only screen and (min-width: 60em) {
+  .md-header-nav__source {
+    width: auto;
+    max-width: 34rem;
+  }
+}
+
+/* Centre the search box in the header so it stays put instead of sliding across
+   the bar as the window resizes (the theme floats it against the stretchy title,
+   so its position tracked the viewport width). Scoped to the full desktop header
+   (>=76.25em, where the logo + repo banner + right ToC all show); the tablet and
+   mobile search layouts are left as the theme has them. The title and repo banner
+   stay in normal flow, so the centred search never squeezes or overlaps them. */
+@media only screen and (min-width: 76.25em) {
+  .md-header-nav { position: relative; }
+  .md-flex__cell--search {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 46rem;
+    max-width: calc(100vw - 52rem);   /* reserve room for the title + repo banner */
+  }
+  .md-search { display: block; width: 100%; }
   .md-search__inner {
-    width: 49rem;
-    max-width: calc(100vw - 33rem);
+    position: relative;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    float: none;
   }
 }
