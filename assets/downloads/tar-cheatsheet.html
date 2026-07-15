@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tar — Archives &amp; Tarballs — Cheatsheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+:root{
+  --ink:#00070A;      /* Midnight Moss  */
+  --blue:#214D72;     /* Chathams Blue  */
+  --sepia:#98643F;    /* Sepia Skin     */
+  --body:#404040;     /* Cape Cod       */
+  --rule:#e1e4e8;
+  --code-bg:#eceff4;
+  --pre-bg:#f6f8fa;
+}
+*{box-sizing:border-box}
+html{font-size:16px}
+body{
+  margin:0;
+  font-family:"Inter","Roboto",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  line-height:1.7;
+  color:var(--body);
+  background:#CCCCCC;
+}
+.page{
+  max-width:820px;
+  margin:2rem auto;
+  padding:3rem 3.25rem 2rem;
+  background:#fff;
+  border-radius:6px;
+  border-bottom:3px solid var(--blue);
+  box-shadow:0 1px 4px rgba(0,0,0,.12);
+}
+h1,h2,h3,h4{line-height:1.3;margin:1.8em 0 .6em}
+h1{color:var(--ink);font-weight:700;font-size:2.1rem;margin-top:0}
+h2{color:var(--blue);font-weight:600;font-size:1.5rem;padding-bottom:.3rem;border-bottom:1px solid var(--rule)}
+h3{color:var(--ink);font-weight:600;font-size:1.2rem}
+h4{color:var(--ink);font-weight:600;font-size:1.05rem}
+p,li{color:var(--body)}
+a{color:var(--blue);text-decoration:none}
+a:hover{color:var(--sepia);text-decoration:underline}
+strong{color:var(--ink)}
+hr{border:0;border-top:1px solid var(--rule);margin:2rem 0}
+ul,ol{padding-left:1.4rem}
+li{margin:.25em 0}
+code,kbd,pre{font-family:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,"Roboto Mono",monospace}
+code{
+  font-size:.88em;color:#24292f;background:var(--code-bg);
+  padding:.12em .4em;border-radius:4px;
+}
+pre{
+  background:var(--pre-bg);
+  border:1px solid var(--rule);
+  border-radius:8px;
+  padding:1rem 1.15rem;
+  overflow:auto;
+  line-height:1.55;
+}
+pre code{font-size:.86em;color:#24292f;background:transparent;padding:0;border-radius:0}
+table{border-collapse:collapse;width:100%;margin:1.2rem 0;font-size:.95em}
+th,td{padding:.55rem .9rem;border:1px solid var(--rule);text-align:left;vertical-align:top}
+th{background:#f3f5f8;color:var(--ink);font-weight:600}
+td code{font-weight:500;color:#0d1117;background:#f3f5f8}
+blockquote{
+  margin:1.2rem 0;padding:.4rem 1.1rem;
+  border-left:4px solid var(--blue);
+  background:#f6f8fa;color:#4a5568;
+}
+img{max-width:100%}
+
+.hljs{color:#24292f;background:transparent}
+.hljs-doctag,.hljs-keyword,.hljs-meta .hljs-keyword,.hljs-template-tag,.hljs-template-variable,.hljs-type,.hljs-variable.language_{color:#cf222e}
+.hljs-title,.hljs-title.class_,.hljs-title.class_.inherited__,.hljs-title.function_{color:#8250df}
+.hljs-attr,.hljs-attribute,.hljs-literal,.hljs-meta,.hljs-number,.hljs-operator,.hljs-variable,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-id{color:#0550ae}
+.hljs-regexp,.hljs-string,.hljs-meta .hljs-string{color:#0a3069}
+.hljs-built_in,.hljs-symbol{color:#e36209}
+.hljs-comment,.hljs-code,.hljs-formula{color:#6e7781}
+.hljs-name,.hljs-quote,.hljs-selector-tag,.hljs-selector-pseudo{color:#116329}
+.hljs-subst{color:#24292f}
+.hljs-section{color:#0550ae;font-weight:700}
+.hljs-bullet{color:#735c0f}
+.hljs-emphasis{color:#24292f;font-style:italic}
+.hljs-strong{color:#24292f;font-weight:700}
+.hljs-addition{color:#116329;background:#dafbe1}
+.hljs-deletion{color:#82071e;background:#ffebe9}
+
+@media print{
+  html{font-size:12.5px}
+  body{background:#fff}
+  .page{max-width:none;margin:0;padding:0;border-radius:0;border-bottom:0;box-shadow:none}
+  h2,h3,h4{break-after:avoid}
+  pre,table,blockquote{break-inside:avoid}
+  a{color:var(--blue)}
+}
+</style>
+</head>
+<body>
+<main class="page">
+<h1 id="tar--archives-amp-tarballs">tar — Archives &amp; Tarballs</h1>
+<p><code>tar</code> bundles many files into one archive — a <em>tarball</em> — and optionally compresses it. The command itself is simple; what trips people up is the flag soup (<code>-czf</code> vs <code>-xjf</code>), the fact that compression is a separate layer from the archive, and the classic &quot;tar bomb&quot; that sprays files across your current directory. This sheet covers the combinations you actually use, plus a few lesser-known options that make extracting safer.</p>
+<h2 id="on-this-page">On This Page</h2>
+<ul>
+<li><a href="#the-mental-model">The mental model</a></li>
+<li><a href="#create-an-archive">Create an archive</a></li>
+<li><a href="#inspect-before-extracting">Inspect before extracting</a></li>
+<li><a href="#extract">Extract</a></li>
+<li><a href="#the-flags-that-matter">The flags that matter</a></li>
+<li><a href="#compression-formats">Compression formats</a></li>
+<li><a href="#handy-recipes">Handy recipes</a></li>
+<li><a href="#gotchas">Gotchas</a></li>
+</ul>
+<h2 id="the-mental-model">The mental model</h2>
+<p><code>tar</code> = <em>tape archive</em>. It concatenates files (with their paths and permissions) into a single <code>.tar</code> stream. <strong>Compression is a separate step</strong> layered on top — <code>.tar.gz</code>, <code>.tar.xz</code>, and so on. The letters pick the job:</p>
+<pre><code class="hljs language-text">c = create      x = extract      t = list (table of contents)
+f = file …      v = verbose      z = gzip   j = bzip2   J = xz
+</code></pre>
+<p>Read <code>-czf</code> as &quot;<strong>c</strong>reate a g<strong>z</strong>ipped <strong>f</strong>ile&quot; and <code>-xf</code> as &quot;e<strong>x</strong>tract this <strong>f</strong>ile.&quot; Modern GNU tar auto-detects the compression when extracting, so you rarely need the <code>z</code>/<code>j</code>/<code>J</code> on the way out.</p>
+<h2 id="create-an-archive">Create an archive</h2>
+<pre><code class="hljs language-bash">tar -cf  archive.tar     files/        <span class="hljs-comment"># bundle only, no compression</span>
+tar -czf archive.tar.gz  files/        <span class="hljs-comment"># gzip   (.tgz)  — fast, universal</span>
+tar -cjf archive.tar.bz2 files/        <span class="hljs-comment"># bzip2  (.tbz)  — smaller, slower</span>
+tar -cJf archive.tar.xz  files/        <span class="hljs-comment"># xz     (.txz)  — smallest, slowest</span>
+tar --zstd -cf archive.tar.zst files/  <span class="hljs-comment"># zstd — fast with a great ratio (modern)</span>
+tar -caf archive.tar.gz  files/        <span class="hljs-comment"># -a: pick compression from the extension</span>
+</code></pre>
+<p>Add <code>-v</code> to watch the file names scroll by. Reach for <code>-a</code> (auto) when you&#39;d rather name the output by extension than remember which letter is which.</p>
+<h2 id="inspect-before-extracting">Inspect before extracting</h2>
+<p>Make this a habit — it&#39;s the cheapest way to avoid a mess:</p>
+<pre><code class="hljs language-bash">tar -tf  archive.tar.gz                <span class="hljs-comment"># list every member, no extraction</span>
+tar -tvf archive.tar.gz                <span class="hljs-comment"># long listing: perms, size, mtime</span>
+tar -tf  archive.tar.gz | <span class="hljs-built_in">head</span>         <span class="hljs-comment"># just the first entries</span>
+</code></pre>
+<p>If the listing shows files at the top level (not tucked under one folder), extracting will scatter them into your current directory — a &quot;tar bomb.&quot; List first, or extract with <code>--one-top-level</code> (below).</p>
+<h2 id="extract">Extract</h2>
+<pre><code class="hljs language-bash">tar -xf archive.tar.gz                       <span class="hljs-comment"># extract here (compression auto-detected)</span>
+tar -xvf archive.tar.gz                      <span class="hljs-comment"># …and print what&#x27;s being written</span>
+tar -xf archive.tar.gz -C /path/to/dir       <span class="hljs-comment"># extract INTO an existing directory</span>
+tar -xf archive.tar.gz --one-top-level       <span class="hljs-comment"># into a new folder named after the archive</span>
+tar -xf archive.tar.gz --one-top-level=out   <span class="hljs-comment"># into a new folder you name</span>
+tar -xf archive.tar.gz <span class="hljs-built_in">dir</span>/file.txt docs/    <span class="hljs-comment"># only these members (paths as shown by -t)</span>
+tar -xf archive.tar.gz --strip-components=1   <span class="hljs-comment"># drop the leading path component</span>
+</code></pre>
+<p><code>--one-top-level</code> (GNU tar) is the antidote to tar bombs: everything lands inside a single new directory no matter how the archive was built. <code>--strip-components=N</code> is handy when a tarball wraps everything in a top folder you don&#39;t want (common with GitHub source tarballs).</p>
+<h2 id="the-flags-that-matter">The flags that matter</h2>
+<table>
+<thead>
+<tr>
+<th align="left">Flag</th>
+<th align="left">Does</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>-c</code></td>
+<td align="left">create an archive</td>
+</tr>
+<tr>
+<td align="left"><code>-x</code></td>
+<td align="left">extract</td>
+</tr>
+<tr>
+<td align="left"><code>-t</code></td>
+<td align="left">list contents (table of contents)</td>
+</tr>
+<tr>
+<td align="left"><code>-f FILE</code></td>
+<td align="left">operate on <code>FILE</code> — almost always required</td>
+</tr>
+<tr>
+<td align="left"><code>-v</code></td>
+<td align="left">verbose — name each member as it&#39;s processed</td>
+</tr>
+<tr>
+<td align="left"><code>-z</code> / <code>-j</code> / <code>-J</code></td>
+<td align="left">compress with gzip / bzip2 / xz</td>
+</tr>
+<tr>
+<td align="left"><code>--zstd</code></td>
+<td align="left">compress with zstd</td>
+</tr>
+<tr>
+<td align="left"><code>-a</code></td>
+<td align="left">choose compression from the file extension (on create)</td>
+</tr>
+<tr>
+<td align="left"><code>-C DIR</code></td>
+<td align="left">change to <code>DIR</code> first (position-sensitive)</td>
+</tr>
+<tr>
+<td align="left"><code>-p</code></td>
+<td align="left">preserve permissions (the default when root)</td>
+</tr>
+<tr>
+<td align="left"><code>--exclude=PATTERN</code></td>
+<td align="left">skip matching paths (repeatable)</td>
+</tr>
+<tr>
+<td align="left"><code>--strip-components=N</code></td>
+<td align="left">remove <code>N</code> leading path parts on extract</td>
+</tr>
+<tr>
+<td align="left"><code>--one-top-level[=DIR]</code></td>
+<td align="left">extract into a single new directory</td>
+</tr>
+</tbody></table>
+<h2 id="compression-formats">Compression formats</h2>
+<table>
+<thead>
+<tr>
+<th align="left">Extension</th>
+<th align="left">Create flag</th>
+<th align="left">Trade-off</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>.tar.gz</code> / <code>.tgz</code></td>
+<td align="left"><code>-z</code></td>
+<td align="left">fast, everywhere — the safe default</td>
+</tr>
+<tr>
+<td align="left"><code>.tar.bz2</code> / <code>.tbz</code></td>
+<td align="left"><code>-j</code></td>
+<td align="left">~10–15% smaller than gzip, noticeably slower</td>
+</tr>
+<tr>
+<td align="left"><code>.tar.xz</code> / <code>.txz</code></td>
+<td align="left"><code>-J</code></td>
+<td align="left">smallest, slowest; great for release artifacts</td>
+</tr>
+<tr>
+<td align="left"><code>.tar.zst</code></td>
+<td align="left"><code>--zstd</code></td>
+<td align="left">near-gzip speed, near-xz ratio; needs a recent tar</td>
+</tr>
+<tr>
+<td align="left"><code>.tar</code></td>
+<td align="left"><em>(none)</em></td>
+<td align="left">no compression — required for <code>-r</code>/<code>-u</code> append</td>
+</tr>
+</tbody></table>
+<h2 id="handy-recipes">Handy recipes</h2>
+<pre><code class="hljs language-bash"><span class="hljs-comment"># Back up a project, skipping junk</span>
+tar -czf backup.tar.gz --exclude=<span class="hljs-string">&#x27;*.log&#x27;</span> --exclude=node_modules project/
+
+<span class="hljs-comment"># Stream one file out of an archive to stdout (no extraction)</span>
+tar -xOf archive.tar.gz path/to/file.txt
+
+<span class="hljs-comment"># Archive from an explicit list of paths</span>
+tar -czf set.tar.gz -T files.txt
+
+<span class="hljs-comment"># Add a file to an existing UNcompressed archive</span>
+tar -rf archive.tar newfile.txt
+
+<span class="hljs-comment"># Copy a directory tree preserving perms/owners (tar-over-pipe)</span>
+tar -cf - -C /src . | tar -xf - -C /dst
+
+<span class="hljs-comment"># Send a compressed backup over SSH to another host</span>
+tar -czf - project/ | ssh user@host <span class="hljs-string">&#x27;cat &gt; /backups/project.tar.gz&#x27;</span>
+</code></pre>
+<h2 id="gotchas">Gotchas</h2>
+<ul>
+<li><strong>You can&#39;t append to a compressed tarball.</strong> <code>-r</code> (append) and <code>-u</code> (update) need a plain <code>.tar</code>. Decompress, append, recompress.</li>
+<li><strong><code>-C</code> is positional.</strong> It takes effect from where it appears on the line, so <code>tar -xf a.tgz -C /dst</code> changes to <code>/dst</code> before extracting.</li>
+<li><strong><code>f</code> is almost always required.</strong> Without <code>-f FILE</code>, tar reads/writes the default device (or stdin/stdout) — usually not what you want.</li>
+<li><strong>GNU vs BSD/macOS tar differ.</strong> macOS ships <code>bsdtar</code>: no <code>--one-top-level</code>, and some long options vary. <code>brew install gnu-tar</code> gives you <code>gtar</code> if you need GNU behaviour.</li>
+<li><strong>Leading slashes are stripped on create.</strong> GNU tar stores absolute paths as relative (a safety feature); <code>-P</code> keeps them literal — rarely what you want, and risky on extract.</li>
+<li><strong><code>-z</code>/<code>-j</code>/<code>-J</code> on extract are optional but harmless.</strong> Modern tar sniffs the format; you only <em>need</em> the letter with very old tars or non-seekable streams.</li>
+</ul>
+</main>
+</body>
+</html>

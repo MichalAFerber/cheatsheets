@@ -16,6 +16,7 @@ from the sidebar, or browse below. Each sheet is also available as a **PDF** dow
 - **[Linux Commands]({{ '/docs/linux-commands/' | relative_url }})** — The everyday command-line toolkit — files, text, processes, and the network.
 - **[macOS Terminal]({{ '/docs/macos-terminal/' | relative_url }})** — The macOS-specific commands — pbcopy, open, mdfind, defaults, and Homebrew.
 - **[Symlinks on macOS & Ubuntu]({{ '/docs/symlinks-cheatsheet/' | relative_url }})** — ln -s is four characters and a lifetime of footguns. Here's the part that isn't obvious.
+- **[tar (Archives)]({{ '/docs/tar-cheatsheet/' | relative_url }})** — Create, inspect, and extract tarballs — the flag combos, compression formats, and safe-extract habits.
 - **[Terminfo & TERM over SSH]({{ '/docs/terminfo-ssh/' | relative_url }})** — Fix 'Error opening terminal: xterm-ghostty' (and kitty/alacritty) under sudo and over SSH.
 - **[tmux Cheat Sheet]({{ '/docs/tmux-cheatsheet/' | relative_url }})** — Sessions, windows, panes, and copy mode — the whole multiplexer at a glance.
 
