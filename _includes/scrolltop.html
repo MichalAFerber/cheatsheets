@@ -1,0 +1,45 @@
+<!-- Vendored from vsoch/mkdocs-jekyll: "Go to top" button.
+     Changes: glyph is a double-chevron SVG (was the 🔝 emoji); background uses the
+     palette primary via site.color; hover is Midnight Moss. -->
+<style>
+#scrolltop {
+  display: none;            /* Hidden by default */
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: {{ site.color }};   /* palette primary (Chathams Blue) */
+  color: #ffffff;
+  cursor: pointer;
+  padding: 11px 13px;
+  border-radius: 100px;
+  line-height: 0;
+  box-shadow: 0 2px 6px rgba(0, 7, 10, 0.35);
+}
+#scrolltop svg { width: 20px; height: 20px; display: block; }
+#scrolltop:hover { background-color: #00070A; }   /* Midnight Moss */
+</style>
+<button onclick="topFunction()" id="scrolltop" title="Go to top" aria-label="Go to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="17 11 12 6 7 11"></polyline><polyline points="17 18 12 13 7 18"></polyline></svg>
+</button>
+
+<script>
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    document.getElementById("scrolltop").style.display = "block";
+  } else {
+    document.getElementById("scrolltop").style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
+</script>

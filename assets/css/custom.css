@@ -14,13 +14,13 @@ input,
 }
 .md-typeset {
   line-height: 1.7;
-  color: #24292f;
+  color: #404040;   /* Cape Cod (body text) */
 }
-.md-typeset h1 { color: #0d1b2a; font-weight: 700; }
-.md-typeset h2 { color: #14213d; font-weight: 600; }
-.md-typeset h3 { color: #1b263b; font-weight: 600; }
+.md-typeset h1 { color: #00070A; font-weight: 700; }   /* Midnight Moss */
+.md-typeset h2 { color: #214D72; font-weight: 600; }   /* Chathams Blue */
+.md-typeset h3 { color: #00070A; font-weight: 600; }   /* Midnight Moss */
 .md-typeset p,
-.md-typeset li { color: #2b3138; }
+.md-typeset li { color: #404040; }                     /* Cape Cod */
 
 /* Monospace — clearer face, darker, subtle background. */
 .md-typeset code,
@@ -70,9 +70,9 @@ code, kbd, pre {
   padding-left: 0;
 }
 
-/* ---------- Source banner: match the header instead of red ---------- */
+/* ---------- Source banner: match the header ---------- */
 .md-nav__source {
-  background-color: #37639b;
+  background-color: #214D72;   /* Chathams Blue */
 }
 
 /* ---------- Copy-to-clipboard buttons ---------- */
@@ -117,3 +117,30 @@ code, kbd, pre {
 .copy-btn--inline svg { width: 12px; height: 12px; }
 .md-typeset table:not([class]) tr:hover .copy-btn--inline { opacity: 0.5; }
 .copy-btn--inline:hover { opacity: 1; }
+
+/* The theme injects its OWN clipboard button (.md-clipboard) on <pre> blocks via
+   application.js. We add our own .copy-btn everywhere (code blocks + command
+   cells), so hide the theme's to stop the two icons overlapping. */
+.md-clipboard { display: none !important; }
+
+/* ---------- Palette theming (MichalAFerber/cheatsheets) ----------
+   Midnight Moss #00070A · Sepia Skin #98643F · Chathams Blue #214D72
+   Cape Cod #404040 · Celeste #CCCCCC
+   (Header, links, and the go-to-top button take Chathams Blue from
+   site.color in _config.yml; the rules below cover the rest.) */
+
+/* Celeste page background, with a crisp white reading surface so the command
+   tables and code stay legible; a thin Chathams Blue accent on the bottom edge. */
+body {
+  background-color: #CCCCCC;
+  border-bottom: 3px solid #214D72;
+}
+.md-content {
+  background-color: #ffffff;
+  border-radius: 6px;
+}
+
+/* Links: Chathams Blue, warming to Sepia Skin on hover/focus. */
+.md-typeset a { color: #214D72; }
+.md-typeset a:hover,
+.md-typeset a:focus { color: #98643F; }
