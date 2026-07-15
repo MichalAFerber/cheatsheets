@@ -216,8 +216,6 @@ find . -xtype l                      <span class="hljs-comment"># GNU shortcut f
 <li><strong>Moving the target orphans the link.</strong> A symlink stores a <em>path</em>, not the data. Move or rename the target and the link dangles silently — nothing warns you until something tries to read it. <code>find . -xtype l</code> (Ubuntu) or the <code>find -type l ! -exec test</code> form (macOS) hunts the corpses.</li>
 <li><strong>Backups and symlinks:</strong> know whether your backup tool follows links or copies the link itself. <code>rsync -a</code> preserves symlinks as links; <code>rsync -aL</code> follows them and copies the target data. Pick deliberately or you&#39;ll back up the wrong thing.</li>
 </ul>
-<hr>
-<p>© 2026 | Created with ❤️ by <a href="https://michalferber.dev/">Michal Ferber</a>, aka <a href="https://techguywithabeard.com/">TechGuyWithABeard</a></p>
 
 </main>
 </body>

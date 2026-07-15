@@ -72,7 +72,3 @@ Vim is modal: keys mean different things depending on the mode. The magic is com
 | `:ls / :b2` | list buffers / go to buffer 2 |
 
 > **Stuck and can't quit?** Press `Esc` first, then type `:q!` and Enter to bail without saving, or `:wq` to save and leave. The `Esc` is what gets you out of Insert mode so the colon command works.
-
----
-
-© 2026 | Created with ❤️ by [Michal Ferber](https://michalferber.dev/), aka [TechGuyWithABeard](https://techguywithabeard.com/)

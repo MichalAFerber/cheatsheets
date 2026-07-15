@@ -55,7 +55,3 @@ macOS ships a BSD-flavoured Unix userland, so the usual `cd`, `ls`, and `grep` a
 | `scutil --dns` | show the resolver / DNS configuration |
 | `ping -c 4 host` | send 4 probes |
 | `arp -a` | show the local ARP cache |
-
----
-
-© 2026 | Created with ❤️ by [Michal Ferber](https://michalferber.dev/), aka [TechGuyWithABeard](https://techguywithabeard.com/)

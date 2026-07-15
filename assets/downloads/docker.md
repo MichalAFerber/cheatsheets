@@ -69,7 +69,3 @@ docker run -d --name web --rm \
 | `docker system prune -a` | containers, networks, and unused images |
 
 > **prune deletes without asking twice.** `docker volume prune` can wipe database data living in an unused volume, and `system prune -a` removes every image no running container references. Check `docker system df` first.
-
----
-
-© 2026 | Created with ❤️ by [Michal Ferber](https://michalferber.dev/), aka [TechGuyWithABeard](https://techguywithabeard.com/)

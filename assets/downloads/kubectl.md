@@ -58,7 +58,3 @@
 | `kubectl cluster-info` | control-plane endpoints |
 | `kubectl cordon <node>` | stop scheduling new pods onto a node |
 | `kubectl drain <node>` | evict pods to prep a node for maintenance |
-
----
-
-© 2026 | Created with ❤️ by [Michal Ferber](https://michalferber.dev/), aka [TechGuyWithABeard](https://techguywithabeard.com/)

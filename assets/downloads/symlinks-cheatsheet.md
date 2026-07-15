@@ -155,7 +155,3 @@ That last one — a `current` symlink flipped between versioned release director
 - **iCloud / cloud-sync flattens symlinks** into broken stubs or copies. Keep links out of synced cloud folders; let the sync engine handle the real files and symlink locally on each machine instead.
 - **Moving the target orphans the link.** A symlink stores a *path*, not the data. Move or rename the target and the link dangles silently — nothing warns you until something tries to read it. `find . -xtype l` (Ubuntu) or the `find -type l ! -exec test` form (macOS) hunts the corpses.
 - **Backups and symlinks:** know whether your backup tool follows links or copies the link itself. `rsync -a` preserves symlinks as links; `rsync -aL` follows them and copies the target data. Pick deliberately or you'll back up the wrong thing.
-
----
-
-© 2026 | Created with ❤️ by [Michal Ferber](https://michalferber.dev/), aka [TechGuyWithABeard](https://techguywithabeard.com/)

@@ -87,5 +87,3 @@ bind C-a send-prefix
 ---
 
 Source: [phoenixNAP — tmux Cheat Sheet](https://phoenixnap.com/kb/tmux-cheat-sheet)
-
-© 2026 | Created with ❤️ by [Michal Ferber](https://michalferber.dev/), aka [TechGuyWithABeard](https://techguywithabeard.com/)

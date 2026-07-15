@@ -63,7 +63,3 @@ Modifier symbols: `⌘` Command, `⌥` Option, `⌃` Control, `⇧` Shift, `⌫`
 | `Space` | Quick Look preview |
 | `⇧ ⌘ .` | show / hide hidden files |
 | `⇧ ⌘ G` | go to a folder path |
-
----
-
-© 2026 | Created with ❤️ by [Michal Ferber](https://michalferber.dev/), aka [TechGuyWithABeard](https://techguywithabeard.com/)

@@ -291,7 +291,3 @@ export SSH_AUTH_SOCK=$HOME/.ssh/proton-pass-agent.sock          # point SSH at t
 - **Proton Pass personal access tokens beat full account logins in CI.** Scope a token to only the vaults a pipeline needs, not the whole account — if the pipeline leaks, the blast radius stays small.
 - **Never put a raw secret value in an environment variable you export normally.** Use `pass://` references with `pass-cli run` so the actual value only ever exists in the child process's memory, never in your shell history.
 - **Syncthing's headless setup needs the daemon running before `cli` commands work.** `syncthing cli ...` talks to a REST API — if nothing's serving that API yet, every cli subcommand just fails to connect.
-
----
-
-© 2026 | Created with ❤️ by [Michal Ferber](https://michalferber.dev/), aka [TechGuyWithABeard](https://techguywithabeard.com/)

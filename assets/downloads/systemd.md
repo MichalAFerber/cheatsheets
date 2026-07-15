@@ -59,7 +59,3 @@ systemd is the init system and service manager on most modern Linux distros. `sy
 | `systemctl suspend` | sleep |
 | `systemctl get-default` | current boot target (e.g. graphical) |
 | `systemd-analyze blame` | what slowed down the last boot |
-
----
-
-© 2026 | Created with ❤️ by [Michal Ferber](https://michalferber.dev/), aka [TechGuyWithABeard](https://techguywithabeard.com/)

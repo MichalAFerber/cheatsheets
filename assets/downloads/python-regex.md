@@ -91,7 +91,3 @@ re.sub(r"(?P<f>\w+)\s+(?P<l>\w+)",
 ```python
 re.findall(r"^error:.*", log, re.I | re.M)
 ```
-
----
-
-© 2026 | Created with ❤️ by [Michal Ferber](https://michalferber.dev/), aka [TechGuyWithABeard](https://techguywithabeard.com/)

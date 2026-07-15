@@ -75,7 +75,3 @@ The shortcuts below use Windows/Linux bindings. On macOS, swap `Ctrl` for `⌘` 
 | `Ctrl+K Z` | Zen mode (distraction-free) |
 | `Ctrl+Shift+E` | Explorer |
 | `Ctrl+Shift+G` | Source Control |
-
----
-
-© 2026 | Created with ❤️ by [Michal Ferber](https://michalferber.dev/), aka [TechGuyWithABeard](https://techguywithabeard.com/)

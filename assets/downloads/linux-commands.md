@@ -97,7 +97,3 @@ sudo dnf check-update
 sudo dnf install <pkg>
 sudo dnf remove <pkg>
 ```
-
----
-
-© 2026 | Created with ❤️ by [Michal Ferber](https://michalferber.dev/), aka [TechGuyWithABeard](https://techguywithabeard.com/)

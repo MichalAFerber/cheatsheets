@@ -108,7 +108,3 @@ git config --global rerere.enabled true   # remember conflict resolutions
 - **Detached HEAD** isn't broken — you're just not on a branch. Commits made there get garbage-collected unless you `switch -c` to keep them. `reflog` finds them if you wandered off.
 - **`git pull` without `--rebase`** spawns merge commits that clutter history. Set `pull.rebase true` globally.
 - **Line-ending wars (CRLF/LF)** across Windows/Mac/Linux — set `core.autocrlf` consistently per platform or use a `.gitattributes` with `* text=auto`.
-
----
-
-© 2026 | Created with ❤️ by [Michal Ferber](https://michalferber.dev/), aka [TechGuyWithABeard](https://techguywithabeard.com/)

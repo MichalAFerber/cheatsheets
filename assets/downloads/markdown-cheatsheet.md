@@ -241,7 +241,3 @@ Thanks @octocat for the review.
 
 Fixes #142, see also a5c3785.
 ```
-
----
-
-© 2026 | Created with ❤️ by [Michal Ferber](https://michalferber.dev/), aka [TechGuyWithABeard](https://techguywithabeard.com/)

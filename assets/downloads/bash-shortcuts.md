@@ -55,7 +55,3 @@ sudo !!             # re-runs: sudo apt update
 | `Ctrl-Z` | suspend to the background (`fg` to resume) |
 | `Ctrl-L` | clear the screen (same as `clear`) |
 | `Ctrl-S / Ctrl-Q` | pause / resume terminal output |
-
----
-
-© 2026 | Created with ❤️ by [Michal Ferber](https://michalferber.dev/), aka [TechGuyWithABeard](https://techguywithabeard.com/)

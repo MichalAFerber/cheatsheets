@@ -114,7 +114,3 @@ CREATE TABLE orders (
 | `ALTER TABLE t DROP COLUMN c` | remove a column |
 | `CREATE INDEX ON t (col)` | speed up lookups on col |
 | `DROP TABLE t` | delete a table and its data |
-
----
-
-© 2026 | Created with ❤️ by [Michal Ferber](https://michalferber.dev/), aka [TechGuyWithABeard](https://techguywithabeard.com/)
