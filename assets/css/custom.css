@@ -16,9 +16,15 @@ input,
   line-height: 1.7;
   color: #404040;   /* Cape Cod (body text) */
 }
+/* JetBrains Mono is the house display face for headings (spec §1). */
+.md-typeset h1, .md-typeset h2, .md-typeset h3, .md-typeset h4,
+.md-header-nav__title {
+  font-family: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, "Roboto Mono", monospace;
+  letter-spacing: -0.02em;
+}
 .md-typeset h1 { color: #00070A; font-weight: 700; }   /* Midnight Moss */
-.md-typeset h2 { color: #214D72; font-weight: 600; }   /* Chathams Blue */
-.md-typeset h3 { color: #00070A; font-weight: 600; }   /* Midnight Moss */
+.md-typeset h2 { color: #214D72; font-weight: 700; }   /* Chathams Blue */
+.md-typeset h3 { color: #00070A; font-weight: 700; }   /* Midnight Moss */
 .md-typeset p,
 .md-typeset li { color: #404040; }                     /* Cape Cod */
 

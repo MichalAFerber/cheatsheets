@@ -4,10 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python RegEx — Cheatsheet</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
+/* Self-hosted fonts served from the cheatsheets site — no Google Fonts (spec §1).
+   Absolute URLs so a downloaded file still gets the real faces online; offline it
+   falls back to the system stack. */
+@font-face{font-family:"Inter";font-weight:400;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/inter-400.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:500;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/inter-500.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:600;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/inter-600.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:700;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/inter-700.woff2") format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-weight:400;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/jetbrains-mono-400.woff2") format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-weight:500;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/jetbrains-mono-500.woff2") format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-weight:700;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/jetbrains-mono-700.woff2") format("woff2")}
 :root{
   --ink:#00070A;      /* Midnight Moss  */
   --blue:#214D72;     /* Chathams Blue  */
@@ -35,11 +42,11 @@ body{
   border-bottom:3px solid var(--blue);
   box-shadow:0 1px 4px rgba(0,0,0,.12);
 }
-h1,h2,h3,h4{line-height:1.3;margin:1.8em 0 .6em}
-h1{color:var(--ink);font-weight:700;font-size:2.1rem;margin-top:0}
-h2{color:var(--blue);font-weight:600;font-size:1.5rem;padding-bottom:.3rem;border-bottom:1px solid var(--rule)}
-h3{color:var(--ink);font-weight:600;font-size:1.2rem}
-h4{color:var(--ink);font-weight:600;font-size:1.05rem}
+h1,h2,h3,h4{font-family:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;letter-spacing:-.02em;line-height:1.3;margin:1.8em 0 .6em}
+h1{color:var(--ink);font-weight:700;font-size:2.05rem;margin-top:0}
+h2{color:var(--blue);font-weight:700;font-size:1.45rem;padding-bottom:.3rem;border-bottom:1px solid var(--rule)}
+h3{color:var(--ink);font-weight:700;font-size:1.18rem}
+h4{color:var(--ink);font-weight:700;font-size:1.02rem}
 p,li{color:var(--body)}
 a{color:var(--blue);text-decoration:none}
 a:hover{color:var(--sepia);text-decoration:underline}
@@ -100,9 +107,9 @@ img{max-width:100%}
 </head>
 <body>
 <main class="page">
-<h1>Python RegEx</h1>
+<h1 id="python-regex">Python RegEx</h1>
 <p>Regular expressions in Python live in the <code>re</code> module. Always write patterns as raw strings (<code>r&quot;...&quot;</code>) so backslashes reach the regex engine instead of being eaten by Python&#39;s string parser.</p>
-<h2>The re Module</h2>
+<h2 id="the-re-module">The re Module</h2>
 <table>
 <thead>
 <tr>
@@ -150,7 +157,8 @@ m = re.search(<span class="hljs-string">r&quot;(\d{4})-(\d{2})-(\d{2})&quot;</sp
 <span class="hljs-keyword">if</span> m:
     year, month, day = m.groups()
     <span class="hljs-built_in">print</span>(m.group(<span class="hljs-number">0</span>))   <span class="hljs-comment"># the full match</span>
-</code></pre><h2>Character Classes</h2>
+</code></pre>
+<h2 id="character-classes">Character Classes</h2>
 <table>
 <thead>
 <tr>
@@ -191,7 +199,7 @@ m = re.search(<span class="hljs-string">r&quot;(\d{4})-(\d{2})-(\d{2})&quot;</sp
 <td>a range: lowercase letter or digit</td>
 </tr>
 </tbody></table>
-<h2>Anchors &amp; Quantifiers</h2>
+<h2 id="anchors-amp-quantifiers">Anchors &amp; Quantifiers</h2>
 <table>
 <thead>
 <tr>
@@ -235,7 +243,7 @@ m = re.search(<span class="hljs-string">r&quot;(\d{4})-(\d{2})-(\d{2})&quot;</sp
 <blockquote>
 <p><strong>Greedy by default.</strong> <code>.*</code> grabs as much as it can and backtracks. For <code>&lt;.*&gt;</code> on <code>&lt;a&gt;&lt;b&gt;</code> that&#39;s the whole string — use the lazy <code>&lt;.*?&gt;</code> to stop at the first <code>&gt;</code>.</p>
 </blockquote>
-<h2>Groups &amp; Lookarounds</h2>
+<h2 id="groups-amp-lookarounds">Groups &amp; Lookarounds</h2>
 <table>
 <thead>
 <tr>
@@ -282,7 +290,8 @@ re.sub(<span class="hljs-string">r&quot;(?P&lt;f&gt;\w+)\s+(?P&lt;l&gt;\w+)&quot
        <span class="hljs-string">r&quot;\g&lt;l&gt;, \g&lt;f&gt;&quot;</span>,
        <span class="hljs-string">&quot;Grace Hopper&quot;</span>)
 <span class="hljs-comment"># -&gt; &quot;Hopper, Grace&quot;</span>
-</code></pre><h2>Flags</h2>
+</code></pre>
+<h2 id="flags">Flags</h2>
 <table>
 <thead>
 <tr>

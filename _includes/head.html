@@ -9,12 +9,8 @@
   <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
   {% if site.author %}<meta name="author" content="{{ site.author }}">{% endif %}
   <meta name="theme-color" content="{{ site.themeColor }}">    
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
-  <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
-
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Self-hosted fonts (Inter, JetBrains Mono, Material Icons) — no Google Fonts (spec §1). -->
+  <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/fonts.css">
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
   <meta name="lang:clipboard.copy" content="Copy to clipboard">      
@@ -31,6 +27,5 @@
   <link rel="shortcut icon" href="{{ site.baseurl }}/assets/img/octocat.svg">
   <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/main.css">
   <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/palette.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/custom.css">
   <script src="{{ site.baseurl }}/assets/js/copy.js" defer></script>
