@@ -74,6 +74,45 @@ Handled by [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages
 it installs the gems, runs `jekyll build` (with the correct `--baseurl`), and
 deploys `_site/`. Repo setting: **Settings → Pages → Source → GitHub Actions**.
 
+## Privacy & analytics
+
+The site is privacy-first: no cookies, no ad trackers, and no personal data leaves
+your browser. Aggregate traffic counts come from a self-hosted
+[Plausible](https://plausible.io) instance — it is cookie-less, stores no personally
+identifiable information, and does no cross-site tracking. There is nothing to consent
+to and nothing to opt out of.
+
+## Credits
+
+This site is built on open-source work:
+
+| Component | Version | License | Role |
+| --- | --- | --- | --- |
+| [mkdocs-jekyll](https://github.com/vsoch/mkdocs-jekyll) | remote theme | MIT | Site theme — layout, sidebar nav, search |
+| [mkdocs-material](https://github.com/squidfunk/mkdocs-material) | bundled by the theme | MIT | CSS/JS the theme is built on |
+| [marked](https://github.com/markedjs/marked) | 12.0.2 | MIT | Markdown → HTML in the download builder |
+| [highlight.js](https://github.com/highlightjs/highlight.js) | 11.11.1 | BSD-3-Clause | Syntax highlighting in the PDF/HTML downloads |
+| [Inter](https://github.com/rsms/inter) | — | OFL-1.1 | Body typeface (self-hosted) |
+| [JetBrains Mono](https://github.com/JetBrains/JetBrainsMono) | — | OFL-1.1 | Headings + code typeface (self-hosted) |
+| [Material Icons](https://github.com/google/material-design-icons) | — | Apache-2.0 | Theme UI icons (self-hosted) |
+
+## Deviations from the TGWAB Dev Standards
+
+This is a **Class C micro-project** — a static content site on GitHub Pages — so a few
+of the standard's requirements are scoped down or waived. For transparency:
+
+- **No footer credit line.** The standard's "Created by…" footer is intentionally
+  omitted here.
+- **The GitHub octocat is kept as the brand mark** rather than a bespoke logo.
+- **No Privacy Policy or Terms pages.** The site is static and collects no personal
+  data (see [Privacy & analytics](#privacy--analytics)), so there is nothing for those
+  pages to govern.
+- **§11 (SEO/plumbing kit) and §12 (`_headers` / CSP) do not apply.** They target
+  Cloudflare-hosted apps; GitHub Pages cannot serve custom response headers, and a
+  micro-project does not need the full SEO kit.
+- **Analytics is self-hosted Plausible**, following the standard's
+  privacy-friendly-analytics guidance.
+
 ## License
 
 Released under the [MIT License](LICENSE). © Michal Ferber.
