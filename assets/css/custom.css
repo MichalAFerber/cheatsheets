@@ -6,6 +6,55 @@
    base scales all text at once — nav, content, TOC, tables, footer. */
 html { font-size: 81.25%; }   /* 1rem = 13px (theme default is 10-12px) */
 
+/* ---------- Palette tokens (light + dark) ----------
+   Light: Midnight Moss #00070A · Sepia Skin #98643F · Chathams Blue #214D72 ·
+   Cape Cod #404040 · Celeste #CCCCCC. Dark: same brand hues, brightened for
+   contrast on a near-black ground. Both modes fully designed (spec §1/§14). */
+:root {
+  --page-bg:      #CCCCCC;   /* Celeste  — page ground */
+  --surface:      #ffffff;   /* content card */
+  --nav-bg:       #ffffff;   /* left/right sidebars */
+  --nav-text:     #2f3742;   /* sidebar links */
+  --text:         #404040;   /* Cape Cod — body */
+  --heading:      #00070A;   /* Midnight Moss */
+  --accent:       #214D72;   /* Chathams Blue — h2, links, brand */
+  --link-hover:   #98643F;   /* Sepia Skin */
+  --code-bg:      #eceff4;
+  --code-text:    #24292f;
+  --td-code-bg:   #f3f5f8;
+  --td-code-text: #0d1117;
+  --rule:         #e1e4e8;
+  --th-bg:        #404040;
+  --th-text:      #ffffff;
+  --btn-bg:       #ffffff;
+  --btn-border:   #d0d7de;
+  --btn-text:     #57606a;
+  --brand:        #214D72;   /* fixed brand blue (header + bottom accent) */
+}
+:root[data-theme="dark"] {
+  --page-bg:      #0a0e13;
+  --surface:      #141b23;
+  --nav-bg:       #0f151c;
+  --nav-text:     #b9c2cd;
+  --text:         #c4ccd6;
+  --heading:      #eef3f8;
+  --accent:       #6ea8dc;   /* brightened Chathams Blue */
+  --link-hover:   #d6a06a;   /* brightened Sepia */
+  --code-bg:      #1c2530;
+  --code-text:    #d6dde5;
+  --td-code-bg:   #1c2530;
+  --td-code-text: #e6edf3;
+  --rule:         #263039;
+  --th-bg:        #2a3646;
+  --th-text:      #eef3f8;
+  --btn-bg:       #1c2530;
+  --btn-border:   #37424f;
+  --btn-text:     #b9c2cd;
+  /* --brand stays #214D72: the header keeps its identity in both modes. */
+}
+:root { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+
 /* ---------- Typography (family + legibility) ---------- */
 body,
 input,
@@ -14,7 +63,7 @@ input,
 }
 .md-typeset {
   line-height: 1.7;
-  color: #404040;   /* Cape Cod (body text) */
+  color: var(--text);
 }
 /* JetBrains Mono is the house display face for headings (spec §1). */
 .md-typeset h1, .md-typeset h2, .md-typeset h3, .md-typeset h4,
@@ -22,13 +71,13 @@ input,
   font-family: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, "Roboto Mono", monospace;
   letter-spacing: -0.02em;
 }
-.md-typeset h1 { color: #00070A; font-weight: 700; }   /* Midnight Moss */
-.md-typeset h2 { color: #214D72; font-weight: 700; }   /* Chathams Blue */
-.md-typeset h3 { color: #00070A; font-weight: 700; }   /* Midnight Moss */
+.md-typeset h1 { color: var(--heading); font-weight: 700; }
+.md-typeset h2 { color: var(--accent);  font-weight: 700; }
+.md-typeset h3 { color: var(--heading); font-weight: 700; }
 .md-typeset p,
-.md-typeset li { color: #404040; }                     /* Cape Cod */
+.md-typeset li { color: var(--text); }
 
-/* Monospace — clearer face, darker, subtle background. */
+/* Monospace — clearer face, subtle background. */
 .md-typeset code,
 .md-typeset pre,
 .md-typeset kbd,
@@ -37,33 +86,34 @@ code, kbd, pre {
 }
 .md-typeset code {
   font-size: 0.9em;
-  color: #24292f;
-  background: #eceff4;
+  color: var(--code-text);
+  background: var(--code-bg);
   padding: 0.12em 0.4em;
   border-radius: 4px;
 }
 .md-typeset pre code {
-  color: #24292f;
+  color: var(--code-text);
   background: transparent;
 }
+.md-typeset pre { background: var(--code-bg); }
 
 /* Command / reference tables. */
 .md-typeset table:not([class]) th,
 .md-typeset table:not([class]) td {
   padding: 0.6rem 0.9rem;
-  color: #24292f;
+  color: var(--text);
+  border-color: var(--rule);
 }
-/* Header row: solid Cape Cod with bold white text (was faint). */
 .md-typeset table:not([class]) th {
-  background-color: #404040;
-  color: #ffffff;
+  background-color: var(--th-bg);
+  color: var(--th-text);
   font-weight: 700;
 }
 .md-typeset table:not([class]) td:first-child { white-space: nowrap; }
 .md-typeset table:not([class]) td code {
   font-weight: 500;
-  color: #0d1117;
-  background: #f3f5f8;
+  color: var(--td-code-text);
+  background: var(--td-code-bg);
 }
 
 /* ---------- Sidebar: flat, always-expanded groups ---------- */
@@ -75,7 +125,7 @@ code, kbd, pre {
   font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #214D72;   /* Chathams Blue — prominent section labels (was faint grey) */
+  color: var(--accent);
 }
 .md-nav--primary .nav-group .md-nav__list {
   margin-left: 0;
@@ -84,7 +134,7 @@ code, kbd, pre {
 
 /* ---------- Source banner: match the header ---------- */
 .md-nav__source {
-  background-color: #214D72;   /* Chathams Blue */
+  background-color: var(--brand);
 }
 
 /* ---------- Copy-to-clipboard buttons ---------- */
@@ -97,14 +147,14 @@ code, kbd, pre {
   height: 30px;
   padding: 0;
   line-height: 0;
-  border: 1px solid #d0d7de;
+  border: 1px solid var(--btn-border);
   border-radius: 6px;
-  background: #ffffff;
-  color: #57606a;
+  background: var(--btn-bg);
+  color: var(--btn-text);
   cursor: pointer;
   transition: opacity .15s ease, color .15s ease, border-color .15s ease;
 }
-.copy-btn:hover { color: #37639b; border-color: #37639b; }
+.copy-btn:hover { color: var(--accent); border-color: var(--accent); }
 .copy-btn.copied { color: #1a7f37; border-color: #1a7f37; }
 
 /* code blocks: reveal top-right on hover */
@@ -131,23 +181,12 @@ code, kbd, pre {
 .copy-btn--inline:hover { opacity: 1; }
 
 /* The theme injects its OWN clipboard button (.md-clipboard) on <pre> blocks via
-   application.js. We add our own .copy-btn everywhere (code blocks + command
-   cells), so hide the theme's to stop the two icons overlapping. */
+   application.js. We add our own .copy-btn everywhere, so hide the theme's. */
 .md-clipboard { display: none !important; }
 
-/* ---------- Palette theming (MichalAFerber/cheatsheets) ----------
-   Midnight Moss #00070A · Sepia Skin #98643F · Chathams Blue #214D72
-   Cape Cod #404040 · Celeste #CCCCCC
-   (Header, links, and the go-to-top button take Chathams Blue from
-   site.color in _config.yml; the rules below cover the rest.) */
-
-/* Celeste page background, with a crisp white reading surface so the command
-   tables and code stay legible. */
-body {
-  background-color: #CCCCCC;
-}
-/* Chathams Blue accent pinned to the bottom edge of the viewport. Fixed,
-   so it stays put instead of scrolling up with the page content. */
+/* ---------- Surfaces ---------- */
+body { background-color: var(--page-bg); }
+/* Brand accent pinned to the bottom edge of the viewport (fixed). */
 body::after {
   content: "";
   position: fixed;
@@ -155,24 +194,57 @@ body::after {
   right: 0;
   bottom: 0;
   height: 8px;
-  background-color: #214D72;
+  background-color: var(--brand);
   z-index: 50;
   pointer-events: none;
 }
 .md-content {
-  background-color: #ffffff;
+  background-color: var(--surface);
   border-radius: 6px;
   padding-bottom: 2.5rem;   /* breathing room so content isn't at the card's edge */
 }
 
-/* Links: Chathams Blue, warming to Sepia Skin on hover/focus. */
-.md-typeset a { color: #214D72; }
-.md-typeset a:hover,
-.md-typeset a:focus { color: #98643F; }
+/* Sidebars (left nav + right ToC) follow the theme in dark mode too. */
+.md-nav { background-color: var(--nav-bg); }
+.md-nav__link { color: var(--nav-text); }
+.md-nav__link:focus, .md-nav__link:hover,
+.md-nav__link--active, .md-nav__item--active > .md-nav__link { color: var(--accent); }
+.md-nav__title { color: var(--heading); }
+/* Search results dropdown surface (shown while typing). */
+.md-search__output, .md-search-result__meta, .md-search-result .md-nav__link {
+  background-color: var(--surface);
+  color: var(--text);
+}
 
-/* ---------- Download pills (PDF / Markdown / HTML) ----------
-   Pill-shaped links with a file-type icon on the left; they fill with Chathams
-   Blue on hover and the icon inverts with them (fill: currentColor). */
+/* Links: Chathams Blue, warming to Sepia Skin on hover/focus. */
+.md-typeset a { color: var(--accent); }
+.md-typeset a:hover,
+.md-typeset a:focus { color: var(--link-hover); }
+
+/* ---------- Theme toggle (header) ---------- */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;               /* >=40px tap target (spec §14) */
+  height: 40px;
+  margin-top: 0.7rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 6px;
+  -webkit-tap-highlight-color: transparent;
+}
+.theme-toggle:hover { background: rgba(255, 255, 255, 0.14); }
+.theme-toggle svg { width: 22px; height: 22px; }
+.theme-toggle .icon-sun  { display: none; }
+.theme-toggle .icon-moon { display: block; }
+:root[data-theme="dark"] .theme-toggle .icon-sun  { display: block; }
+:root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
+/* ---------- Download pills (PDF / Markdown / HTML) ---------- */
 .md-typeset .dl-pills {
   display: flex;
   flex-wrap: wrap;
@@ -184,9 +256,9 @@ body::after {
   align-items: center;
   gap: 0.42em;
   padding: 0.34em 0.9em;
-  border: 1.5px solid #214D72;
+  border: 1.5px solid var(--accent);
   border-radius: 999px;
-  color: #214D72;
+  color: var(--accent);
   font-size: 0.82rem;
   font-weight: 600;
   line-height: 1.3;
@@ -195,22 +267,22 @@ body::after {
 }
 .md-typeset a.dl-pill:hover,
 .md-typeset a.dl-pill:focus {
-  background-color: #214D72;
-  color: #ffffff;
+  background-color: var(--accent);
+  color: var(--page-bg);
 }
 .md-typeset a.dl-pill svg { flex: none; }
 
+/* ---------- Accessibility (spec §14) ---------- */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: 0.001ms !important; animation-duration: 0.001ms !important; }
+}
+
 /* ---------- Header: tighter logo gap + wider search ---------- */
-/* Bring the "Cheatsheets" title up against the octocat, matching the small gap
-   between the git-branch icon and the repo name on the right (theme default is
-   a roomy 2rem). */
 .md-header-nav__title {
   padding-left: 0.4rem;   /* ~15px gap, matching the git-branch↔repo-name gap */
 }
 
-/* Let the repo banner size to its content so the name shows in full — the theme
-   hard-caps it at 23rem, which ellipsised "MichalAFerber/cheatsheets" at every
-   width. Applies across the desktop range (>=60em). */
 @media only screen and (min-width: 60em) {
   .md-header-nav__source {
     width: auto;
@@ -219,11 +291,7 @@ body::after {
 }
 
 /* Centre the search box in the header so it stays put instead of sliding across
-   the bar as the window resizes (the theme floats it against the stretchy title,
-   so its position tracked the viewport width). Scoped to the full desktop header
-   (>=76.25em, where the logo + repo banner + right ToC all show); the tablet and
-   mobile search layouts are left as the theme has them. The title and repo banner
-   stay in normal flow, so the centred search never squeezes or overlaps them. */
+   the bar as the window resizes. Scoped to the full desktop header (>=76.25em). */
 @media only screen and (min-width: 76.25em) {
   .md-header-nav { position: relative; }
   .md-flex__cell--search {
@@ -232,7 +300,7 @@ body::after {
     top: 0;
     transform: translateX(-50%);
     width: 46rem;
-    max-width: calc(100vw - 52rem);   /* reserve room for the title + repo banner */
+    max-width: calc(100vw - 56rem);   /* reserve room for title + toggle + repo banner */
   }
   .md-search { display: block; width: 100%; }
   .md-search__inner {
