@@ -215,6 +215,24 @@ body::after {
    wheel/trackpad scrolling stay; only the visible bar is gone. */
 .md-sidebar__scrollwrap { scrollbar-width: none; -ms-overflow-style: none; }
 .md-sidebar__scrollwrap::-webkit-scrollbar { width: 0; height: 0; display: none; }
+
+/* ---------- Sidebar cards: top-aligned with the content, roomier ----------
+   The theme drops each sidebar's nav ~2.4rem below the content card (via
+   .md-sidebar's top padding) and butts the cards against the content with almost
+   no gutter. On the full desktop layout: top-align the nav cards with the content
+   card, round them to match, inset them for a real gutter, and pad the interiors.
+   Scoped to >=76.25em so the mobile drawer (primary nav as an overlay) is left
+   alone. */
+@media only screen and (min-width: 76.25em) {
+  .md-sidebar { padding-top: 0; }
+  .md-nav--primary,
+  .md-nav--secondary {
+    border-radius: 6px;
+    padding: 0.9rem 1.1rem 1.2rem;
+  }
+  .md-sidebar--primary  .md-sidebar__scrollwrap { margin: 0 1.5rem 0 0.8rem; }
+  .md-sidebar--secondary .md-sidebar__scrollwrap { margin: 0 0.8rem 0 1.5rem; }
+}
 /* Search results dropdown surface (shown while typing). */
 .md-search__output, .md-search-result__meta, .md-search-result .md-nav__link {
   background-color: var(--surface);
