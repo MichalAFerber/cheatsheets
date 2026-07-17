@@ -233,6 +233,15 @@ body::after {
   .md-sidebar--primary  .md-sidebar__scrollwrap { margin: 0 1.5rem 0 0.8rem; }
   .md-sidebar--secondary .md-sidebar__scrollwrap { margin: 0 0.8rem 0 1.5rem; }
 }
+
+/* Hide the in-page Table-of-contents card when it has no entries, and let the
+   content reclaim the freed gutter. The ToC list (#nav-toc) is filled at runtime;
+   :has() re-evaluates live, so the card shows the moment it's populated and stays
+   hidden when it isn't (e.g. a page with no headings). */
+@media only screen and (min-width: 60em) {
+  .md-main__inner:not(:has(#nav-toc a)) .md-sidebar--secondary { display: none; }
+  .md-main__inner:not(:has(#nav-toc a)) .md-content { margin-right: 0; }
+}
 /* Search results dropdown surface (shown while typing). */
 .md-search__output, .md-search-result__meta, .md-search-result .md-nav__link {
   background-color: var(--surface);
