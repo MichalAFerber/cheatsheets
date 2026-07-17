@@ -12,7 +12,7 @@ Modifier symbols: `⌘` Command, `⌥` Option, `⌃` Control, `⇧` Shift, `⌫`
 | `⌘ F` | find in the current app |
 | `⌘ Space` | Spotlight search |
 | `⌘ Tab` | switch between apps |
-| `⌘ `` | cycle windows of the current app |
+| `` ⌘ ` `` | cycle windows of the current app |
 | `⌃ ⌘ Space` | emoji & symbol picker |
 
 ## Windows & Apps
