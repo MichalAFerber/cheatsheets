@@ -69,12 +69,27 @@ function toHtml(md, title) {
 }
 
 function findChrome() {
+  // CHROME_BIN wins; otherwise probe the usual Chromium-family paths. Any
+  // Chromium-based browser (Chrome + its channels, Chromium, Brave, Edge)
+  // renders the same PDF, so accept whichever is installed first.
   const candidates = [
     process.env.CHROME_BIN,
+    // Linux
     "/usr/bin/chromium",
     "/usr/bin/chromium-browser",
     "/usr/bin/google-chrome",
+    "/usr/bin/google-chrome-stable",
+    "/snap/bin/chromium",
+    "/usr/bin/brave-browser",
+    "/usr/bin/microsoft-edge",
+    // macOS
     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    "/Applications/Google Chrome Dev.app/Contents/MacOS/Google Chrome Dev",
+    "/Applications/Google Chrome Beta.app/Contents/MacOS/Google Chrome Beta",
+    "/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary",
+    "/Applications/Chromium.app/Contents/MacOS/Chromium",
+    "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser",
+    "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge",
   ].filter(Boolean);
   return candidates.find((p) => existsSync(p));
 }
