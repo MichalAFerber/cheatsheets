@@ -4,10 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Git — Cheatsheet</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
+/* Self-hosted fonts served from the cheatsheets site — no Google Fonts (spec §1).
+   Absolute URLs so a downloaded file still gets the real faces online; offline it
+   falls back to the system stack. */
+@font-face{font-family:"Inter";font-weight:400;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/inter-400.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:500;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/inter-500.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:600;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/inter-600.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:700;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/inter-700.woff2") format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-weight:400;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/jetbrains-mono-400.woff2") format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-weight:500;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/jetbrains-mono-500.woff2") format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-weight:700;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/jetbrains-mono-700.woff2") format("woff2")}
 :root{
   --ink:#00070A;      /* Midnight Moss  */
   --blue:#214D72;     /* Chathams Blue  */
@@ -35,11 +42,11 @@ body{
   border-bottom:3px solid var(--blue);
   box-shadow:0 1px 4px rgba(0,0,0,.12);
 }
-h1,h2,h3,h4{line-height:1.3;margin:1.8em 0 .6em}
-h1{color:var(--ink);font-weight:700;font-size:2.1rem;margin-top:0}
-h2{color:var(--blue);font-weight:600;font-size:1.5rem;padding-bottom:.3rem;border-bottom:1px solid var(--rule)}
-h3{color:var(--ink);font-weight:600;font-size:1.2rem}
-h4{color:var(--ink);font-weight:600;font-size:1.05rem}
+h1,h2,h3,h4{font-family:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;letter-spacing:-.02em;line-height:1.3;margin:1.8em 0 .6em}
+h1{color:var(--ink);font-weight:700;font-size:2.05rem;margin-top:0}
+h2{color:var(--blue);font-weight:700;font-size:1.45rem;padding-bottom:.3rem;border-bottom:1px solid var(--rule)}
+h3{color:var(--ink);font-weight:700;font-size:1.18rem}
+h4{color:var(--ink);font-weight:700;font-size:1.02rem}
 p,li{color:var(--body)}
 a{color:var(--blue);text-decoration:none}
 a:hover{color:var(--sepia);text-decoration:underline}
@@ -100,9 +107,9 @@ img{max-width:100%}
 </head>
 <body>
 <main class="page">
-<h1>Git</h1>
+<h1 id="git">Git</h1>
 <p>You know Git. This isn&#39;t a tutorial — it&#39;s the reference for the commands you reach for under pressure and the recovery moves that turn &quot;I just destroyed three hours of work&quot; into &quot;nothing happened.&quot; The headline truth: <strong>almost nothing in Git is actually gone.</strong> <code>reflog</code> is your time machine. Learn it and you stop fearing the tool.</p>
-<h2>Daily driver</h2>
+<h2 id="daily-driver">Daily driver</h2>
 <pre><code class="hljs language-bash">git status -sb                    <span class="hljs-comment"># short, with branch info</span>
 git add -p                        <span class="hljs-comment"># stage hunks interactively — review what you commit</span>
 git commit -m <span class="hljs-string">&quot;msg&quot;</span>
@@ -112,14 +119,16 @@ git pull --rebase                 <span class="hljs-comment"># avoid the noise m
 git push
 git push -u origin feature/x      <span class="hljs-comment"># set upstream first push</span>
 git <span class="hljs-built_in">log</span> --oneline --graph --all --decorate    <span class="hljs-comment"># the only log you need</span>
-</code></pre><h2>Branching</h2>
+</code></pre>
+<h2 id="branching">Branching</h2>
 <pre><code class="hljs language-bash">git switch -c feature/x           <span class="hljs-comment"># create + switch (modern; replaces checkout -b)</span>
 git switch main                   <span class="hljs-comment"># switch (replaces checkout &lt;branch&gt;)</span>
 git branch -d feature/x           <span class="hljs-comment"># delete merged branch</span>
 git branch -D feature/x           <span class="hljs-comment"># force-delete unmerged</span>
 git branch -vv                    <span class="hljs-comment"># show tracking + last commit per branch</span>
 git fetch -p                      <span class="hljs-comment"># fetch + prune dead remote branches</span>
-</code></pre><h2>Stash</h2>
+</code></pre>
+<h2 id="stash">Stash</h2>
 <pre><code class="hljs language-bash">git stash push -m <span class="hljs-string">&quot;wip auth&quot;</span>      <span class="hljs-comment"># named stash</span>
 git stash list
 git stash show -p stash@{0}       <span class="hljs-comment"># diff a stash</span>
@@ -127,14 +136,16 @@ git stash pop                     <span class="hljs-comment"># apply + drop</spa
 git stash apply stash@{1}         <span class="hljs-comment"># apply, keep in list</span>
 git stash drop stash@{0}
 git stash -u                      <span class="hljs-comment"># include untracked files</span>
-</code></pre><h2>Rebase &amp; history surgery</h2>
+</code></pre>
+<h2 id="rebase-amp-history-surgery">Rebase &amp; history surgery</h2>
 <pre><code class="hljs language-bash">git rebase main                   <span class="hljs-comment"># replay current branch onto main</span>
 git rebase -i HEAD~5              <span class="hljs-comment"># squash/reword/reorder last 5 commits</span>
 git rebase --abort                <span class="hljs-comment"># bail out of a bad rebase</span>
 git rebase --<span class="hljs-built_in">continue</span>             <span class="hljs-comment"># after resolving conflicts</span>
 git cherry-pick &lt;sha&gt;             <span class="hljs-comment"># grab one commit onto current branch</span>
 git revert &lt;sha&gt;                  <span class="hljs-comment"># safe undo: new commit that reverses &lt;sha&gt;</span>
-</code></pre><h2>The &quot;oh no&quot; recovery section</h2>
+</code></pre>
+<h2 id="the-quotoh-noquot-recovery-section">The &quot;oh no&quot; recovery section</h2>
 <pre><code class="hljs language-bash">git reflog                        <span class="hljs-comment"># EVERY HEAD movement — your undo history</span>
 git reset --hard HEAD@{2}         <span class="hljs-comment"># jump back to where HEAD was 2 moves ago</span>
 
@@ -160,20 +171,23 @@ git reset --hard origin/main      <span class="hljs-comment"># reset main back t
 
 <span class="hljs-comment"># threw away uncommitted work with reset --hard? if it was ever staged:</span>
 git fsck --lost-found             <span class="hljs-comment"># dangling blobs live here</span>
-</code></pre><h2>Undo a pushed commit (when you must)</h2>
+</code></pre>
+<h2 id="undo-a-pushed-commit-when-you-must">Undo a pushed commit (when you must)</h2>
 <pre><code class="hljs language-bash"><span class="hljs-comment"># safe (public branch): revert creates a new undo commit</span>
 git revert &lt;sha&gt; &amp;&amp; git push
 
 <span class="hljs-comment"># rewriting pushed history (only on branches you own, never shared main)</span>
 git reset --hard &lt;good-sha&gt;
 git push --force-with-lease       <span class="hljs-comment"># NOT --force — lease checks nobody else pushed</span>
-</code></pre><h2>Useful config / aliases</h2>
+</code></pre>
+<h2 id="useful-config--aliases">Useful config / aliases</h2>
 <pre><code class="hljs language-bash">git config --global pull.rebase <span class="hljs-literal">true</span>
 git config --global init.defaultBranch main
 git config --global alias.lg <span class="hljs-string">&quot;log --oneline --graph --all --decorate&quot;</span>
 git config --global alias.st <span class="hljs-string">&quot;status -sb&quot;</span>
 git config --global rerere.enabled <span class="hljs-literal">true</span>   <span class="hljs-comment"># remember conflict resolutions</span>
-</code></pre><h2>Things that bite you</h2>
+</code></pre>
+<h2 id="things-that-bite-you">Things that bite you</h2>
 <ul>
 <li><strong><code>--force</code> vs <code>--force-with-lease</code>:</strong> always use the lease version. Plain <code>--force</code> will happily overwrite a teammate&#39;s pushed work without warning.</li>
 <li><strong><code>reset --hard</code> discards uncommitted changes permanently</strong> — there&#39;s no reflog for unstaged working-dir edits. Stash first if unsure.</li>
@@ -181,7 +195,6 @@ git config --global rerere.enabled <span class="hljs-literal">true</span>   <spa
 <li><strong><code>git pull</code> without <code>--rebase</code></strong> spawns merge commits that clutter history. Set <code>pull.rebase true</code> globally.</li>
 <li><strong>Line-ending wars (CRLF/LF)</strong> across Windows/Mac/Linux — set <code>core.autocrlf</code> consistently per platform or use a <code>.gitattributes</code> with <code>* text=auto</code>.</li>
 </ul>
-
 </main>
 </body>
 </html>

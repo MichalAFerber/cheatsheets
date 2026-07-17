@@ -4,10 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Markdown Cheatsheet — Cheatsheet</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
+/* Self-hosted fonts served from the cheatsheets site — no Google Fonts (spec §1).
+   Absolute URLs so a downloaded file still gets the real faces online; offline it
+   falls back to the system stack. */
+@font-face{font-family:"Inter";font-weight:400;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/inter-400.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:500;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/inter-500.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:600;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/inter-600.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:700;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/inter-700.woff2") format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-weight:400;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/jetbrains-mono-400.woff2") format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-weight:500;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/jetbrains-mono-500.woff2") format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-weight:700;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/jetbrains-mono-700.woff2") format("woff2")}
 :root{
   --ink:#00070A;      /* Midnight Moss  */
   --blue:#214D72;     /* Chathams Blue  */
@@ -35,11 +42,11 @@ body{
   border-bottom:3px solid var(--blue);
   box-shadow:0 1px 4px rgba(0,0,0,.12);
 }
-h1,h2,h3,h4{line-height:1.3;margin:1.8em 0 .6em}
-h1{color:var(--ink);font-weight:700;font-size:2.1rem;margin-top:0}
-h2{color:var(--blue);font-weight:600;font-size:1.5rem;padding-bottom:.3rem;border-bottom:1px solid var(--rule)}
-h3{color:var(--ink);font-weight:600;font-size:1.2rem}
-h4{color:var(--ink);font-weight:600;font-size:1.05rem}
+h1,h2,h3,h4{font-family:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;letter-spacing:-.02em;line-height:1.3;margin:1.8em 0 .6em}
+h1{color:var(--ink);font-weight:700;font-size:2.05rem;margin-top:0}
+h2{color:var(--blue);font-weight:700;font-size:1.45rem;padding-bottom:.3rem;border-bottom:1px solid var(--rule)}
+h3{color:var(--ink);font-weight:700;font-size:1.18rem}
+h4{color:var(--ink);font-weight:700;font-size:1.02rem}
 p,li{color:var(--body)}
 a{color:var(--blue);text-decoration:none}
 a:hover{color:var(--sepia);text-decoration:underline}
@@ -100,7 +107,7 @@ img{max-width:100%}
 </head>
 <body>
 <main class="page">
-<h1>Markdown Cheatsheet</h1>
+<h1 id="markdown-cheatsheet">Markdown Cheatsheet</h1>
 <blockquote>
 <p>GitHub Flavored Markdown Reference</p>
 </blockquote>
@@ -112,7 +119,7 @@ img{max-width:100%}
 <li><strong>GitHub.com</strong> — web app rendering only, not in any Markdown spec</li>
 </ul>
 <hr>
-<h2>Headings — CommonMark</h2>
+<h2 id="headings--commonmark">Headings — CommonMark</h2>
 <p>ATX-style headings use 1–6 <code>#</code> characters followed by a space. A closing run of
 <code>#</code> is optional and ignored.</p>
 <pre><code class="hljs language-markdown"><span class="hljs-section"># Heading 1</span>
@@ -121,14 +128,16 @@ img{max-width:100%}
 <span class="hljs-section">#### Heading 4</span>
 <span class="hljs-section">##### Heading 5</span>
 <span class="hljs-section">###### Heading 6</span>
-</code></pre><h2>Emphasis — CommonMark (+ GFM)</h2>
+</code></pre>
+<h2 id="emphasis--commonmark--gfm">Emphasis — CommonMark (+ GFM)</h2>
 <p>Bold and italic are core CommonMark. Strikethrough (<code>~~text~~</code>) is a GFM-only
 addition.</p>
 <pre><code class="hljs language-markdown"><span class="hljs-emphasis">*italic*</span> or <span class="hljs-emphasis">_italic_</span>
 <span class="hljs-strong">**bold**</span> or <span class="hljs-strong">__bold__</span>
 <span class="hljs-strong">**<span class="hljs-emphasis">*bold italic*</span>**</span>
 ~~strikethrough~~
-</code></pre><h2>Paragraphs &amp; Line Breaks — CommonMark</h2>
+</code></pre>
+<h2 id="paragraphs-amp-line-breaks--commonmark">Paragraphs &amp; Line Breaks — CommonMark</h2>
 <p>A blank line starts a new paragraph. For a hard line break inside one paragraph,
 end the line with two or more trailing spaces, or a trailing backslash <code>\</code>.</p>
 <pre><code class="hljs language-markdown">First paragraph.
@@ -138,9 +147,10 @@ Second paragraph, line two
 
 Line one\
 Line two (backslash break)
-</code></pre><p>The <code>␣␣</code> above stands in for two literal trailing spaces — invisible in most
+</code></pre>
+<p>The <code>␣␣</code> above stands in for two literal trailing spaces — invisible in most
 editors, which is exactly why the backslash form is usually the safer choice.</p>
-<h2>Blockquotes — CommonMark</h2>
+<h2 id="blockquotes--commonmark">Blockquotes — CommonMark</h2>
 <p>Prefix a line with <code>&gt;</code>. Quotes can be nested and can contain other block
 elements like lists or code.</p>
 <pre><code class="hljs language-markdown"><span class="hljs-quote">&gt; Single level quote.</span>
@@ -148,7 +158,8 @@ elements like lists or code.</p>
 &gt; &gt; Nested quote inside it.</span>
 <span class="hljs-quote">&gt;
 &gt; Back to the first level, with a <span class="hljs-strong">**bold**</span> word.</span>
-</code></pre><h2>Lists — CommonMark</h2>
+</code></pre>
+<h2 id="lists--commonmark">Lists — CommonMark</h2>
 <p>Unordered lists accept <code>-</code>, <code>*</code>, or <code>+</code> as the bullet marker — pick one and stay
 consistent. Ordered lists use any number followed by <code>.</code>; the actual numbers
 after the first don&#39;t matter for rendering.</p>
@@ -161,7 +172,8 @@ after the first don&#39;t matter for rendering.</p>
 <span class="hljs-bullet">2.</span> Second step
 <span class="hljs-bullet">   1.</span> Nested step
 <span class="hljs-bullet">3.</span> Third step
-</code></pre><h2>Task Lists — GFM</h2>
+</code></pre>
+<h2 id="task-lists--gfm">Task Lists — GFM</h2>
 <p>A list item written as <code>[ ]</code> or <code>[x]</code> renders as an interactive-looking
 checkbox. On GitHub.com, checkboxes in issues and PRs are actually clickable.</p>
 <pre><code class="hljs language-markdown"><span class="hljs-bullet">-</span> [x] Write cheatsheet
@@ -170,7 +182,8 @@ checkbox. On GitHub.com, checkboxes in issues and PRs are actually clickable.</p
 <span class="hljs-bullet">-</span> [ ] Sub-tasks:
 <span class="hljs-bullet">  -</span> [x] Draft
 <span class="hljs-bullet">  -</span> [ ] Review
-</code></pre><h2>Code — CommonMark</h2>
+</code></pre>
+<h2 id="code--commonmark">Code — CommonMark</h2>
 <p>Inline code uses single backticks. Fenced code blocks use triple backticks and
 accept an optional language hint that GitHub.com uses for syntax highlighting.</p>
 <pre><code class="hljs language-markdown">Run <span class="hljs-code">`npm install`</span> first.
@@ -179,7 +192,8 @@ accept an optional language hint that GitHub.com uses for syntax highlighting.</
 echo &quot;hello world&quot;
 git status
 ```</span>
-</code></pre><h2>Links — CommonMark</h2>
+</code></pre>
+<h2 id="links--commonmark">Links — CommonMark</h2>
 <p>Inline links carry the URL right in the text. Reference-style links keep prose
 clean by parking the URL in a definition elsewhere in the document.</p>
 <pre><code class="hljs language-markdown">[<span class="hljs-string">Anthropic</span>](<span class="hljs-link">https://anthropic.com &quot;Anthropic homepage&quot;</span>)
@@ -187,7 +201,8 @@ clean by parking the URL in a definition elsewhere in the document.</p>
 Check out [<span class="hljs-string">TGWAB</span>][<span class="hljs-symbol">tgwab</span>] for MSP tips.
 
 [<span class="hljs-symbol">tgwab</span>]: <span class="hljs-link">https://techguywithabeard.com &quot;TechGuyWithABeard&quot;</span>
-</code></pre><h2>Autolinks — CommonMark (+ GFM extended)</h2>
+</code></pre>
+<h2 id="autolinks--commonmark--gfm-extended">Autolinks — CommonMark (+ GFM extended)</h2>
 <p>CommonMark auto-links anything wrapped in angle brackets. GFM&#39;s <em>extended
 autolinks</em> go further and link bare URLs, <code>www.</code> domains, and email addresses
 with no brackets at all.</p>
@@ -196,20 +211,23 @@ with no brackets at all.</p>
 
 Just paste it bare: https://github.com
 Or a bare domain: www.michalferber.dev
-</code></pre><h2>Images — CommonMark</h2>
+</code></pre>
+<h2 id="images--commonmark">Images — CommonMark</h2>
 <p>Same syntax as links with a leading <code>!</code>. Wrap an image in a link to make it
 clickable.</p>
 <pre><code class="hljs language-markdown">![<span class="hljs-string">Server rack diagram</span>](<span class="hljs-link">./rack.png &quot;Rack layout v2&quot;</span>)
 
 [<span class="hljs-string">![Company logo</span>](<span class="hljs-link">./logo.png</span>)](<span class="hljs-link">https://techguywithabeard.com</span>)
-</code></pre><h2>Tables — GFM</h2>
+</code></pre>
+<h2 id="tables--gfm">Tables — GFM</h2>
 <p>Pipe-delimited rows with a required header separator. Colons in the separator
 control column alignment.</p>
 <pre><code class="hljs language-markdown">| Service    | Uptime  | Cost   |
 | :--------- | :-----: | -----: |
 | DNS        | 99.99%  | $150   |
 | Migration  | 99.9%   | $400   |
-</code></pre><table>
+</code></pre>
+<table>
 <thead>
 <tr>
 <th align="left">Service</th>
@@ -228,7 +246,7 @@ control column alignment.</p>
 <td align="right">$400</td>
 </tr>
 </tbody></table>
-<h2>Horizontal Rules — CommonMark</h2>
+<h2 id="horizontal-rules--commonmark">Horizontal Rules — CommonMark</h2>
 <p>Three or more <code>-</code>, <code>*</code>, or <code>_</code> characters on their own line, all producing an
 identical <code>&lt;hr&gt;</code>.</p>
 <pre><code class="hljs language-markdown">Above the line.
@@ -238,20 +256,23 @@ identical <code>&lt;hr&gt;</code>.</p>
 ___
 
 Below the line.</span>
-</code></pre><h2>Escaping — CommonMark</h2>
+</code></pre>
+<h2 id="escaping--commonmark">Escaping — CommonMark</h2>
 <p>A backslash before a punctuation character forces it to render literally instead
 of being parsed as syntax.</p>
 <pre><code class="hljs language-markdown">\<span class="hljs-emphasis">*not italic\*</span>
 \# not a heading
 1975\. not a list item
-</code></pre><p>Escapable characters: <code>\</code> <code>`</code> <code>*</code> <code>_</code> <code>{ }</code> <code>[ ]</code> <code>( )</code> <code>#</code> <code>+</code> <code>-</code> <code>.</code> <code>!</code> <code>|</code></p>
-<h2>Footnotes — GFM</h2>
+</code></pre>
+<p>Escapable characters: <code>\</code> <code>`</code> <code>*</code> <code>_</code> <code>{ }</code> <code>[ ]</code> <code>( )</code> <code>#</code> <code>+</code> <code>-</code> <code>.</code> <code>!</code> <code>|</code></p>
+<h2 id="footnotes--gfm">Footnotes — GFM</h2>
 <p>A caret-bracket marker in the text pairs with a definition anywhere else in the
 document; GitHub.com renders it as a jump-linked superscript.</p>
 <pre><code class="hljs language-markdown">DNS propagation can take up to 48 hours.[^1]
 
 [<span class="hljs-symbol">^1</span>]: <span class="hljs-link">In practice it&#x27;s usually under an hour with low TTLs.</span>
-</code></pre><h2>Raw HTML — CommonMark (+ GFM sanitization)</h2>
+</code></pre>
+<h2 id="raw-html--commonmark--gfm-sanitization">Raw HTML — CommonMark (+ GFM sanitization)</h2>
 <p>CommonMark passes inline HTML straight through. GFM&#39;s <em>disallowed raw HTML</em>
 extension then escapes a specific list of tags for safety, even though the base
 parser would otherwise render them.</p>
@@ -263,9 +284,10 @@ Hidden content revealed on click.
 <span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">details</span>&gt;</span></span>
 
 &lt;!-- this comment is invisible --&gt;
-</code></pre><p>Tags GFM always escapes: <code>&lt;title&gt;</code> <code>&lt;textarea&gt;</code> <code>&lt;style&gt;</code> <code>&lt;xmp&gt;</code> <code>&lt;iframe&gt;</code>
+</code></pre>
+<p>Tags GFM always escapes: <code>&lt;title&gt;</code> <code>&lt;textarea&gt;</code> <code>&lt;style&gt;</code> <code>&lt;xmp&gt;</code> <code>&lt;iframe&gt;</code>
 <code>&lt;noembed&gt;</code> <code>&lt;noframes&gt;</code> <code>&lt;script&gt;</code> <code>&lt;plaintext&gt;</code></p>
-<h2>GitHub.com Extras — GitHub.com</h2>
+<h2 id="githubcom-extras--githubcom">GitHub.com Extras — GitHub.com</h2>
 <p>Web-app rendering behavior, not part of the GFM parsing spec. These only
 activate inside GitHub.com, in a repository context — a static Markdown renderer
 built against the GFM spec won&#39;t reproduce them.</p>

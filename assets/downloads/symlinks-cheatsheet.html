@@ -3,11 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Symlinks (macOS & Ubuntu) — Cheatsheet</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<title>Symlinks (macOS &amp; Ubuntu) — Cheatsheet</title>
 <style>
+/* Self-hosted fonts served from the cheatsheets site — no Google Fonts (spec §1).
+   Absolute URLs so a downloaded file still gets the real faces online; offline it
+   falls back to the system stack. */
+@font-face{font-family:"Inter";font-weight:400;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/inter-400.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:500;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/inter-500.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:600;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/inter-600.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:700;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/inter-700.woff2") format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-weight:400;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/jetbrains-mono-400.woff2") format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-weight:500;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/jetbrains-mono-500.woff2") format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-weight:700;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/jetbrains-mono-700.woff2") format("woff2")}
 :root{
   --ink:#00070A;      /* Midnight Moss  */
   --blue:#214D72;     /* Chathams Blue  */
@@ -35,11 +42,11 @@ body{
   border-bottom:3px solid var(--blue);
   box-shadow:0 1px 4px rgba(0,0,0,.12);
 }
-h1,h2,h3,h4{line-height:1.3;margin:1.8em 0 .6em}
-h1{color:var(--ink);font-weight:700;font-size:2.1rem;margin-top:0}
-h2{color:var(--blue);font-weight:600;font-size:1.5rem;padding-bottom:.3rem;border-bottom:1px solid var(--rule)}
-h3{color:var(--ink);font-weight:600;font-size:1.2rem}
-h4{color:var(--ink);font-weight:600;font-size:1.05rem}
+h1,h2,h3,h4{font-family:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;letter-spacing:-.02em;line-height:1.3;margin:1.8em 0 .6em}
+h1{color:var(--ink);font-weight:700;font-size:2.05rem;margin-top:0}
+h2{color:var(--blue);font-weight:700;font-size:1.45rem;padding-bottom:.3rem;border-bottom:1px solid var(--rule)}
+h3{color:var(--ink);font-weight:700;font-size:1.18rem}
+h4{color:var(--ink);font-weight:700;font-size:1.02rem}
 p,li{color:var(--body)}
 a{color:var(--blue);text-decoration:none}
 a:hover{color:var(--sepia);text-decoration:underline}
@@ -100,9 +107,9 @@ img{max-width:100%}
 </head>
 <body>
 <main class="page">
-<h1>Symlinks (macOS &amp; Ubuntu)</h1>
+<h1 id="symlinks-macos-amp-ubuntu">Symlinks (macOS &amp; Ubuntu)</h1>
 <p>A symbolic link is a tiny file that says &quot;I&#39;m actually over there.&quot; That&#39;s it. It&#39;s how you keep one canonical copy of a thing and point everything else at it — exactly the move behind keeping Obsidian as the source of truth and symlinking config out to where tools expect it (<code>~/.claude/CLAUDE.md</code>, dotfiles, whatever). The command is trivial. What gets people is link <em>direction</em>, relative-vs-absolute paths, and the fact that macOS and Linux agree on the mechanics but disagree on the edges — BSD <code>ln</code> flags, Finder aliases that masquerade as symlinks, and cloud-sync engines that flatten links into broken copies.</p>
-<h2>On This Page</h2>
+<h2 id="on-this-page">On This Page</h2>
 <ul>
 <li><a href="#the-one-command-and-the-order-that-trips-everyone">The One Command, and the Order That Trips Everyone</a></li>
 <li><a href="#the-flags-that-actually-matter">The Flags That Actually Matter</a></li>
@@ -115,38 +122,43 @@ img{max-width:100%}
 <li><a href="#common-real-world-patterns">Common Real-World Patterns</a></li>
 <li><a href="#things-that-bite-you">Things That Bite You</a></li>
 </ul>
-<h2>The one command, and the order that trips everyone</h2>
+<h2 id="the-one-command-and-the-order-that-trips-everyone">The one command, and the order that trips everyone</h2>
 <pre><code class="hljs language-bash"><span class="hljs-built_in">ln</span> -s &lt;target&gt; &lt;link_name&gt;
 <span class="hljs-comment">#       ^source   ^the new thing you&#x27;re creating</span>
-</code></pre><p>Read it as: &quot;make <code>link_name</code> point <em>to</em> <code>target</code>.&quot; Target first, link second. Everyone reverses this once and creates a link with the wrong name pointing at nothing. Mnemonic: same argument order as <code>cp</code> — source, then destination.</p>
+</code></pre>
+<p>Read it as: &quot;make <code>link_name</code> point <em>to</em> <code>target</code>.&quot; Target first, link second. Everyone reverses this once and creates a link with the wrong name pointing at nothing. Mnemonic: same argument order as <code>cp</code> — source, then destination.</p>
 <pre><code class="hljs language-bash"><span class="hljs-built_in">ln</span> -s /opt/app/config.yml ~/.config/app/config.yml   <span class="hljs-comment"># link at ~/.config/... -&gt; /opt/app/...</span>
-</code></pre><h2>The flags that actually matter</h2>
+</code></pre>
+<h2 id="the-flags-that-actually-matter">The flags that actually matter</h2>
 <pre><code class="hljs language-bash"><span class="hljs-built_in">ln</span> -s   target <span class="hljs-built_in">link</span>          <span class="hljs-comment"># create a symbolic link</span>
 <span class="hljs-built_in">ln</span> -sf  target <span class="hljs-built_in">link</span>          <span class="hljs-comment"># FORCE — overwrite an existing link (the daily driver)</span>
 <span class="hljs-built_in">ln</span> -sfn target <span class="hljs-built_in">link</span>          <span class="hljs-comment"># force + no-deref — CRITICAL when relinking a directory (see below)</span>
 <span class="hljs-built_in">ln</span> -sr  target <span class="hljs-built_in">link</span>          <span class="hljs-comment"># relative link, computed for you (GNU/Ubuntu only)</span>
-</code></pre><ul>
+</code></pre>
+<ul>
 <li><strong><code>-s</code></strong> = symbolic (without it you get a <em>hard</em> link — almost never what you want; see below).</li>
 <li><strong><code>-f</code></strong> = force, replace what&#39;s already at <code>link</code>. Without it, <code>ln</code> refuses if the link name exists.</li>
 <li><strong><code>-n</code></strong> = treat an existing symlink-to-a-directory as a file, not as the directory it points into. <strong>This is the big one.</strong></li>
 </ul>
-<h3>The <code>-sfn</code> gotcha (the one that silently nests)</h3>
+<h3 id="the--sfn-gotcha-the-one-that-silently-nests">The <code>-sfn</code> gotcha (the one that silently nests)</h3>
 <p>If <code>link</code> is already a symlink pointing at a directory, plain <code>ln -sf</code> <em>follows</em> it and creates your new link <em>inside</em> the target directory instead of replacing the link. You end up with <code>~/.claude/CLAUDE.md/global-context.md</code> nested garbage instead of a replaced link.</p>
 <pre><code class="hljs language-bash"><span class="hljs-comment"># WRONG when relinking an existing dir symlink — creates a link INSIDE the target</span>
 <span class="hljs-built_in">ln</span> -sf ~/vault/new-dir ~/.config/thing
 
 <span class="hljs-comment"># RIGHT — -n stops it from dereferencing the existing link</span>
 <span class="hljs-built_in">ln</span> -sfn ~/vault/new-dir ~/.config/thing
-</code></pre><p>When relinking directories, always reach for <code>-sfn</code>. Burn this in.</p>
-<h2>Absolute vs relative — pick deliberately</h2>
+</code></pre>
+<p>When relinking directories, always reach for <code>-sfn</code>. Burn this in.</p>
+<h2 id="absolute-vs-relative--pick-deliberately">Absolute vs relative — pick deliberately</h2>
 <pre><code class="hljs language-bash"><span class="hljs-built_in">ln</span> -s /home/michal/vault/file.md  ~/.config/file.md     <span class="hljs-comment"># absolute: breaks if you move the vault</span>
 <span class="hljs-built_in">ln</span> -s ../vault/file.md            ~/.config/file.md      <span class="hljs-comment"># relative: survives if both move together</span>
 <span class="hljs-built_in">ln</span> -sr /home/michal/vault/file.md ~/.config/file.md      <span class="hljs-comment"># GNU: let ln compute the relative path</span>
-</code></pre><ul>
+</code></pre>
+<ul>
 <li><strong>Absolute</strong> links are robust to where you run the command from but break if the <em>target</em> moves.</li>
 <li><strong>Relative</strong> links survive moving a whole tree (dotfiles repo, vault) as a unit — which is why dotfile managers use them. macOS <code>ln</code> has no <code>-r</code>; compute it yourself or use a tool (<code>stow</code>, <code>chezmoi</code>).</li>
 </ul>
-<h2>Inspecting links</h2>
+<h2 id="inspecting-links">Inspecting links</h2>
 <pre><code class="hljs language-bash"><span class="hljs-built_in">ls</span> -l <span class="hljs-built_in">link</span>                   <span class="hljs-comment"># shows  link -&gt; target</span>
 <span class="hljs-built_in">ls</span> -lO <span class="hljs-built_in">link</span>                  <span class="hljs-comment"># macOS: include file flags</span>
 <span class="hljs-built_in">readlink</span> <span class="hljs-built_in">link</span>                <span class="hljs-comment"># print the immediate target (one hop)</span>
@@ -154,8 +166,9 @@ img{max-width:100%}
 <span class="hljs-built_in">realpath</span> <span class="hljs-built_in">link</span>                <span class="hljs-comment"># canonical absolute path of the final target (both, modern)</span>
 <span class="hljs-built_in">stat</span> <span class="hljs-built_in">link</span>                    <span class="hljs-comment"># metadata; the link itself vs target</span>
 file <span class="hljs-built_in">link</span>                    <span class="hljs-comment"># &quot;symbolic link to ...&quot;</span>
-</code></pre><p><strong>macOS divergence:</strong> BSD <code>readlink</code> has no <code>-f</code>. To resolve a full chain on macOS use <code>readlink -f</code> only if you&#39;ve installed GNU coreutils (<code>brew install coreutils</code>, then <code>greadlink -f</code>), or just use <code>realpath</code> which works on modern macOS.</p>
-<h2>Finding and cleaning up links</h2>
+</code></pre>
+<p><strong>macOS divergence:</strong> BSD <code>readlink</code> has no <code>-f</code>. To resolve a full chain on macOS use <code>readlink -f</code> only if you&#39;ve installed GNU coreutils (<code>brew install coreutils</code>, then <code>greadlink -f</code>), or just use <code>realpath</code> which works on modern macOS.</p>
+<h2 id="finding-and-cleaning-up-links">Finding and cleaning up links</h2>
 <pre><code class="hljs language-bash"><span class="hljs-comment"># find all symlinks under a dir</span>
 find . -<span class="hljs-built_in">type</span> l                       <span class="hljs-comment"># every symlink</span>
 find . -<span class="hljs-built_in">type</span> l ! -<span class="hljs-built_in">exec</span> <span class="hljs-built_in">test</span> -e {} \; -<span class="hljs-built_in">print</span>   <span class="hljs-comment"># BROKEN links (target gone)</span>
@@ -165,17 +178,19 @@ find . -xtype l                      <span class="hljs-comment"># GNU shortcut f
 <span class="hljs-built_in">rm</span> <span class="hljs-built_in">link</span>                              <span class="hljs-comment"># correct</span>
 <span class="hljs-built_in">rm</span> <span class="hljs-built_in">link</span>/                             <span class="hljs-comment"># WRONG — trailing slash can hit the target&#x27;s contents</span>
 <span class="hljs-built_in">unlink</span> <span class="hljs-built_in">link</span>                          <span class="hljs-comment"># explicit, single-link only</span>
-</code></pre><p><strong>Never put a trailing slash when <code>rm</code>-ing a directory symlink</strong> — <code>rm mylink/</code> can operate on what it points to, not the link. <code>rm mylink</code> (no slash) removes just the link.</p>
-<h2>Hard links — what they are and why you usually don&#39;t want one</h2>
+</code></pre>
+<p><strong>Never put a trailing slash when <code>rm</code>-ing a directory symlink</strong> — <code>rm mylink/</code> can operate on what it points to, not the link. <code>rm mylink</code> (no slash) removes just the link.</p>
+<h2 id="hard-links--what-they-are-and-why-you-usually-don39t-want-one">Hard links — what they are and why you usually don&#39;t want one</h2>
 <pre><code class="hljs language-bash"><span class="hljs-built_in">ln</span> target <span class="hljs-built_in">link</span>               <span class="hljs-comment"># NO -s = hard link</span>
-</code></pre><p>A hard link is a second name for the <em>same inode</em> — same actual data, no &quot;pointer&quot; file. Differences that matter:</p>
+</code></pre>
+<p>A hard link is a second name for the <em>same inode</em> — same actual data, no &quot;pointer&quot; file. Differences that matter:</p>
 <ul>
 <li>Hard links <strong>can&#39;t cross filesystems</strong> (different disk/volume = no). Symlinks can point anywhere.</li>
 <li>Hard links <strong>can&#39;t link directories</strong> (normally). Symlinks can.</li>
 <li>Delete the original name of a hard-linked file and the data survives (other names still reference the inode). Delete a symlink&#39;s target and the symlink dangles.</li>
 </ul>
 <p>For config/dotfile/vault work you want <strong>symbolic</strong> links 99% of the time. Hard links are for dedup and specific backup tricks (rsync <code>--link-dest</code>).</p>
-<h2>macOS-specific landmines</h2>
+<h2 id="macos-specific-landmines">macOS-specific landmines</h2>
 <ul>
 <li><strong>Finder &quot;aliases&quot; are NOT symlinks.</strong> An alias is a macOS-proprietary fat reference that the <em>Finder/GUI</em> understands; the shell, scripts, and cross-platform tools do not. If you made it by right-click → &quot;Make Alias,&quot; the terminal can&#39;t follow it. Always create links you&#39;ll use from the CLI with <code>ln -s</code>.</li>
 <li><strong>iCloud Drive eats symlinks.</strong> iCloud sync does not reliably preserve symlinks — it&#39;ll flatten, break, or refuse them. Don&#39;t put symlinks inside <code>~/Library/Mobile Documents/</code> (iCloud). This is a real concern for vault/config workflows.</li>
@@ -184,14 +199,14 @@ find . -xtype l                      <span class="hljs-comment"># GNU shortcut f
 <li><strong>Case-insensitive filesystem</strong> (default APFS) — a link target differing only in case resolves anyway on Mac and then breaks when synced to case-sensitive Linux. Be consistent.</li>
 <li><strong>System Integrity Protection</strong> blocks symlinks in protected system paths (<code>/System</code>, parts of <code>/usr</code>). Use <code>/usr/local</code> or <code>/opt</code>.</li>
 </ul>
-<h2>Ubuntu-specific notes</h2>
+<h2 id="ubuntu-specific-notes">Ubuntu-specific notes</h2>
 <ul>
 <li><strong><code>ln -sr</code> (relative) and <code>find -xtype l</code> (broken links)</strong> are GNU conveniences you&#39;ll miss on macOS.</li>
 <li><strong>Symlinks across mounts</strong> work fine (unlike hard links) — link from an SSD into an NFS/SMB mount or a Docker bind path without issue.</li>
 <li><strong>Docker bind mounts and symlinks:</strong> a symlink <em>inside</em> a bind-mounted host dir resolves on the host&#39;s terms; the container may not see the target if it&#39;s outside the mounted path. Mount the real target, don&#39;t rely on a symlink reaching outside the bind.</li>
 <li><strong>systemd loves symlinks:</strong> <code>systemctl enable</code> literally creates symlinks in <code>/etc/systemd/system/*.wants/</code>. <code>ls -l</code> those dirs to see what&#39;s actually enabled.</li>
 </ul>
-<h2>Common real-world patterns</h2>
+<h2 id="common-real-world-patterns">Common real-world patterns</h2>
 <pre><code class="hljs language-bash"><span class="hljs-comment"># dotfiles: canonical copy in a git repo, linked into $HOME</span>
 <span class="hljs-built_in">ln</span> -sf ~/dotfiles/.zshrc ~/.zshrc
 <span class="hljs-built_in">ln</span> -sf ~/dotfiles/.gitconfig ~/.gitconfig
@@ -204,8 +219,9 @@ find . -xtype l                      <span class="hljs-comment"># GNU shortcut f
 
 <span class="hljs-comment"># point &quot;current&quot; at a versioned release dir, flip atomically on deploy</span>
 <span class="hljs-built_in">ln</span> -sfn /opt/app/releases/v1.2.3 /opt/app/current
-</code></pre><p>That last one — a <code>current</code> symlink flipped between versioned release directories — is the cleanest zero-downtime deploy trick there is. Build the new release alongside, then <code>ln -sfn</code> to flip; the switch is atomic.</p>
-<h2>Things that bite you</h2>
+</code></pre>
+<p>That last one — a <code>current</code> symlink flipped between versioned release directories — is the cleanest zero-downtime deploy trick there is. Build the new release alongside, then <code>ln -sfn</code> to flip; the switch is atomic.</p>
+<h2 id="things-that-bite-you">Things that bite you</h2>
 <ul>
 <li><strong>Argument order reversed.</strong> <code>ln -s link target</code> instead of <code>ln -s target link</code> creates a dead link with the wrong name. Source first, like <code>cp</code>.</li>
 <li><strong><code>ln -sf</code> into an existing directory symlink nests instead of replacing.</strong> Use <code>-sfn</code> for directories. The single most common silent failure.</li>
@@ -216,7 +232,6 @@ find . -xtype l                      <span class="hljs-comment"># GNU shortcut f
 <li><strong>Moving the target orphans the link.</strong> A symlink stores a <em>path</em>, not the data. Move or rename the target and the link dangles silently — nothing warns you until something tries to read it. <code>find . -xtype l</code> (Ubuntu) or the <code>find -type l ! -exec test</code> form (macOS) hunts the corpses.</li>
 <li><strong>Backups and symlinks:</strong> know whether your backup tool follows links or copies the link itself. <code>rsync -a</code> preserves symlinks as links; <code>rsync -aL</code> follows them and copies the target data. Pick deliberately or you&#39;ll back up the wrong thing.</li>
 </ul>
-
 </main>
 </body>
 </html>

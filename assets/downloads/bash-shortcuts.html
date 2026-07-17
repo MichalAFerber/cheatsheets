@@ -4,10 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bash Shortcuts — Cheatsheet</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
+/* Self-hosted fonts served from the cheatsheets site — no Google Fonts (spec §1).
+   Absolute URLs so a downloaded file still gets the real faces online; offline it
+   falls back to the system stack. */
+@font-face{font-family:"Inter";font-weight:400;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/inter-400.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:500;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/inter-500.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:600;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/inter-600.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:700;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/inter-700.woff2") format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-weight:400;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/jetbrains-mono-400.woff2") format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-weight:500;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/jetbrains-mono-500.woff2") format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-weight:700;font-display:swap;src:url("https://michalaferber.github.io/cheatsheets/assets/fonts/jetbrains-mono-700.woff2") format("woff2")}
 :root{
   --ink:#00070A;      /* Midnight Moss  */
   --blue:#214D72;     /* Chathams Blue  */
@@ -35,11 +42,11 @@ body{
   border-bottom:3px solid var(--blue);
   box-shadow:0 1px 4px rgba(0,0,0,.12);
 }
-h1,h2,h3,h4{line-height:1.3;margin:1.8em 0 .6em}
-h1{color:var(--ink);font-weight:700;font-size:2.1rem;margin-top:0}
-h2{color:var(--blue);font-weight:600;font-size:1.5rem;padding-bottom:.3rem;border-bottom:1px solid var(--rule)}
-h3{color:var(--ink);font-weight:600;font-size:1.2rem}
-h4{color:var(--ink);font-weight:600;font-size:1.05rem}
+h1,h2,h3,h4{font-family:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;letter-spacing:-.02em;line-height:1.3;margin:1.8em 0 .6em}
+h1{color:var(--ink);font-weight:700;font-size:2.05rem;margin-top:0}
+h2{color:var(--blue);font-weight:700;font-size:1.45rem;padding-bottom:.3rem;border-bottom:1px solid var(--rule)}
+h3{color:var(--ink);font-weight:700;font-size:1.18rem}
+h4{color:var(--ink);font-weight:700;font-size:1.02rem}
 p,li{color:var(--body)}
 a{color:var(--blue);text-decoration:none}
 a:hover{color:var(--sepia);text-decoration:underline}
@@ -100,9 +107,9 @@ img{max-width:100%}
 </head>
 <body>
 <main class="page">
-<h1>Bash Shortcuts</h1>
+<h1 id="bash-shortcuts">Bash Shortcuts</h1>
 <p>These are Readline (Emacs-mode) key bindings — they work the same in Bash, Zsh, and most REPLs, on Linux and macOS. Learning even the top row (<code>Ctrl-A</code>, <code>Ctrl-R</code>, <code>Ctrl-W</code>) makes the shell dramatically faster.</p>
-<h2>Move the Cursor</h2>
+<h2 id="move-the-cursor">Move the Cursor</h2>
 <table>
 <thead>
 <tr>
@@ -131,7 +138,7 @@ img{max-width:100%}
 <td>toggle between start and current position</td>
 </tr>
 </tbody></table>
-<h2>Edit the Line</h2>
+<h2 id="edit-the-line">Edit the Line</h2>
 <table>
 <thead>
 <tr>
@@ -175,7 +182,7 @@ img{max-width:100%}
 <blockquote>
 <p><strong>Cut and paste, shell-style.</strong> <code>Ctrl-U</code>, <code>Ctrl-K</code>, and <code>Ctrl-W</code> don&#39;t just delete — they cut into a buffer. <code>Ctrl-Y</code> pastes it back, so you can move text around the line.</p>
 </blockquote>
-<h2>History</h2>
+<h2 id="history">History</h2>
 <table>
 <thead>
 <tr>
@@ -215,7 +222,8 @@ img{max-width:100%}
 <p><strong>The classic sudo rescue</strong></p>
 <pre><code class="hljs language-bash">apt update          <span class="hljs-comment"># oops, permission denied</span>
 <span class="hljs-built_in">sudo</span> !!             <span class="hljs-comment"># re-runs: sudo apt update</span>
-</code></pre><h2>Control the Shell</h2>
+</code></pre>
+<h2 id="control-the-shell">Control the Shell</h2>
 <table>
 <thead>
 <tr>
@@ -244,7 +252,6 @@ img{max-width:100%}
 <td>pause / resume terminal output</td>
 </tr>
 </tbody></table>
-
 </main>
 </body>
 </html>
