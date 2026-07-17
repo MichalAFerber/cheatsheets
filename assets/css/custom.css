@@ -210,6 +210,11 @@ body::after {
 .md-nav__link:focus, .md-nav__link:hover,
 .md-nav__link--active, .md-nav__item--active > .md-nav__link { color: var(--accent); }
 .md-nav__title { color: var(--heading); }
+/* Drop the independent scrollbars the theme puts on each sidebar when its nav is
+   taller than the viewport (they read as a bug). The sticky behaviour and
+   wheel/trackpad scrolling stay; only the visible bar is gone. */
+.md-sidebar__scrollwrap { scrollbar-width: none; -ms-overflow-style: none; }
+.md-sidebar__scrollwrap::-webkit-scrollbar { width: 0; height: 0; display: none; }
 /* Search results dropdown surface (shown while typing). */
 .md-search__output, .md-search-result__meta, .md-search-result .md-nav__link {
   background-color: var(--surface);
