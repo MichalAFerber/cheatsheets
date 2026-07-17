@@ -7,7 +7,7 @@ permalink: /
 # Cheatsheets
 
 A growing collection of clean, printable developer cheatsheets. Every one is
-**privacy-first** — no trackers, no analytics, just the reference. Pick a topic
+**privacy-first** — no cookies, no ad trackers, just the reference. Pick a topic
 from the sidebar, or browse below. Each sheet is also available as a **PDF** download.
 
 ## Shell & CLI
