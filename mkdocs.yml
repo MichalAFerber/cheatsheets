@@ -1,0 +1,86 @@
+site_name: Cheatsheets
+site_description: Clean, privacy-first developer cheatsheets — web, PDF & Markdown.
+site_url: https://michalaferber.github.io/cheatsheets/
+site_author: Michal Ferber
+copyright: © Michal Ferber
+
+repo_url: https://github.com/MichalAFerber/cheatsheets
+repo_name: MichalAFerber/cheatsheets
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  favicon: assets/favicon.svg
+  logo: assets/favicon.svg
+  font: false          # self-hosted JetBrains Mono only — no Google Fonts
+  icon:
+    repo: fontawesome/brands/github
+  palette:
+    scheme: default
+    primary: custom
+    accent: custom
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.tracking
+    - navigation.instant
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.action.edit
+
+extra_css:
+  - stylesheets/extra.css
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+
+plugins:
+  - search
+
+validation:
+  links:
+    unrecognized_links: ignore
+    absolute_links: ignore
+
+nav:
+  - Home: index.md
+  - Shell & CLI:
+      - Bash Shortcuts: bash-shortcuts.md
+      - Linux Commands: linux-commands.md
+      - macOS Terminal: macos-terminal.md
+      - Symlinks on macOS & Ubuntu: symlinks-cheatsheet.md
+      - tar (Archives): tar-cheatsheet.md
+      - Terminfo & TERM over SSH: terminfo-ssh.md
+      - tmux Cheat Sheet: tmux-cheatsheet.md
+  - Editors:
+      - Vim Commands: vim-commands.md
+      - VS Code Shortcuts: vscode-shortcuts.md
+  - DevOps:
+      - Docker: docker.md
+      - Git Ops Cheatsheet: git-cheatsheet.md
+      - Kubernetes (kubectl): kubectl.md
+      - Sync & Secrets CLI: sync-secrets-cli-cheatsheet.md
+      - systemd: systemd.md
+  - Languages & Data:
+      - Markdown: markdown-cheatsheet.md
+      - Python RegEx: python-regex.md
+      - SQL Commands: sql-commands.md
+  - macOS:
+      - macOS Keyboard Shortcuts: macos-keyboard-shortcuts.md

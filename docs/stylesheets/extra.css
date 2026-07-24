@@ -1,0 +1,41 @@
+/* Coral primary + accent (matches the tgwab.us / default-web-pages family). */
+[data-md-color-primary="custom"] {
+  --md-primary-fg-color: #e0654f;
+  --md-primary-fg-color--light: #e8836f;
+  --md-primary-fg-color--dark: #c94f3a;
+  --md-primary-bg-color: #ffffff;
+  --md-primary-bg-color--light: rgba(255, 255, 255, 0.7);
+}
+[data-md-color-accent="custom"] {
+  --md-accent-fg-color: #c94f3a;
+  --md-accent-fg-color--transparent: rgba(224, 101, 79, 0.1);
+  --md-accent-bg-color: #ffffff;
+  --md-accent-bg-color--light: rgba(255, 255, 255, 0.7);
+}
+
+/* Self-hosted JetBrains Mono — no Google Fonts. */
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url("../assets/fonts/jetbrains-mono-400.woff2") format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 500; font-display: swap; src: url("../assets/fonts/jetbrains-mono-500.woff2") format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 700; font-display: swap; src: url("../assets/fonts/jetbrains-mono-700.woff2") format("woff2"); }
+
+:root {
+  --md-text-font: "JetBrains Mono";
+  --md-code-font: "JetBrains Mono";
+}
+
+/* Slightly tighter line-height for the mono body text. */
+.md-typeset { line-height: 1.6; }
+
+/* Per-cheatsheet download pills (PDF / Markdown / HTML). */
+.dl-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.4rem 0 1.4rem; }
+.dl-pill {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.28rem 0.8rem;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 999px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.02em;
+  color: var(--md-default-fg-color--light); text-decoration: none;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.dl-pill svg { fill: currentColor; }
+.dl-pill:hover { background: var(--md-primary-fg-color); border-color: var(--md-primary-fg-color); color: #fff; }

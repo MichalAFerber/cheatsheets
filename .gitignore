@@ -1,17 +1,14 @@
-# Third-party source cheatsheets, kept locally for reference only.
-# Copyrighted by their publishers (MakeUseOf/Valnet, Datadog, RaspberryTips,
-# Red Hat, …) — never commit or publish them. Everything in _docs/ is original.
-/datadog/
-/muo/
-/raspberrytips/
-/redhat/
+# MkDocs build output
+/site/
 
-# Jekyll build output & local gems
-_site/
-.jekyll-cache/
-.jekyll-metadata
-vendor/
-.bundle/
+# Python
+.venv/
+__pycache__/
+*.pyc
+.cache/
 
-# Node deps for the generator scripts (declared in package.json)
+# Node (download-generation tooling deps)
 node_modules/
+
+# macOS
+.DS_Store

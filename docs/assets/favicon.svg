@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Cheatsheets">
+  <rect width="64" height="64" rx="14" fill="#e0654f"/>
+  <g fill="#ffffff">
+    <rect x="15" y="17" width="26" height="6" rx="3"/>
+    <rect x="15" y="29" width="34" height="4.5" rx="2.25"/>
+    <rect x="15" y="38.5" width="34" height="4.5" rx="2.25"/>
+    <rect x="15" y="48" width="22" height="4.5" rx="2.25"/>
+  </g>
+</svg>
