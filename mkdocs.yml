@@ -10,6 +10,7 @@ edit_uri: edit/main/docs/
 
 theme:
   name: material
+  custom_dir: overrides
   favicon: assets/favicon.svg
   logo: assets/favicon.svg
   font: false          # self-hosted JetBrains Mono only — no Google Fonts
@@ -61,26 +62,26 @@ validation:
 
 nav:
   - Home: index.md
-  - Shell & CLI:
-      - Bash Shortcuts: bash-shortcuts.md
-      - Linux Commands: linux-commands.md
-      - macOS Terminal: macos-terminal.md
-      - Symlinks on macOS & Ubuntu: symlinks-cheatsheet.md
-      - tar (Archives): tar-cheatsheet.md
-      - Terminfo & TERM over SSH: terminfo-ssh.md
-      - tmux Cheat Sheet: tmux-cheatsheet.md
-  - Editors:
-      - Vim Commands: vim-commands.md
-      - VS Code Shortcuts: vscode-shortcuts.md
-  - DevOps:
-      - Docker: docker.md
-      - Git Ops Cheatsheet: git-cheatsheet.md
-      - Kubernetes (kubectl): kubectl.md
-      - Sync & Secrets CLI: sync-secrets-cli-cheatsheet.md
-      - systemd: systemd.md
-  - Languages & Data:
-      - Markdown: markdown-cheatsheet.md
-      - Python RegEx: python-regex.md
-      - SQL Commands: sql-commands.md
-  - macOS:
-      - macOS Keyboard Shortcuts: macos-keyboard-shortcuts.md
+  - "Shell & CLI":
+      - "Bash Shortcuts": bash-shortcuts.md
+      - "Linux Commands": linux-commands.md
+      - "macOS Terminal": macos-terminal.md
+      - "Symlinks on macOS & Ubuntu": symlinks-cheatsheet.md
+      - "tar (Archives)": tar-cheatsheet.md
+      - "Terminfo & TERM over SSH": terminfo-ssh.md
+      - "tmux Cheat Sheet": tmux-cheatsheet.md
+  - "Editors":
+      - "Vim Commands": vim-commands.md
+      - "VS Code Shortcuts": vscode-shortcuts.md
+  - "DevOps":
+      - "Docker": docker.md
+      - "Git Ops Cheatsheet": git-cheatsheet.md
+      - "Kubernetes (kubectl)": kubectl.md
+      - "Sync & Secrets CLI": sync-secrets-cli-cheatsheet.md
+      - "systemd": systemd.md
+  - "Languages & Data":
+      - "Markdown": markdown-cheatsheet.md
+      - "Python RegEx": python-regex.md
+      - "SQL Commands": sql-commands.md
+  - "macOS":
+      - "macOS Keyboard Shortcuts": macos-keyboard-shortcuts.md

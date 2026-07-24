@@ -5,7 +5,7 @@
 //   npm install                                  # once, to get marked + highlight.js
 //   node scripts/gen-downloads.mjs <slug>        # one sheet: .md + .html
 //   node scripts/gen-downloads.mjs <slug> --pdf  # also print the .pdf (needs Chromium)
-//   node scripts/gen-downloads.mjs --all [--pdf] # every sheet in _docs/
+//   node scripts/gen-downloads.mjs --all [--pdf] # every sheet in docs/
 //
 // PDF needs a Chromium/Chrome binary; set CHROME_BIN or it will try common paths.
 // See CONTRIBUTING.md for the full authoring + download spec.
@@ -21,14 +21,14 @@ const { marked } = require("marked");
 const hljs = require("highlight.js").default || require("highlight.js");
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const docsDir = join(root, "_docs");
-const outDir = join(root, "assets", "downloads");
+const docsDir = join(root, "docs");
+const outDir = join(root, "downloads");
 const template = readFileSync(join(root, "scripts", "download-template.html"), "utf8");
 
 const args = process.argv.slice(2);
 const wantPdf = args.includes("--pdf");
 const slugs = args.includes("--all")
-  ? readdirSync(docsDir).filter((f) => f.endsWith(".md")).map((f) => f.replace(/\.md$/, ""))
+  ? readdirSync(docsDir).filter((f) => f.endsWith(".md") && f !== "index.md").map((f) => f.replace(/\.md$/, ""))
   : args.filter((a) => !a.startsWith("--"));
 
 if (!slugs.length) {
@@ -45,11 +45,11 @@ const decode = (s) =>
   s.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, "&");
 
 function toDownloadMarkdown(docSource) {
-  // Strip the YAML front matter and the {% include downloads.html %} line: the raw
-  // .md download is exactly the page body a reader would want to keep.
+  // Strip the YAML front matter and the download pills block: the raw .md
+  // download is exactly the page body a reader would want to keep.
   return docSource
     .replace(/^---\n[\s\S]*?\n---\n+/, "")
-    .replace(/\{%\s*include downloads\.html[^%]*%\}\n*/, "")
+    .replace(/<p class="dl-pills">[\s\S]*?<\/p>\n*/, "")
     .replace(/\n+$/, "\n");
 }
 
@@ -97,7 +97,7 @@ function findChrome() {
 for (const slug of slugs) {
   const docPath = join(docsDir, `${slug}.md`);
   if (!existsSync(docPath)) {
-    console.error(`skip ${slug}: no _docs/${slug}.md`);
+    console.error(`skip ${slug}: no docs/${slug}.md`);
     continue;
   }
   const src = readFileSync(docPath, "utf8");

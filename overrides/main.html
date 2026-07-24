@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+  {{ super() }}
+  <!-- Self-hosted, cookieless Plausible analytics — no Google, no cookies. -->
+  <script defer
+          data-domain="michalaferber.github.io"
+          src="https://plausible.thompsonblack.us/js/script.js"></script>
+{% endblock %}
