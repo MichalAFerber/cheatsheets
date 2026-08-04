@@ -1,0 +1,31 @@
+name: ci
+
+# §4: the gate lives on the pull request. This repo deployed from main with
+# nothing checking a change first, so the deploy was the first thing to find out.
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Job name is the required-check context; the estate requires `ci`.
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Material for MkDocs
+        run: pip install mkdocs-material
+      - name: Build site (strict)
+        # --strict promotes broken links and bad nav references to errors. The
+        # deploy builds without it, so those shipped silently.
+        run: mkdocs build --strict
