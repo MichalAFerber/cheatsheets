@@ -122,6 +122,14 @@ of the standard's requirements are scoped down or waived. For transparency:
 - **No Privacy Policy or Terms pages.** The site is static and collects no personal
   data (see [Privacy & analytics](#privacy--analytics)), so there is nothing for those
   pages to govern.
+- **§4's Class C deploy path (GitHub Pages' own Jekyll build from `main`) does not
+  apply.** This site is built with MkDocs Material, which the platform build cannot
+  produce, so the one deploy path is a single GitHub Actions workflow to Pages. §4's
+  binding rule is *exactly one deploy path*, and that is satisfied — there is no second
+  path and no superseded workflow. What is deviated from is the doctrine table's Class C
+  row, which names Jekyll because that is what GitHub Pages builds natively. Converting
+  the content would mean losing admonitions, tabbed blocks, and superfences for no
+  reader-visible gain.
 - **§11 (SEO/plumbing kit) and §12 (`_headers` / CSP) do not apply.** They target
   Cloudflare-hosted apps; GitHub Pages cannot serve custom response headers, and a
   micro-project does not need the full SEO kit.
