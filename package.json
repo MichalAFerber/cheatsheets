@@ -9,7 +9,7 @@
     "gen:all-downloads": "node scripts/gen-downloads.mjs --all --pdf"
   },
   "devDependencies": {
-    "highlight.js": "^11.9.0",
+    "highlight.js": "^11.12.0",
     "marked": "^18.0.11"
   }
 }
