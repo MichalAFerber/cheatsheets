@@ -25,6 +25,9 @@ jobs:
           python-version: '3.12'
       - name: Install Material for MkDocs
         run: pip install mkdocs-material
+      # FULL tree, deliberately not --omit=dev (§15): the dev half is the toolchain, and its output is what ships.
+      - name: Dependency audit (§15)
+        run: npm audit --audit-level=high
       - name: Build site (strict)
         # --strict promotes broken links and bad nav references to errors. The
         # deploy builds without it, so those shipped silently.
